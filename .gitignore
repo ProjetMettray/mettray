@@ -20,7 +20,6 @@
 ###< phpunit/phpunit ###
 
 .idea/
-
 *.mwb
-
 .DS_Store
+migrations/
