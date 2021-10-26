@@ -54,10 +54,16 @@ class User
      */
     private $rooms;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user_id")
+     */
+    private $events;
+
     public function __construct()
     {
         $this->associations = new ArrayCollection();
         $this->rooms = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -174,6 +180,36 @@ class User
     {
         if ($this->rooms->removeElement($room)) {
             $room->removeRoomHasUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getUserId() === $this) {
+                $event->setUserId(null);
+            }
         }
 
         return $this;
