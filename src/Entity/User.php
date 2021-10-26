@@ -49,9 +49,15 @@ class User
      */
     private $associations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Room::class, mappedBy="room_has_user")
+     */
+    private $rooms;
+
     public function __construct()
     {
         $this->associations = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,6 +147,33 @@ class User
     {
         if ($this->associations->removeElement($association)) {
             $association->removeUserHasAssociation($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getRooms(): Collection
+    {
+        return $this->rooms;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->rooms->contains($room)) {
+            $this->rooms[] = $room;
+            $room->addRoomHasUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        if ($this->rooms->removeElement($room)) {
+            $room->removeRoomHasUser($this);
         }
 
         return $this;
