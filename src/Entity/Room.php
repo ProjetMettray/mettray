@@ -54,10 +54,16 @@ class Room
      */
     private $room_id;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="room_id")
+     */
+    private $events;
+
     public function __construct()
     {
         $this->room_has_user = new ArrayCollection();
         $this->room_id = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -173,6 +179,36 @@ class Room
             // set the owning side to null (unless already changed)
             if ($roomId->getRoom() === $this) {
                 $roomId->setRoom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setRoomId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getRoomId() === $this) {
+                $event->setRoomId(null);
             }
         }
 
