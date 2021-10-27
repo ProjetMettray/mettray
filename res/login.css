@@ -1,0 +1,25 @@
+body{
+    background-color: whitesmoke
+}
+*{
+    background-color: whitesmoke;
+}
+.input-connexion{
+    margin: .2rem;
+}
+.input-connexion:focus{
+    color: #0cb1b9;
+}
+.formulaire-connexion{
+    border: none;
+}
+.btn-connexion{
+    border: .2rem solid #0cb1b9;
+    background-color: whitesmoke;
+    color:#0cb1b9;
+}
+.btn-connexion:hover{
+    color:whitesmoke;
+    background-color: #0cb1b9;
+    border: .2rem solid #0cb1b9
+}
