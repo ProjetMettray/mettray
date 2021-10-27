@@ -6,6 +6,7 @@ body{
 }
 .input-connexion{
     margin: .2rem;
+    border-radius: 2rem;
 }
 .input-connexion:focus{
     color: #0cb1b9;
@@ -15,6 +16,7 @@ body{
 }
 .btn-connexion{
     border: .2rem solid #0cb1b9;
+    border-radius: 2rem;
     background-color: whitesmoke;
     color:#0cb1b9;
 }
