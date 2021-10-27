@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Association
+{% endblock %}
+
+{% block body %}
+	<h1>{{ association.name }}</h1>
+
+	<hr>
+
+	<div class="row">
+		<div class="col-6">
+			<p>{{ association.email }}</p>
+		</div>
+		<div class="col-6">
+			<p>{{ association.telephone }}</p>
+		</div>
+	</div>
+
+{% endblock %}
