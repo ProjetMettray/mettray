@@ -2,9 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Room;
 use App\Entity\User;
 use App\Entity\Association;
+use App\Repository\RoomRepository;
 use Symfony\Component\Form\AbstractType;
+use App\Repository\AssociationRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,7 +32,7 @@ class UserType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'w-50 form-control'
+                    'class' => 'form-control'
             ],
             ])
             ->add('lastname', TextType::class, [
@@ -52,17 +55,17 @@ class UserType extends AbstractType
                 'expanded' => false,
                 'multiple' => false,
                 'choice_label' => 'name',
-                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (AssociationRepository $er) {
                     return $er->createQueryBuilder('u')                 
                     ->orderBy('u.name', 'ASC');
                 }
             ])
             ->add('rooms', EntityType::class, [
-                'class' => Rooms::class,
+                'class' => Room::class,
                 'expanded' => false,
                 'multiple' => false,
                 'choice_label' => 'name',
-                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (RoomRepository $er) {
                     return $er->createQueryBuilder('u')                 
                     ->orderBy('u.name', 'ASC');
                 }
