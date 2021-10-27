@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+        {{ form_row(form.company, {
+        label: 'Nom de l\'entreprise'
+        }) }}
+        {{ form_row(form.start_at, {
+        label: 'Date de début'
+        }) }}
+        {{ form_row(form.end_at, {
+        label: 'Date de fin'
+        }) }}
+        {{ form_row(form.details, {
+        label: 'Détails'
+        }) }}
+        {{ form_row(form.register, {
+        label: 'Modifier'
+        }) }}
+{{ form_end(form) }}
