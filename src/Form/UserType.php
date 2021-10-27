@@ -3,9 +3,14 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Association;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UserType extends AbstractType
 {
@@ -41,6 +46,26 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
             ],
+            ])
+            ->add('associations', EntityType::class, [
+                'class' => Association::class,
+                'expanded' => false,
+                'multiple' => false,
+                'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')                 
+                    ->orderBy('u.name', 'ASC');
+                }
+            ])
+            ->add('rooms', EntityType::class, [
+                'class' => Rooms::class,
+                'expanded' => false,
+                'multiple' => false,
+                'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')                 
+                    ->orderBy('u.name', 'ASC');
+                }
             ])
         ;
     }
