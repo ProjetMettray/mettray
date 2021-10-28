@@ -47,8 +47,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 ->setFirstname($fakeuser[2])
                 ->setLastname($fakeuser[3])
                 ->setPhone($fakeuser[4])
-                ->addAssociation($manager->getRepository(Association::class)->findOneByName($fakeuser[5]))
-                    ;
+                ->addAssociation($manager->getRepository(Association::class)
+                ->findOneByName($fakeadmin[5]));
 
             $manager->persist($user);
             $manager->flush();
