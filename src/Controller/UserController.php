@@ -28,22 +28,22 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-            $user = new User();
-            $form = $this->createForm(UserType::class, $user);
-            $form->handleRequest($request);
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-                return $this->redirectToRoute('user_skill', [], Response::HTTP_SEE_OTHER);
-            }
+            return $this->redirectToRoute('user_skill', [], Response::HTTP_SEE_OTHER);
+        }
 
-            return $this->renderForm('user/new.html.twig', [
-                'user' => $user,
-                'form' => $form,
-            ]);
+        return $this->renderForm('user/new.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
     }
 
     /**
@@ -62,8 +62,7 @@ class UserController extends AbstractController
     public function edit(Request $request, User $user): Response
     {
         $actualUser = $this->getUser();
-        if($actualUser->getId() == $user->getId() || in_array('ROLE_SUPER_ADMIN', $actualUser->getRoles(), true))
-        {
+        if ($actualUser->getId() == $user->getId() || in_array('ROLE_SUPER_ADMIN', $actualUser->getRoles(), true)) {
             $form = $this->createForm(UserType::class, $user);
             $form->handleRequest($request);
 
@@ -77,18 +76,17 @@ class UserController extends AbstractController
                 'user' => $user,
                 'form' => $form,
             ]);
-        }
-        else {
+        } else {
             return $this->redirectToRoute('user');
         }
     }
 
-        /**
+    /**
      * @Route("/{id}/edit_team", name="user_edit_team", methods={"GET","POST"})
      */
     public function editTeam(Request $request, User $user): Response
     {
-        
+
         $form = $this->createForm(UserHierarchyType::class, $user);
         $form->handleRequest($request);
 
@@ -128,16 +126,14 @@ class UserController extends AbstractController
     public function delete(Request $request, User $user): Response
     {
         $actualUser = $this->getUser();
-        if(($actualUser->getId() == $user->getId() || in_array('ROLE_ADMIN', $actualUser->getRoles(), true)))
-        {
-            if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if (($actualUser->getId() == $user->getId() || in_array('ROLE_ADMIN', $actualUser->getRoles(), true))) {
+            if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($user);
                 $entityManager->flush();
             }
             return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
-        }
-        else {
+        } else {
             return $this->redirectToRoute('user');
         }
     }
