@@ -14,13 +14,13 @@ body{
 .formulaire-connexion{
     border: none;
 }
-.btn-connexion{
-    border: .2rem solid #0cb1b9;
-    border-radius: 2rem;
+.btn-form:hover,
+.btn-form:focus{
+    border: .2rem solid #006767;
     background-color: whitesmoke;
-    color:#0cb1b9;
+    color:#006767;
 }
-.btn-connexion:hover{
+.btn-form{
     color:whitesmoke;
     background-color: #0cb1b9;
     border: .2rem solid #0cb1b9
