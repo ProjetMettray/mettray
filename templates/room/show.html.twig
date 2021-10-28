@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Salle
+{% endblock %}
+
+{% block body %}
+	<h1>{{ room.name }}</h1>
+
+	<hr>
+
+	<div class="row">
+		<div class="col-6">
+			<p>{{ room.description }}</p>
+		</div>
+		<div class="col-2">
+			<p>{{ room.nbPlace }}</p>
+		</div>
+		<div class="col-2">
+			<p>{{ room.locationId }}</p>
+		</div>
+		<div class="col-2">
+			<p>{{ room.roomParent }}</p>
+		</div>
+	</div>
+
+{% endblock %}
