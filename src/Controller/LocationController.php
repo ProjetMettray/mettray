@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +16,14 @@ class LocationController extends AbstractController
     public function index(LocationRepository $locationRepository): Response
     {
         return $this->render('location/index.html.twig', [
-            'location' => $locationRepository->findAll(),
+            'location' => $locationRepository->findAll()
         ]);
     }
 
-    public function addLocation(Request $request): Response
+    /**
+     * @Route("/location_new", name="location_new", methods={"GET", "POST"})
+     */
+    public function addLocation(Request $request, EntityManagerInterface $entityManager): Response
     {
         $location = $this->getLocation();
         
@@ -29,10 +33,10 @@ class LocationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+            $entityManager->persist($location);
             $entityManager->flush();
 
-            return $this->redirectToRoute()
+            return $this->redirectToRoute('location');
         }
 
         return $this->renderForm('location/index.html.twig', [
