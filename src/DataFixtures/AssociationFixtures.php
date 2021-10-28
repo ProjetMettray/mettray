@@ -7,8 +7,6 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AssociationFixtures extends Fixture {
 
-
-
     public const FAKE_ASSO = [
         ['Mettray','ad@ad.fr','0725635354'],
         ['Lolita','ed@ed.fr','07223565325'],
