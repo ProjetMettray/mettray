@@ -1,17 +1,11 @@
-<?php 
-
+<?php
 namespace App\DataFixtures ;
 
 use App\Entity\Association;
 use Doctrine\Persistence\ObjectManager;
-use App\DataFixtures \AssociationFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
-
 class AssociationFixtures extends Fixture {
-
-
-
     public const FAKE_ASSO = [
         ['Bilboquet','ad@ad.fr','0725635354'],
         ['Lolita','ed@ed.fr','07223565325'],
@@ -27,7 +21,6 @@ class AssociationFixtures extends Fixture {
                 ->setEmail($fakeAsso[1])
                 ->setTelephone($fakeAsso[2]);
             $manager->persist($association);
-            
         }
         $manager->flush();
     }

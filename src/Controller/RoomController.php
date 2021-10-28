@@ -21,7 +21,7 @@ class RoomController extends AbstractController
     }
 
     /**
-     * @Route("/association/add", name="association_add")
+     * @Route("/room/add", name="room_add")
      * 
      */
     public function addRoom(Request $request, EntityManagerInterface $entityManager)
@@ -77,7 +77,7 @@ class RoomController extends AbstractController
 
         $this->addFlash('success', $deleteMessage);
 
-        return $this->redirectToRoute('association');
+        return $this->redirectToRoute('room');
     }
 
     /**
