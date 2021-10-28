@@ -46,6 +46,7 @@ class Room
 
     /**
      * @ORM\OneToMany(targetEntity=Room::class, mappedBy="room")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $roomId;
 
@@ -151,6 +152,7 @@ class Room
 
     /**
      * @return Collection|self[]
+     * @ORM\JoinColumn(nullable=true)
      */
     public function getRoomId(): Collection
     {

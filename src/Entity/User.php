@@ -65,6 +65,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $rooms;
 
+    public function __construct()
+    {
+        $this->associations = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -205,6 +210,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addAssociation(Association $association): self
     {
+        // if ($this->associations == null) {
+        //     $this->associations = [];
+        // }
         if (!$this->associations->contains($association)) {
             $this->associations[] = $association;
             $association->addUserHasAssociation($this);
