@@ -27,17 +27,12 @@ class Room
     /**
      * @ORM\Column(type="integer")
      */
-    private $nb_place;
+    private $nbPlace;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $location_id;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="rooms")
@@ -47,17 +42,23 @@ class Room
     /**
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="room_id")
      */
-    private $room;
+    private $roomParent;
 
     /**
      * @ORM\OneToMany(targetEntity=Room::class, mappedBy="room")
      */
-    private $room_id;
+    private $roomId;
 
     /**
      * @ORM\OneToMany(targetEntity=Event::class, mappedBy="room_id")
      */
     private $events;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="rooms")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $locationId;
 
     public function __construct()
     {
@@ -83,14 +84,19 @@ class Room
         return $this;
     }
 
-    public function getNbPlace(): ?int
+    public function __toString()
     {
-        return $this->nb_place;
+        return $this->name;
     }
 
-    public function setNbPlace(int $nb_place): self
+    public function getNbPlace(): ?int
     {
-        $this->nb_place = $nb_place;
+        return $this->nbPlace;
+    }
+
+    public function setNbPlace(int $nbPlace): self
+    {
+        $this->nbPlace = $nbPlace;
 
         return $this;
     }
@@ -103,18 +109,6 @@ class Room
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getLocationId(): ?int
-    {
-        return $this->location_id;
-    }
-
-    public function setLocationId(?int $location_id): self
-    {
-        $this->location_id = $location_id;
 
         return $this;
     }
@@ -145,12 +139,12 @@ class Room
 
     public function getRoom(): ?self
     {
-        return $this->room;
+        return $this->roomParent;
     }
 
-    public function setRoom(?self $room): self
+    public function setRoom(?self $roomParent): self
     {
-        $this->room = $room;
+        $this->roomParent = $roomParent;
 
         return $this;
     }
@@ -160,13 +154,13 @@ class Room
      */
     public function getRoomId(): Collection
     {
-        return $this->room_id;
+        return $this->roomId;
     }
 
     public function addRoomId(self $roomId): self
     {
-        if (!$this->room_id->contains($roomId)) {
-            $this->room_id[] = $roomId;
+        if (!$this->roomId->contains($roomId)) {
+            $this->roomId[] = $roomId;
             $roomId->setRoom($this);
         }
 
@@ -175,7 +169,7 @@ class Room
 
     public function removeRoomId(self $roomId): self
     {
-        if ($this->room_id->removeElement($roomId)) {
+        if ($this->roomId->removeElement($roomId)) {
             // set the owning side to null (unless already changed)
             if ($roomId->getRoom() === $this) {
                 $roomId->setRoom(null);
@@ -211,6 +205,30 @@ class Room
                 $event->setRoomId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocationId(): ?Location
+    {
+        return $this->locationId;
+    }
+
+    public function setLocationId(?Location $locationId): self
+    {
+        $this->locationId = $locationId;
+
+        return $this;
+    }
+
+    public function getRoomParent(): ?Room
+    {
+        return $this->roomParent;
+    }
+
+    public function setRoomParent(?Room $roomParent): self
+    {
+        $this->roomParent = $roomParent;
 
         return $this;
     }
