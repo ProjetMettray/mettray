@@ -4,12 +4,16 @@ body{
 *{
     background-color: whitesmoke;
 }
-.input-connexion{
+.input-form{
     margin: .2rem;
-    border-radius: 2rem;
+    border: .2rem solid #006767;
+
 }
-.input-connexion:focus{
-    color: #0cb1b9;
+.form-control:focus{
+    background-color: #fff;
+    border-color: #006767;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(0 103 96 / 25%);
 }
 .formulaire-connexion{
     border: none;
@@ -17,11 +21,13 @@ body{
 .btn-form:hover,
 .btn-form:focus{
     border: .2rem solid #006767;
-    background-color: whitesmoke;
-    color:#006767;
+
+    background-color: #006767;
+    color:whitesmoke;
 }
 .btn-form{
     color:whitesmoke;
     background-color: #0cb1b9;
-    border: .2rem solid #0cb1b9
+    border: .2rem solid #0cb1b9;
+    border-radius: 0;
 }
