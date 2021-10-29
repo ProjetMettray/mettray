@@ -14,6 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AssociationController extends AbstractController
 {
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
      /**
      * @Route("/association", name="association")
      */
@@ -89,8 +95,18 @@ class AssociationController extends AbstractController
      */
     public function showAssociation(Association $association)
     {
-        return $this->render('association/show.html.twig', [
+        return $this->render('association/showOne.html.twig', [
             'association' => $association
+        ]);
+    }
+    /**
+     * @Route("/associations/show", name="association_show")
+     */
+    public function showAsso()
+    {
+        $asso = $this->em->getRepository(Association::class)->findAll();
+        return $this->render('association/show.html.twig', [
+            'association' => $asso
         ]);
     }
 }
