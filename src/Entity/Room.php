@@ -25,9 +25,9 @@ class Room
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $nbPlace;
+    private $nb_place;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -35,38 +35,28 @@ class Room
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="rooms")
+     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="rooms")
+     * @ORM\JoinColumn(name="location_id", referencedColumnName="id", nullable=true)
      */
-    private $room_has_user;
+    private $location;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="room_id")
+     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="rooms")
+     * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=true)
      */
-    private $roomParent;
+    private $room;
 
     /**
      * @ORM\OneToMany(targetEntity=Room::class, mappedBy="room")
-     * @ORM\JoinColumn(nullable=true)
      */
-    private $roomId;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="room_id")
-     */
-    private $events;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="rooms")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $locationId;
+    private $rooms;
 
     public function __construct()
     {
-        $this->room_has_user = new ArrayCollection();
-        $this->room_id = new ArrayCollection();
-        $this->events = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
     }
+
+
 
     public function getId(): ?int
     {
@@ -92,12 +82,12 @@ class Room
 
     public function getNbPlace(): ?int
     {
-        return $this->nbPlace;
+        return $this->nb_place;
     }
 
-    public function setNbPlace(int $nbPlace): self
+    public function setNbPlace(?int $nb_place): self
     {
-        $this->nbPlace = $nbPlace;
+        $this->nb_place = $nb_place;
 
         return $this;
     }
@@ -114,124 +104,58 @@ class Room
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getRoomHasUser(): Collection
+    public function getLocation(): ?Location
     {
-        return $this->room_has_user;
+        return $this->location;
     }
 
-    public function addRoomHasUser(User $roomHasUser): self
+    public function setLocation(?Location $location): self
     {
-        if (!$this->room_has_user->contains($roomHasUser)) {
-            $this->room_has_user[] = $roomHasUser;
-        }
-
-        return $this;
-    }
-
-    public function removeRoomHasUser(User $roomHasUser): self
-    {
-        $this->room_has_user->removeElement($roomHasUser);
+        $this->location = $location;
 
         return $this;
     }
 
     public function getRoom(): ?self
     {
-        return $this->roomParent;
+        return $this->room;
     }
 
-    public function setRoom(?self $roomParent): self
+    public function setRoom(?self $room): ?self
     {
-        $this->roomParent = $roomParent;
+        $this->room = $room;
 
         return $this;
     }
 
     /**
      * @return Collection|self[]
-     * @ORM\JoinColumn(nullable=true)
      */
-    public function getRoomId(): Collection
+    public function getRooms(): Collection
     {
-        return $this->roomId;
+        return $this->rooms;
     }
 
-    public function addRoomId(self $roomId): self
+    public function addRoom(?self $room): ?self
     {
-        if (!$this->roomId->contains($roomId)) {
-            $this->roomId[] = $roomId;
-            $roomId->setRoom($this);
+        if (!$this->rooms->contains($room) && $room !== NULL) {
+            $this->rooms[] = $room;
+            $room->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeRoomId(self $roomId): self
+    public function removeRoom(self $room): self
     {
-        if ($this->roomId->removeElement($roomId)) {
+        if ($this->rooms->removeElement($room)) {
             // set the owning side to null (unless already changed)
-            if ($roomId->getRoom() === $this) {
-                $roomId->setRoom(null);
+            if ($room->getRoom() === $this) {
+                $room->setRoom(null);
             }
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection|Event[]
-     */
-    public function getEvents(): Collection
-    {
-        return $this->events;
-    }
-
-    public function addEvent(Event $event): self
-    {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->setRoomId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvent(Event $event): self
-    {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getRoomId() === $this) {
-                $event->setRoomId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getLocationId(): ?Location
-    {
-        return $this->locationId;
-    }
-
-    public function setLocationId(?Location $locationId): self
-    {
-        $this->locationId = $locationId;
-
-        return $this;
-    }
-
-    public function getRoomParent(): ?Room
-    {
-        return $this->roomParent;
-    }
-
-    public function setRoomParent(?Room $roomParent): self
-    {
-        $this->roomParent = $roomParent;
-
-        return $this;
-    }
 }
