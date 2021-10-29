@@ -4,17 +4,16 @@
 {% endblock %}
 
 {% block body %}
-	<h1>{{ association.name }}</h1>
-
-	<hr>
-
-	<div class="row">
-		<div class="col-6">
-			<p>{{ association.email }}</p>
+	{% for asso in association %}
+		<h1>{{ asso.name }}</h1>
+		<hr>
+		<div class="row">
+			<div class="col-6">
+				<p>{{ asso.email }}</p>
+			</div>
+			<div class="col-6">
+				<p>{{ asso.telephone }}</p>
+			</div>
 		</div>
-		<div class="col-6">
-			<p>{{ association.telephone }}</p>
-		</div>
-	</div>
-
+	{% endfor %}
 {% endblock %}
