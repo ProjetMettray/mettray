@@ -31,7 +31,7 @@ class RoomFixtures extends Fixture implements DependentFixtureInterface {
             $room->setName($fakeRoom[0])
                  ->setNbPlace($fakeRoom[1])
                  ->setDescription($fakeRoom[2])
-                 ->addRoomHasUser($fakeRoom[3])
+                 ->addRoomHasUser($manager->getRepository(User::class)->findOneByLastname($fakeRoom[3]))
                  ->setRoom($fakeRoom[4])
                  ->addRoomId($fakeRoom[5])
                  ->setLocationId($fakeRoom[6]);

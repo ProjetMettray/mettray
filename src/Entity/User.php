@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use App\Entity\Room;
+//use App\Entity\Room;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -60,10 +60,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $associations;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Room::class, mappedBy="room_has_user")
-     */
-    private $rooms;
+    public function __construct()
+    {
+        $this->associations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -205,6 +205,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addAssociation(Association $association): self
     {
+        // if ($this->associations == null) {
+        //     $this->associations = [];
+        // }
         if (!$this->associations->contains($association)) {
             $this->associations[] = $association;
             $association->addUserHasAssociation($this);
@@ -217,33 +220,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->associations->removeElement($association)) {
             $association->removeUserHasAssociation($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Room[]
-     */
-    public function getRooms(): Collection
-    {
-        return $this->rooms;
-    }
-
-    public function addRoom(Room $room): self
-    {
-        if (!$this->rooms->contains($room)) {
-            $this->rooms[] = $room;
-            $room->addRoomHasUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRoom(Room $room): self
-    {
-        if ($this->rooms->removeElement($room)) {
-            $room->removeRoomHasUser($this);
         }
 
         return $this;
