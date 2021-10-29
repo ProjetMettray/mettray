@@ -14,7 +14,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AssociationController extends AbstractController
 {
-    #[Route('/association', name: 'association')]
+     /**
+     * @Route("/association", name="association")
+     */
     public function index(): Response
     {
         return $this->render('association/index.html.twig', [

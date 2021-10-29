@@ -12,7 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RoomController extends AbstractController
 {
-    #[Route('/room', name: 'room')]
+     /**
+     * @Route("/room", name="room")
+     */
     public function index(): Response
     {
         return $this->render('room/index.html.twig', [
