@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Gestion
+{% endblock %}
+
+{% block body %}
+	<div class="card text-center">
+		<div class="card-body overflow-auto">
+			<div class="row row-cols-1 row-cols-md-6 g-4 overflow-auto">
+				<div class="container d-flex justify-content-center w-100">
+					<div class="card w-100">
+						<div class="card-body">
+							<h5 class="card-title">{{ app.user.firstname }}
+								{{ app.user.lastname }}</h5>
+							<p class="card-text">
+								Vous êtes connecté en tant que :
+								{% if is_granted("ROLE_SUPER_ADMIN") %}
+									Administrateur
+								{% elseif is_granted("ROLE_ADMIN") %}
+									Commercial
+								{% elseif (is_granted("ROLE_USER")) and app.user.parent %}
+									Collaborateur
+								{% else %}
+									Candidat
+								{% endif %}
+							</p>
+						</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">{{ app.user.email }}</li>
+							<li class="list-group-item">{{ app.user.address }}</li>
+							<li class="list-group-item">{{ app.user.phone }}</li>
+						</ul>
+						<div class="card-body">
+							{% if is_granted("ROLE_SUPER_ADMIN") %}
+								<a class="btn btn-primary" href="{{ path("user_edit_admin", {"id": app.user.id}) }}">Modifier</a>
+							{% else %}
+								<a class="btn btn-primary" href="{{ path("user_edit", {"id": app.user.id}) }}">Modifier</a>
+							{% endif %}
+
+							<a class="btn btn-secondary" href="{{ path("user_show", {"id": app.user.id}) }}">Plus d'informations</a>
+							<a class="btn btn-danger" href="{{ path('user_delete', {'id': app.user.id}) }}">Supprimer</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="overflow-auto">
+			<h1>Gestion des Experiences</h1>
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Id</th>
+						<th scope="col">Nom de la personne</th>
+						<th scope="col">Entreprise</th>
+						<th scope="col">Date de début</th>
+						<th scope="col">Date de fin</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					{% for experience in experiences %}
+
+						<tr class="table-active">
+							<th scope="row">{{ experience.id }}</th>
+							<td>{{ experience.company }}</td>
+							<td>{{ experience.company }}</td>
+							<td>{{ experience.startAt|date('d/m/Y') }}</td>
+							<td>{{ experience.endAt|date('d/m/Y') }}</td>
+							<td>
+								<a class="btn btn-secondary" href="{{ path("experience_show", {"id": experience.id}) }}">Plus d'informations</a>
+									<a class="btn btn-primary" href="{{ path("experience_edit", {"id": experience.id}) }}">Modifier</a>
+							</td>
+						</tr>
+
+					{% endfor %}
+				</tbody>
+			</tbody>
+		</table>
+	{% if is_granted("ROLE_ADMIN") %}
+		<a class="btn btn-primary" href="{{ path("experience_new") }}">
+			<i class="fas fa-plus"></i>
+		</a>
+	{% endif %}
+</div></div>{% endblock %}

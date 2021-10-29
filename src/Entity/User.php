@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Entity\Association;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+//use App\Entity\Room;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -51,6 +55,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $phone;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Association::class, mappedBy="user_has_association")
+     */
+    private $associations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserRoom::class, mappedBy="user")
+     */
+    private $room;
+
+    public function __construct()
+    {
+        $this->associations = new ArrayCollection();
+        $this->room = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -84,6 +104,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername(): string
     {
         return (string) $this->email;
+    }
+
+    public function __toString()
+    {
+        return $this->email;
     }
 
     /**
@@ -172,6 +197,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Association[]
+     */
+    public function getAssociations(): Collection
+    {
+        return $this->associations;
+    }
+
+    public function addAssociation(Association $association): self
+    {
+        // if ($this->associations == null) {
+        //     $this->associations = [];
+        // }
+        if (!$this->associations->contains($association)) {
+            $this->associations[] = $association;
+            $association->addUserHasAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociation(Association $association): self
+    {
+        if ($this->associations->removeElement($association)) {
+            $association->removeUserHasAssociation($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserRoom[]
+     */
+    public function getRoom(): Collection
+    {
+        return $this->room;
+    }
+
+    public function addRoom(UserRoom $room): self
+    {
+        if (!$this->room->contains($room)) {
+            $this->room[] = $room;
+            $room->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(UserRoom $room): self
+    {
+        if ($this->room->removeElement($room)) {
+            // set the owning side to null (unless already changed)
+            if ($room->getUser() === $this) {
+                $room->setUser(null);
+            }
+        }
 
         return $this;
     }

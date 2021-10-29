@@ -43,11 +43,6 @@ class Event
     private $status;
 
     /**
-     * @ORM\Column(type="smallint")
-     */
-    private $disponibility;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -123,19 +118,7 @@ class Event
 
         return $this;
     }
-
-    public function getDisponibility(): ?int
-    {
-        return $this->disponibility;
-    }
-
-    public function setDisponibility(int $disponibility): self
-    {
-        $this->disponibility = $disponibility;
-
-        return $this;
-    }
-
+    
     public function getUserId(): ?User
     {
         return $this->user_id;
