@@ -15,9 +15,9 @@ class RoomType extends AbstractType
             ->add('name')
             ->add('nbPlace')
             ->add('description')
-            ->add('locationId')
+            ->add('location')
             //->add('room_has_user')
-            ->add('roomParent')
+            ->add('room')
         ;
     }
 

@@ -40,7 +40,7 @@ class Location
     private $city;
 
     /**
-     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="location_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="location")
      */
     private $rooms;
 
@@ -48,6 +48,7 @@ class Location
     {
         $this->rooms = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -119,7 +120,7 @@ class Location
     {
         if (!$this->rooms->contains($room)) {
             $this->rooms[] = $room;
-            $room->setLocationId($this);
+            $room->setLocation($this);
         }
 
         return $this;
@@ -129,8 +130,8 @@ class Location
     {
         if ($this->rooms->removeElement($room)) {
             // set the owning side to null (unless already changed)
-            if ($room->getLocationId() === $this) {
-                $room->setLocationId(null);
+            if ($room->getLocation() === $this) {
+                $room->setLocation(null);
             }
         }
 

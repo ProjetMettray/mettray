@@ -21,12 +21,15 @@ class AllFixtures extends Fixture implements DependentFixtureInterface
         ['lagoon','ld@ld.fr','0765454342']
     ];
 
+    public const FAKE_ROOM_PARENT = [
+        ['Arobase',100,'salle de cours arobase','Daunay',NULL,1]
+    ];
+
     public const FAKE_ROOM = [
-        ['Arobase',100,'salle de cours arobase','Daunay',NULL , 3,4,1],
-        ['wiki',100,'salle de cours wiki','Cauvin','Arobase',3,2],
-        ['cookie',50,'salle de cours cookie','Cauvin','Arobase',2,5],
-        ['404',50,'salle de cours 404','Cauvin','Arobase', 2,4],
-        ['battle',60,'salle de cours battle','Guillon','Arobase',3,4]
+        ['wiki',100,'salle de cours wiki','Cauvin','Arobase',2],
+        ['cookie',50,'salle de cours cookie','Cauvin','Arobase',5],
+        ['404',50,'salle de cours 404','Cauvin','Arobase',4],
+        ['battle',60,'salle de cours battle','Guillon','Arobase',4]
     ];
 
     public const FAKE_LOCATION = [
@@ -122,16 +125,28 @@ class AllFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
 
+        foreach (self::FAKE_ROOM_PARENT as $fakeRoomParent) {
+            $room = new Room();
+            $room->setName($fakeRoomParent[0])
+                 ->setNbPlace($fakeRoomParent[1])
+                 ->setDescription($fakeRoomParent[2])
+                 //->addRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[3]))
+                 ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoomParent[4]))
+                 ->setLocation($manager->getRepository(Location::class)->findOneByName('bat1'));
+
+            $manager->persist($room);
+            
+        }
+        $manager->flush();
+
         foreach (self::FAKE_ROOM as $fakeRoom) {
             $room = new Room();
             $room->setName($fakeRoom[0])
                  ->setNbPlace($fakeRoom[1])
                  ->setDescription($fakeRoom[2])
-                 ->addRoomHasUser($manager->getRepository(User::class)->findOneByLastname($fakeRoom[3]))
-                 //->setRoom($fakeRoom[4])
-                 ->addRoomId($manager->getRepository(Room::class)->findOneByName($fakeRoom[4]))
-                 ->setLocationId($manager->getRepository(Location::class)->findOneByName('bat1'))
-                 ;
+                 //->addRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[3]))
+                 ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[4]))
+                 ->setLocation($manager->getRepository(Location::class)->findOneByName('bat1'));
 
             $manager->persist($room);
             
