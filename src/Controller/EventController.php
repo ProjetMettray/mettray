@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Form\EventType;
 use App\Form\Event1Type;
 use App\Repository\EventRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,6 +14,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EventController extends AbstractController
 {
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
     /**
      * @Route("/event", name="event")
      */
@@ -37,7 +44,7 @@ class EventController extends AbstractController
             $entityManager->persist($event);
             $entityManager->flush();
 
-            return $this->redirectToRoute('event_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('event', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('event/new.html.twig', [
@@ -46,16 +53,26 @@ class EventController extends AbstractController
         ]);
     }
 
+    
     /**
-     * @Route("/event/{id}", name="event_show", methods={"GET"})
+     * @Route("/event/show", name="event_show")
      */
-    public function show(Event $event): Response
+    public function showEvent()
     {
+        $event = $this->em->getRepository(Event::class)->findAll();
         return $this->render('event/show.html.twig', [
             'event' => $event,
         ]);
     }
-
+    /**
+     * @Route("/event/{id}", name="event_showOne", methods={"GET"})
+     */
+    public function showOne(Event $event): Response
+    {
+        return $this->render('event/showOne.html.twig', [
+            'event' => $event,
+        ]);
+    }
     /**
      * @Route("/event/{id}/edit", name="event_edit", methods={"GET","POST"})
      */
@@ -67,7 +84,7 @@ class EventController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('event_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('event', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('event/edit.html.twig', [
@@ -87,6 +104,6 @@ class EventController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('event_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('event', [], Response::HTTP_SEE_OTHER);
     }
 }

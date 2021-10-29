@@ -15,7 +15,6 @@ class EventType extends AbstractType
             ->add('title')
             ->add('start_at')
             ->add('end_at')
-            ->add('options')
             ->add('status')
             ->add('user_id')
             ->add('room_id')

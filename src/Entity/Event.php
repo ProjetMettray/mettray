@@ -54,6 +54,7 @@ class Event
      */
     private $room_id;
 
+
     public function getId(): ?int
     {
         return $this->id;
