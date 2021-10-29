@@ -2,16 +2,16 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Room;
 use App\Entity\User;
+use App\Entity\Location;
+use App\Entity\UserRoom;
 use App\Entity\Association;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Location;
-use App\Entity\Room;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class AllFixtures extends Fixture implements DependentFixtureInterface
+class AllFixtures extends Fixture
 {
     public const FAKE_ASSO = [
         ['Mettray','ad@ad.fr','0725635354'],
@@ -51,6 +51,18 @@ class AllFixtures extends Fixture implements DependentFixtureInterface
     public const FAKE_ADMIN = [
         ['f@gmail.com', ['ROLE_ADMIN'], 'Kevin', 'Bertaux', '02.47.45.12.16', 'Mettray'],
         ['g@gmail.com', ['ROLE_ADMIN'], 'g', 'g', '02.47.45.12.17', 'Mettray']
+    ];
+
+    public const FAKE_ROOM_USER = [
+        ['wiki','Daunay'],
+        ['wiki','Guillon'],
+        ['cookie','Cauvin'],
+        ['cookie','Daunay'],
+        ['404','Cauvin'],
+        ['wiki','Daunay'],
+        ['battle','Daunay'],
+        ['battle','Brault'],
+        ['Arobase','Brault']
     ];
 
     private UserPasswordHasherInterface $userPasswordHasher;
@@ -152,12 +164,17 @@ class AllFixtures extends Fixture implements DependentFixtureInterface
             
         }
         $manager->flush();
-    }
-    
-    public function getDependencies()
-    {
-        return [
-            AppFixtures::class
-        ];
+
+        foreach (self::FAKE_ROOM_USER as $fakeRoomUser) {
+            $roomUser = new UserRoom();
+            $roomUser
+            ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoomUser[0]))
+            ->setUser($manager->getRepository(User::class)->findOneByLastname($fakeRoomUser[1]))
+                 ;
+
+            $manager->persist($roomUser);
+            
+        }
+        $manager->flush();
     }
 }

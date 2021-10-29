@@ -51,9 +51,15 @@ class Room
      */
     private $rooms;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserRoom::class, mappedBy="room")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
 
@@ -152,6 +158,36 @@ class Room
             // set the owning side to null (unless already changed)
             if ($room->getRoom() === $this) {
                 $room->setRoom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserRoom[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(UserRoom $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(UserRoom $user): self
+    {
+        if ($this->user->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getRoom() === $this) {
+                $user->setRoom(null);
             }
         }
 

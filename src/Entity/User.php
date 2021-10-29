@@ -60,9 +60,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $associations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserRoom::class, mappedBy="user")
+     */
+    private $room;
+
     public function __construct()
     {
         $this->associations = new ArrayCollection();
+        $this->room = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,6 +226,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->associations->removeElement($association)) {
             $association->removeUserHasAssociation($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserRoom[]
+     */
+    public function getRoom(): Collection
+    {
+        return $this->room;
+    }
+
+    public function addRoom(UserRoom $room): self
+    {
+        if (!$this->room->contains($room)) {
+            $this->room[] = $room;
+            $room->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(UserRoom $room): self
+    {
+        if ($this->room->removeElement($room)) {
+            // set the owning side to null (unless already changed)
+            if ($room->getUser() === $this) {
+                $room->setUser(null);
+            }
         }
 
         return $this;
