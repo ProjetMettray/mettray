@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\UserRoom;
 use App\Entity\Association;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;

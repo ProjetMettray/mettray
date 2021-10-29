@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\EventRepository;
+use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
  */
-class Event
+class Booking
 {
     /**
      * @ORM\Id
@@ -107,6 +107,14 @@ class Event
         return $this;
     }
 
+    /**
+     * @param string|int $name
+     */
+    public function addOption($name, $value): void
+    {
+        $this->options[$name] = $value;
+    }
+
     public function getStatus(): ?string
     {
         return $this->status;
@@ -118,7 +126,7 @@ class Event
 
         return $this;
     }
-    
+
     public function getUserId(): ?User
     {
         return $this->user_id;
