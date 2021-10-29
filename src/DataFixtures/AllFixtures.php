@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Room;
 use App\Entity\User;
+use App\Entity\Event;
 use App\Entity\Location;
 use App\Entity\UserRoom;
 use App\Entity\Association;
@@ -63,6 +64,14 @@ class AllFixtures extends Fixture
         ['battle','Daunay'],
         ['battle','Brault'],
         ['Arobase','Brault']
+    ];
+
+    public const FAKE_EVENT = [
+        ['Réunion Alcooliques Anonymes','2002-06-02 23:59:59.99','2002-06-02 23:59:59.99',[],'En attente','Brault','battle'],
+        ['Match Foot','2002-06-02 23:59:59.99','2002-06-02 23:59:59.99',[],'Validé','Brault','Arobase'],
+        ['Mariage','2002-06-02 23:59:59.99','2002-06-02 23:59:59.99',[],'Supprimé','Cauvin', '404'],
+        ['Anniversaire','2002-06-02 23:59:59.99','2002-06-02 23:59:59.99',[],'En attente','Daunay','battle'],
+        ['Interville','2002-06-02 23:59:59.99','2002-06-02 23:59:59.99',[],'Validé','Daunay','wiki']
     ];
 
     private UserPasswordHasherInterface $userPasswordHasher;
@@ -171,6 +180,26 @@ class AllFixtures extends Fixture
             ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoomUser[0]))
             ->setUser($manager->getRepository(User::class)->findOneByLastname($fakeRoomUser[1]))
                  ;
+
+            $manager->persist($roomUser);
+            
+        }
+        $manager->flush();
+
+        foreach (self::FAKE_EVENT as $fakeEvent) {
+            $start_at = new \DateTimeImmutable($fakeEvent[1]);
+            $end_at = new \DateTimeImmutable($fakeEvent[2]);
+
+            $roomUser = new Event();
+            $roomUser
+            ->setTitle($fakeEvent[0])
+            ->setStartAt($start_at)
+            ->setEndAt($end_at)
+            ->setOptions($fakeEvent[3])
+            ->setStatus($fakeEvent[4])
+            ->setUserId($manager->getRepository(User::class)->findOneByLastname($fakeEvent[5]))
+            ->setRoomId($manager->getRepository(Room::class)->findOneByName($fakeEvent[6]))
+            ;
 
             $manager->persist($roomUser);
             
