@@ -51,9 +51,15 @@ class Room
      */
     private $rooms;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RoomAssociation::class, mappedBy="room")
+     */
+    private $roomAssociations;
+
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
+        $this->roomAssociations = new ArrayCollection();
     }
 
 
@@ -152,6 +158,36 @@ class Room
             // set the owning side to null (unless already changed)
             if ($room->getRoom() === $this) {
                 $room->setRoom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RoomAssociation[]
+     */
+    public function getRoomAssociations(): Collection
+    {
+        return $this->roomAssociations;
+    }
+
+    public function addRoomAssociation(RoomAssociation $roomAssociation): self
+    {
+        if (!$this->roomAssociations->contains($roomAssociation)) {
+            $this->roomAssociations[] = $roomAssociation;
+            $roomAssociation->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoomAssociation(RoomAssociation $roomAssociation): self
+    {
+        if ($this->roomAssociations->removeElement($roomAssociation)) {
+            // set the owning side to null (unless already changed)
+            if ($roomAssociation->getRoom() === $this) {
+                $roomAssociation->setRoom(null);
             }
         }
 

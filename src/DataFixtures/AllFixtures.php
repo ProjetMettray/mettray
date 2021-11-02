@@ -8,6 +8,8 @@ use App\Entity\Booking;
 use App\Entity\Location;
 use App\Entity\UserRoom;
 use App\Entity\Association;
+use App\Entity\AssociationUser;
+use App\Entity\RoomAssociation;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -42,36 +44,46 @@ class AllFixtures extends Fixture
     ];
 
     public const FAKE_USER = [
-        ['a@gmail.com', ['ROLE_USER'], 'Alan', 'Daunay', '02.47.45.12.12', 'Lolita'],
-        ['b@gmail.com', ['ROLE_USER'], 'Adrien', 'Cauvin', '02.47.45.12.13', 'HockeyBoy'],
-        ['c@gmail.com', ['ROLE_USER'], 'Dimitri', 'Guillon', '02.47.45.12.14', 'Puchito'],
-        ['d@gmail.com', ['ROLE_USER'], 'Ludovic', 'Brault', '02.47.45.12.15', 'lagoon'],
-        ['e@gmail.com', ['ROLE_USER'], 'e', 'e', '02.47.45.12.56', 'lagoon']
+        ['a@gmail.com', ['ROLE_USER'], 'Alan', 'Daunay', '02.47.45.12.12'],
+        ['b@gmail.com', ['ROLE_USER'], 'Adrien', 'Cauvin', '02.47.45.12.13'],
+        ['c@gmail.com', ['ROLE_USER'], 'Dimitri', 'Guillon', '02.47.45.12.14'],
+        ['d@gmail.com', ['ROLE_USER'], 'Ludovic', 'Brault', '02.47.45.12.15'],
+        ['e@gmail.com', ['ROLE_USER'], 'e', 'e', '02.47.45.12.56']
     ];
 
     public const FAKE_ADMIN = [
-        ['f@gmail.com', ['ROLE_ADMIN'], 'Kevin', 'Bertaux', '02.47.45.12.16', 'Mettray'],
-        ['g@gmail.com', ['ROLE_ADMIN'], 'g', 'g', '02.47.45.12.17', 'Mettray']
+        ['f@gmail.com', ['ROLE_ADMIN'], 'Kevin', 'Bertaux', '02.47.45.12.16'],
+        ['g@gmail.com', ['ROLE_ADMIN'], 'g', 'g', '02.47.45.12.17']
     ];
 
-    public const FAKE_ROOM_USER = [
-        ['wiki','Daunay'],
-        ['wiki','Guillon'],
-        ['cookie','Cauvin'],
-        ['cookie','Daunay'],
-        ['404','Cauvin'],
-        ['wiki','Daunay'],
-        ['battle','Daunay'],
-        ['battle','Brault'],
-        ['Arobase','Brault']
+    public const FAKE_ROOM_ASSO = [
+        ['wiki','Mettray'],
+        ['wiki','Lolita'],
+        ['cookie','HockeyBoy'],
+        ['cookie','Mettray'],
+        ['404','Mettray'],
+        ['wiki','HockeyBoy'],
+        ['battle','Mettray'],
+        ['battle','Lolita'],
+        ['Arobase','Lolita']
+    ];
+
+    public const FAKE_ASSO_USER = [
+        ['Daunay', 'Mettray'],
+        ['Cauvin', 'Mettray'],
+        ['Guillon', 'Lolita'],
+        ['Brault', 'HockeyBoy'],
+        ['e', 'lagoon'],
+        ['e', 'HockeyBoy'],
+        ['Daunay', 'Lolita']
     ];
 
     public const FAKE_BOOKING = [
-        ['Réunion Alcooliques Anonymes','2021-10-29 23:59:59.99','2021-11-02 23:59:59.99',[],'En attente','Brault','battle'],
-        ['Match Foot','2021-11-01 23:59:59.99','2021-11-13 23:59:59.99',[],'Validé','Brault','Arobase'],
-        ['Mariage','2021-11-13 23:59:59.99','2021-11-14 12:59:59.99',[],'Supprimé','Cauvin', '404'],
-        ['Anniversaire','2002-06-02 23:59:59.99','2002-06-02 23:59:59.99',[],'En attente','Daunay','battle'],
-        ['Interville','2002-06-02 23:59:59.99','2002-06-02 23:59:59.99',[],'Validé','Daunay','wiki']
+        ['Réunion Alcooliques Anonymes','2021-10-29 23:59:59.99','2021-11-02 23:59:59.99',[],'En attente','Brault','battle','Mettray'],
+        ['Match Foot','2021-11-01 23:59:59.99','2021-11-13 23:59:59.99',[],'Validé','Brault','Arobase','Lolita'],
+        ['Mariage','2021-11-13 23:59:59.99','2021-11-14 12:59:59.99',[],'Supprimé','Cauvin', '404','HockeyBoy'],
+        ['Anniversaire','2002-06-02 23:59:59.99','2002-06-02 23:59:59.99',[],'En attente','Daunay','battle','HockeyBoy'],
+        ['Interville','2002-06-02 23:59:59.99','2002-06-02 23:59:59.99',[],'Validé','Daunay','wiki','Puchito']
     ];
 
     private UserPasswordHasherInterface $userPasswordHasher;
@@ -88,6 +100,7 @@ class AllFixtures extends Fixture
             $association->setName($fakeAsso[0])
                 ->setEmail($fakeAsso[1])
                 ->setTelephone($fakeAsso[2]);
+                ;
             $manager->persist($association);
         }
         $manager->flush();
@@ -114,10 +127,8 @@ class AllFixtures extends Fixture
                 )
                 ->setFirstname($fakeuser[2])
                 ->setLastname($fakeuser[3])
-                ->setPhone($fakeuser[4]);
-                //->addAssociation(
-                //    $manager->getRepository(Association::class)
-                //    ->findOneByName($fakeuser[5]));
+                ->setPhone($fakeuser[4])
+                ;
 
             $manager->persist($user);
             $manager->flush();
@@ -135,15 +146,24 @@ class AllFixtures extends Fixture
                 )
                 ->setFirstname($fakeadmin[2])
                 ->setLastname($fakeadmin[3])
-                ->setPhone($fakeadmin[4])
-                ->addAssociation(
-                    $manager->getRepository(Association::class)
-                    ->findOneByName($fakeadmin[5]));
+                ->setPhone($fakeadmin[4]);
 
             $manager->persist($user);
             $manager->flush();
         }
 
+        $manager->flush();
+
+        foreach (self::FAKE_ASSO_USER as $fakeAssoUser) {
+
+            $assoUser = new AssociationUser();
+            $assoUser
+            ->setAssociation($manager->getRepository(Association::class)->findOneByName($fakeAssoUser[1]))
+            ->setUser($manager->getRepository(User::class)->findOneByLastname($fakeAssoUser[0]))
+            ;
+
+            $manager->persist($assoUser);
+        }
         $manager->flush();
 
         foreach (self::FAKE_ROOM_PARENT as $fakeRoomParent) {
@@ -174,11 +194,11 @@ class AllFixtures extends Fixture
         }
         $manager->flush();
 
-        foreach (self::FAKE_ROOM_USER as $fakeRoomUser) {
-            $roomUser = new UserRoom();
+        foreach (self::FAKE_ROOM_ASSO as $fakeRoomAssociation) {
+            $roomUser = new RoomAssociation();
             $roomUser
-            ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoomUser[0]))
-            ->setUser($manager->getRepository(User::class)->findOneByLastname($fakeRoomUser[1]))
+            ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoomAssociation[0]))
+            ->setAssociation($manager->getRepository(Association::class)->findOneByName($fakeRoomAssociation[1]))
                  ;
 
             $manager->persist($roomUser);
@@ -197,8 +217,8 @@ class AllFixtures extends Fixture
             ->setEndAt($end_at)
             ->setOptions($fakeBooking[3])
             ->setStatus($fakeBooking[4])
-            ->setUserId($manager->getRepository(User::class)->findOneByLastname($fakeBooking[5]))
             ->setRoomId($manager->getRepository(Room::class)->findOneByName($fakeBooking[6]))
+            ->setAssociation($manager->getRepository(Association::class)->findOneByName($fakeBooking[7]))
             ;
 
             $manager->persist($roomUser);

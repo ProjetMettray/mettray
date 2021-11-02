@@ -57,19 +57,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Association::class, mappedBy="user_has_association")
+     * @ORM\OneToMany(targetEntity=AssociationUser::class, mappedBy="user")
      */
-    private $associations;
-
-    /**
-     * @ORM\OneToMany(targetEntity=UserRoom::class, mappedBy="user")
-     */
-    private $room;
+    private $associationUsers;
 
     public function __construct()
     {
         $this->associations = new ArrayCollection();
         $this->room = new ArrayCollection();
+        $this->associationUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,59 +199,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|Association[]
+     * @return Collection|AssociationUser[]
      */
-    public function getAssociations(): Collection
+    public function getAssociationUsers(): Collection
     {
-        return $this->associations;
+        return $this->associationUsers;
     }
 
-    public function addAssociation(Association $association): self
+    public function addAssociationUser(AssociationUser $associationUser): self
     {
-        // if ($this->associations == null) {
-        //     $this->associations = [];
-        // }
-        if (!$this->associations->contains($association)) {
-            $this->associations[] = $association;
-            $association->addUserHasAssociation($this);
+        if (!$this->associationUsers->contains($associationUser)) {
+            $this->associationUsers[] = $associationUser;
+            $associationUser->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeAssociation(Association $association): self
+    public function removeAssociationUser(AssociationUser $associationUser): self
     {
-        if ($this->associations->removeElement($association)) {
-            $association->removeUserHasAssociation($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|UserRoom[]
-     */
-    public function getRoom(): Collection
-    {
-        return $this->room;
-    }
-
-    public function addRoom(UserRoom $room): self
-    {
-        if (!$this->room->contains($room)) {
-            $this->room[] = $room;
-            $room->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRoom(UserRoom $room): self
-    {
-        if ($this->room->removeElement($room)) {
+        if ($this->associationUsers->removeElement($associationUser)) {
             // set the owning side to null (unless already changed)
-            if ($room->getUser() === $this) {
-                $room->setUser(null);
+            if ($associationUser->getUser() === $this) {
+                $associationUser->setUser(null);
             }
         }
 
