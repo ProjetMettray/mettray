@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class BookingController extends AbstractController
 {
@@ -35,8 +36,8 @@ class BookingController extends AbstractController
      */
     public function showAllByUser(): Response
     {
-        
-        $bookings = $this->em->getRepository(Booking::class)->findAll();
+        $userId = $this->getUser()->getId();
+        $bookings = $this->em->getRepository(Booking::class)->findByUserId($userId);
         return $this->render('booking/show_all_by_user.html.twig', [
             'bookings' => $bookings
         ]);

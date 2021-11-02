@@ -6,7 +6,7 @@ use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=EventRepository::class)
+ * @ORM\Entity(repositoryClass=BookingRepository::class)
  */
 class Booking
 {
@@ -46,7 +46,7 @@ class Booking
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $userId;
 
     /**
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="events")
@@ -129,12 +129,12 @@ class Booking
 
     public function getUserId(): ?User
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(?User $user_id): self
+    public function setUserId(?User $userId): self
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }
