@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Booking;
 use App\Form\BookingType;
-use App\Form\Booking1Type;
 use App\Repository\BookingRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
