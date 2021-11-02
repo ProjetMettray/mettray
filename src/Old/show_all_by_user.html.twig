@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event
+{% endblock %}
+
+{% block body %}
+
+	<div class="container text-center mt-5 bg-dark">
+		<h1 class="p-5 text-white">Liste des Réservation</h1>
+		<div class="d-flex start-flex p-4 ">
+			<label class="text-white " for="search">Recherche</label>
+			<input name="search" type="text">
+			<input type="submit">
+		</div>
+		<ul class="p-4">
+			{{ dump(events) }}
+			{% for event in events %}
+				<li class="row bg-white m-2 rounded">
+					<p class="col-3">{{ event.title }}</p>
+					<p class="col-3">{{ event.startAt|date('Y-m-d') }}</p>
+					<p class="col-3">{{ event.endAt|date('Y-m-d') }}</p>
+					<p class="col-3">{{ event.userId.id }}</p>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+
+{% endblock %}
