@@ -33,7 +33,7 @@ class Location
      * @ORM\Column(type="string", length=45)
      */
     private $road;
-
+ 
     /**
      * @ORM\Column(type="string", length=45)
      */

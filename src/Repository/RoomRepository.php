@@ -48,3 +48,4 @@ class RoomRepository extends ServiceEntityRepository
     }
     */
 }
+ 

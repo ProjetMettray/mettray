@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Event;
+use App\Entity\Booking;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +25,7 @@ class EventType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Event::class,
+            'data_class' => Booking::class,
         ]);
     }
 }

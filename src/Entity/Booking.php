@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=EventRepository::class)
  */
 class Booking
-{
+{ 
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
