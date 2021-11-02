@@ -1,61 +1,56 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>
-			{% block title %}Welcome!
-			{% endblock %}
-		</title>
-		{# Run `composer require symfony/webpack-encore-bundle`
-		           and uncomment the following Encore helpers to start using Symfony UX #}
-		{% block stylesheets %}
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
-			<link
-			rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
-		{#{{ encore_entry_link_tags('app') }}#}
-		{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}Welcome!{% endblock %}
+    </title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+    {% endblock %}
 
-		{% block javascripts %}
+    {% block javascripts %}
         <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
 
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-            var calendarEl = document.getElementById('calendar-holder');
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                var calendarEl = document.getElementById('calendar-holder');
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                defaultView: 'dayGridMonth',
-                editable: true,
-                eventSources: [
-                    {
-                        url: "{{ path('fc_load_events') }}",
-                        method: "POST",
-                        extraParams: {
-                            filters: JSON.stringify({})
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    defaultView: 'dayGridMonth',
+                    editable: true,
+                    eventSources: [
+                        {
+                            url: "{{ path('fc_load_events') }}",
+                            method: "POST",
+                            extraParams: {
+                                filters: JSON.stringify({})
+                            },
+                            failure: () => {
+                                // alert("There was an error while fetching FullCalendar!");
+                            },
                         },
-                        failure: () => {
-                            // alert("There was an error while fetching FullCalendar!");
-                        },
+                    ],
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay',
                     },
-                ],
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
-                },
-                plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
-                timeZone: 'UTC',
+                    plugins: ['interaction', 'dayGrid', 'timeGrid'], // https://fullcalendar.io/docs/plugin-index
+                    timeZone: 'UTC',
+                });
+                calendar.render();
             });
-            calendar.render();
-        });
-    </script>
-			{#{{ encore_entry_script_tags('app') }}#}
-		{% endblock %}
-	</head>
-	<body>
-		{% block body %}{% endblock %}
-	</body>
+        </script>
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+{% endblock %}
+</body>
 </html>
