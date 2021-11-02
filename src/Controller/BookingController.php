@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Booking;
 use App\Form\BookingType;
-use App\Form\Booking1Type;
 use App\Repository\BookingRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,6 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BookingController extends AbstractController
 {
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route("/booking", name="booking")
      */
@@ -20,6 +27,18 @@ class BookingController extends AbstractController
     {
         return $this->render('booking/index.html.twig', [
             'bookings' => $BookingRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/booking/show_all_by_user", name="booking_show_all_by_user")
+     */
+    public function showAllByUser(): Response
+    {
+        
+        $bookings = $this->em->getRepository(Booking::class)->findAll();
+        return $this->render('booking/show_all_by_user.html.twig', [
+            'bookings' => $bookings
         ]);
     }
 
