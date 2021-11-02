@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=BookingRepository::class)
  */
 class Booking
-{ 
+{
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -43,15 +43,16 @@ class Booking
     private $status;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userId;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
     private $room_id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="bookings")
-     */
-    private $association;
 
     public function getId(): ?int
     {
@@ -125,7 +126,19 @@ class Booking
 
         return $this;
     }
-    
+
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): self
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
     public function getRoomId(): ?Room
     {
         return $this->room_id;
@@ -134,18 +147,6 @@ class Booking
     public function setRoomId(?Room $room_id): self
     {
         $this->room_id = $room_id;
-
-        return $this;
-    }
-
-    public function getAssociation(): ?Association
-    {
-        return $this->association;
-    }
-
-    public function setAssociation(?Association $association): self
-    {
-        $this->association = $association;
 
         return $this;
     }

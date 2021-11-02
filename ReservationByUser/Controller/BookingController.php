@@ -110,4 +110,3 @@ class BookingController extends AbstractController
         return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
     }
 }
- 
