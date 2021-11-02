@@ -16,6 +16,7 @@ class LocationType extends AbstractType
             ->add('cp')
             ->add('road')
             ->add('city')
+
         ;
     }
 

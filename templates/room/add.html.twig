@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Ajouter une salle
 {% endblock %}
 
@@ -7,5 +6,15 @@
 	<h1>Ajouter une salle</h1>
 
 	<hr>
+	{{ form_start(addRoomForm) }}
 
-	{{ form(addRoomForm) }}{% endblock %}
+	{{ form_row(addRoomForm.name, { 'label': 'Nom'}) }}
+	{{ form_row(addRoomForm.nbPlace, { 'label': 'Nombre de place'}) }}
+	{{ form_row(addRoomForm.description, { 'label': 'Description'}) }}
+	{{ form_row(addRoomForm.location, { 'label': 'Location'}) }}
+	{{ form_row(addRoomForm.room, { 'label': 'room'}) }}
+	{{ form_row(addRoomForm.submit, { 'label': 'Submit me'}) }}
+
+
+	{{ form_end(addRoomForm) }}
+{% endblock %}
