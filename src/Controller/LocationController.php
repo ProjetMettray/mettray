@@ -6,20 +6,20 @@ use App\Entity\Location;
 use App\Form\LocationType;
 use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LocationController extends AbstractController
 {
-    /**
+/**
      * @Route("/location", name="location")
      */
     public function index(LocationRepository $locationRepository): Response
     {
         return $this->render('location/index.html.twig', [
-            'location' => $locationRepository->findAll()
+            'locations' => $locationRepository->findAll()
         ]);
     }
 
@@ -51,7 +51,7 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @Route("/locations/{location}/update", name="location_update")
+     * @Route("/locations/{id}/update", name="location_update")
      */
     public function updateLocation(Location $location, Request $request, EntityManagerInterface $entityManager)
     {
@@ -70,7 +70,7 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @Route("/locations/{location}/delete", name="location_delete")
+     * @Route("/locations/{id}/delete", name="location_delete")
      */
     public function deleteLocation(Location $location, EntityManagerInterface $entityManager)
     {
@@ -84,7 +84,7 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @Route("/locations/{location}", name="location_show")
+     * @Route("/locations/{id}", name="location_show")
      */
     public function showLocation(Location $location)
     {
