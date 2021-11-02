@@ -13,13 +13,13 @@
 			<input type="submit">
 		</div>
 		<ul class="p-4">
-			{{ dump(events) }}
-			{% for event in events %}
+			{{ dump(bookings) }}
+			{% for booking in bookings %}
 				<li class="row bg-white m-2 rounded">
-					<p class="col-3">{{ event.title }}</p>
-					<p class="col-3">{{ event.startAt|date('Y-m-d') }}</p>
-					<p class="col-3">{{ event.endAt|date('Y-m-d') }}</p>
-					<p class="col-3">{{ event.userId.id }}</p>
+					<p class="col-3">{{ booking.title }}</p>
+					<p class="col-3">{{ booking.startAt|date('Y-m-d') }}</p>
+					<p class="col-3">{{ booking.endAt|date('Y-m-d') }}</p>
+					<p class="col-3">{{ booking.userId.id }}</p>
 				</li>
 			{% endfor %}
 		</ul>
