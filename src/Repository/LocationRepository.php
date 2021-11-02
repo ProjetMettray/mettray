@@ -48,3 +48,4 @@ class LocationRepository extends ServiceEntityRepository
     }
     */
 }
+ 

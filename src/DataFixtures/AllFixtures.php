@@ -206,3 +206,4 @@ class AllFixtures extends Fixture
         $manager->flush();
     }
 }
+ 
