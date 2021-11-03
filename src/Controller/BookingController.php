@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Association;
+use App\Entity\AssociationUser;
 use App\Entity\Booking;
+use App\Entity\User;
 use App\Form\BookingType;
 use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,9 +39,22 @@ class BookingController extends AbstractController
     public function showAllByUser(): Response
     {
         $userId = $this->getUser()->getId();
-        $bookings = $this->em->getRepository(Booking::class)->findByUserId($userId);
+        $userAssociations = [];
+        $bookingsByAssociation = [];
+        
+        $userHasAssociations = $this->em->getRepository(AssociationUser::class)->findByUser($userId);
+        foreach ($userHasAssociations as $userHasAssociation) {
+            $userAssociations[$userHasAssociation->getAssociation()->getId()] = $userHasAssociation->getAssociation()->getName();
+        }
+        
+        foreach ($userAssociations as $associationId => $associationName) {
+            $bookingsByAssociation[$associationName] = $this->em->getRepository(Booking::class)->findByAssociation($associationId);
+        }
+
         return $this->render('booking/show_all_by_user.html.twig', [
-            'bookings' => $bookings
+            'userId' => $userId, 
+            'userAssociations' => $userAssociations,
+            'bookingsByAssociation' =>$bookingsByAssociation
         ]);
     }
 
