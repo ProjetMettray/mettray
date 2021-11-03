@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\EventRepository;
+use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=EventRepository::class)
+ * @ORM\Entity(repositoryClass=BookingRepository::class)
  */
-class Event
-{
+class Booking
+{ 
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -43,21 +43,15 @@ class Event
     private $status;
 
     /**
-     * @ORM\Column(type="smallint")
-     */
-    private $disponibility;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user_id;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
     private $room_id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="bookings")
+     */
+    private $association;
 
     public function getId(): ?int
     {
@@ -112,6 +106,14 @@ class Event
         return $this;
     }
 
+    /**
+     * @param string|int $name
+     */
+    public function addOption($name, $value): void
+    {
+        $this->options[$name] = $value;
+    }
+
     public function getStatus(): ?string
     {
         return $this->status;
@@ -123,31 +125,7 @@ class Event
 
         return $this;
     }
-
-    public function getDisponibility(): ?int
-    {
-        return $this->disponibility;
-    }
-
-    public function setDisponibility(int $disponibility): self
-    {
-        $this->disponibility = $disponibility;
-
-        return $this;
-    }
-
-    public function getUserId(): ?User
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(?User $user_id): self
-    {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
-
+    
     public function getRoomId(): ?Room
     {
         return $this->room_id;
@@ -156,6 +134,18 @@ class Event
     public function setRoomId(?Room $room_id): self
     {
         $this->room_id = $room_id;
+
+        return $this;
+    }
+
+    public function getAssociation(): ?Association
+    {
+        return $this->association;
+    }
+
+    public function setAssociation(?Association $association): self
+    {
+        $this->association = $association;
 
         return $this;
     }

@@ -7,6 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
+/migrations/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -20,7 +21,6 @@
 ###< phpunit/phpunit ###
 
 .idea/
-
 *.mwb
-
 .DS_Store
+migrations/

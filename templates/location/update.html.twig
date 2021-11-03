@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une location
+{% endblock %}
+
+{% block body %}
+	<h1>Modifier
+		{{ locationName }}</h1>
+
+	<hr>
+
+	{{ form(updateLocationForm) }}{% endblock %}

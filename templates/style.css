@@ -1,0 +1,92 @@
+body{
+    background-color: whitesmoke
+}
+*{
+    background-color: whitesmoke;
+}
+.card-salle{
+    padding: 1rem;
+    background-color: #006767;
+    border: none;
+
+
+}
+.input-form{
+    margin: .2rem;
+    border: .2rem solid #006767;
+
+}
+.form-control:focus{
+    background-color: #fff;
+    border-color: #006767;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(0 103 96 / 25%);
+}
+.formulaire-connexion{
+    border: none;
+}
+.btn-form:hover,
+.btn-form:focus{
+    border: .2rem solid #006767;
+    box-shadow: 0 0 0 0.25rem rgb(0 103 96 / 25%);
+    background-color: #006767;
+    color:whitesmoke;
+}
+.btn-form{
+    color:whitesmoke;
+    background-color: #0cb1b9;
+    border: .2rem solid #0cb1b9;
+    border-radius: 0;
+    height: 2.9rem;
+}
+.accordion{
+    border-radius: 0;
+}
+.accordion-overflow{
+    overflow: auto;
+}
+.accordion-item{
+    background-color: #0cb1b9;
+    border: none;
+}
+.accordion-button{
+    border-top: .1rem solid #0cb1b9;
+    border-bottom: none;
+    background-color: #0cb1b9;
+    color: whitesmoke;
+    border-radius: 0;
+    height: 2.9rem;
+}
+.accordion-item:last-of-type .accordion-button.collapsed {
+    border-bottom: .1rem solid #0cb1b9;
+    border-radius: 0;
+}
+.accordion-item:first-of-type .accordion-button{
+    border-radius: 0;
+}
+.accordion-button:focus{
+    border: .1rem solid #0cb1b9;
+    background-color: #0cb1b9;
+    color: whitesmoke;
+    box-shadow: 0 0 0 0.25rem rgb(0 103 96 / 25%);
+}
+.accordion-button:hover{
+    background-color: whitesmoke;
+    color: #0cb1b9;
+}
+.accordion-button:not(.collapsed){
+    border-bottom: .1rem solid #0cb1b9;
+    background-color: #fff;
+    border-color: #0cb1b9;
+    outline: 0;
+    color: #006767;
+}
+.accordion-body{
+    background-color: whitesmoke;
+}
+.accordion-button::after{
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='whitesmoke'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+.accordion-button:not(.collapsed)::after{
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='darkcyan'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}

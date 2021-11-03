@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Salle
+{% endblock %}
+
+{% block body %}
+	{% for oneRoom in room %}
+		<h1>{{ oneRoom.name }}</h1>
+
+		<hr>
+
+		<div class="row">
+			<div class="col-6">
+				<p>{{ oneRoom.description }}</p>
+			</div>
+			<div class="col-2">
+				<p>{{ oneRoom.nbPlace }}</p>
+			</div>
+			<div class="col-2">
+				<p>{{ oneRoom.location }}</p>
+			</div>
+			<div class="col-2">
+				<p>{{ oneRoom.room }}</p>
+			</div>
+		</div>
+	{% endfor %}
+
+{% endblock %}

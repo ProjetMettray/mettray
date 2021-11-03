@@ -2,10 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Entity\UserRoom;
+use App\Entity\Association;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+//use App\Entity\Room;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -51,6 +56,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $phone;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AssociationUser::class, mappedBy="user")
+     */
+    private $associationUsers;
+
+    public function __construct()
+    {
+        $this->associations = new ArrayCollection();
+        $this->room = new ArrayCollection();
+        $this->associationUsers = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -84,6 +101,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername(): string
     {
         return (string) $this->email;
+    }
+
+    public function __toString()
+    {
+        return $this->email;
     }
 
     /**
@@ -172,6 +194,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AssociationUser[]
+     */
+    public function getAssociationUsers(): Collection
+    {
+        return $this->associationUsers;
+    }
+
+    public function addAssociationUser(AssociationUser $associationUser): self
+    {
+        if (!$this->associationUsers->contains($associationUser)) {
+            $this->associationUsers[] = $associationUser;
+            $associationUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationUser(AssociationUser $associationUser): self
+    {
+        if ($this->associationUsers->removeElement($associationUser)) {
+            // set the owning side to null (unless already changed)
+            if ($associationUser->getUser() === $this) {
+                $associationUser->setUser(null);
+            }
+        }
 
         return $this;
     }

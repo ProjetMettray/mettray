@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Location
+{% endblock %}
+
+{% block body %}
+	<h1>{{ location.name }}</h1>
+
+	<hr>
+
+	<div class="row">
+		<div class="col-4">
+			<p>{{ location.cp }}</p>
+		</div>
+		<div class="col-4">
+			<p>{{ location.road }}</p>
+		</div>
+		<div class="col-4">
+			<p>{{ location.city }}</p>
+		</div>
+	</div>
+
+{% endblock %}

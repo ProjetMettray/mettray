@@ -35,13 +35,26 @@ class Association
     private $telephone;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="associations")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="association")
      */
-    private $user_has_association;
+    private $bookings;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AssociationUser::class, mappedBy="association")
+     */
+    private $associationUsers;
+
+    /**
+     * @ORM\OneToMany(targetEntity=RoomAssociation::class, mappedBy="association")
+     */
+    private $roomAssociations;
 
     public function __construct()
     {
         $this->user_has_association = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
+        $this->associationUsers = new ArrayCollection();
+        $this->roomAssociations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,25 +99,91 @@ class Association
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|Booking[]
      */
-    public function getUserHasAssociation(): Collection
+    public function getBookings(): Collection
     {
-        return $this->user_has_association;
+        return $this->bookings;
     }
 
-    public function addUserHasAssociation(User $userHasAssociation): self
+    public function addBooking(Booking $booking): self
     {
-        if (!$this->user_has_association->contains($userHasAssociation)) {
-            $this->user_has_association[] = $userHasAssociation;
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setAssociation($this);
         }
 
         return $this;
     }
 
-    public function removeUserHasAssociation(User $userHasAssociation): self
+    public function removeBooking(Booking $booking): self
     {
-        $this->user_has_association->removeElement($userHasAssociation);
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getAssociation() === $this) {
+                $booking->setAssociation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AssociationUser[]
+     */
+    public function getAssociationUsers(): Collection
+    {
+        return $this->associationUsers;
+    }
+
+    public function addAssociationUser(AssociationUser $associationUser): self
+    {
+        if (!$this->associationUsers->contains($associationUser)) {
+            $this->associationUsers[] = $associationUser;
+            $associationUser->setAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationUser(AssociationUser $associationUser): self
+    {
+        if ($this->associationUsers->removeElement($associationUser)) {
+            // set the owning side to null (unless already changed)
+            if ($associationUser->getAssociation() === $this) {
+                $associationUser->setAssociation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RoomAssociation[]
+     */
+    public function getRoomAssociations(): Collection
+    {
+        return $this->roomAssociations;
+    }
+
+    public function addRoomAssociation(RoomAssociation $roomAssociation): self
+    {
+        if (!$this->roomAssociations->contains($roomAssociation)) {
+            $this->roomAssociations[] = $roomAssociation;
+            $roomAssociation->setAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoomAssociation(RoomAssociation $roomAssociation): self
+    {
+        if ($this->roomAssociations->removeElement($roomAssociation)) {
+            // set the owning side to null (unless already changed)
+            if ($roomAssociation->getAssociation() === $this) {
+                $roomAssociation->setAssociation(null);
+            }
+        }
 
         return $this;
     }
