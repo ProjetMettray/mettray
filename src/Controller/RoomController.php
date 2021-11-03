@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Room;
 use App\Form\RoomType;
+use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,13 +22,15 @@ class RoomController extends AbstractController
     /**
      * @Route("/rooms/show", name="show_room")
      */
-    public function showAllRoom()
+    public function showAllRoom(RoomRepository $roomRepository): Response
     {
-        $room = $this->em->getRepository(Room::class)->findAll();
+        $rooms = $roomRepository->findAll();
+
         return $this->render('room/show.html.twig', [
-            'room' => $room
+            'room' => $rooms
         ]);
     }
+
     /**
      * @Route("/room", name="room")
      */
@@ -114,16 +117,6 @@ class RoomController extends AbstractController
     public function showRoom(Room $room)
     {
         return $this->render('room/showOne.html.twig', [
-            'room' => $room
-        ]);
-    }
-
-        /**
-     * @Route("/rooms/show", name="show_room")
-     */
-    public function showAllRoom()
-    {
-        return $this->render('room/show.html.twig', [
             'room' => $room
         ]);
     }

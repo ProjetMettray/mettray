@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/", name="m ain")
+     * @Route("/", name="main")
      */
     public function index(BookingRepository $repositoryBooking): Response
     {
