@@ -4,8 +4,11 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Ajouter une location</h1>
+	<div class="container">
+		<h1 class="text-center">Ajouter une location</h1>
 
-	<hr>
+		<hr>
 
-	{{ form(addLocationForm) }}{% endblock %}
+		{{ form(addLocationForm) }}
+		</div>
+	{% endblock %}

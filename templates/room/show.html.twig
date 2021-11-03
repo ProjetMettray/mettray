@@ -4,23 +4,25 @@
 {% endblock %}
 
 {% block body %}
-	<h1>{{ room.name }}</h1>
+	{% for rooms in room %}
+		<h1>{{ rooms.name }}</h1>
 
-	<hr>
+		<hr>
 
-	<div class="row">
-		<div class="col-6">
-			<p>{{ room.description }}</p>
+		<div class="row">
+			<div class="col-6">
+				<p>{{ rooms.description }}</p>
+			</div>
+			<div class="col-2">
+				<p>{{ rooms.nbPlace }}</p>
+			</div>
+			<div class="col-2">
+				<p>{{ rooms.location }}</p>
+			</div>
+			<div class="col-2">
+				<p>{{ rooms.room }}</p>
+			</div>
 		</div>
-		<div class="col-2">
-			<p>{{ room.nbPlace }}</p>
-		</div>
-		<div class="col-2">
-			<p>{{ room.location }}</p>
-		</div>
-		<div class="col-2">
-			<p>{{ room.room }}</p>
-		</div>
-	</div>
+	{% endfor %}
 
 {% endblock %}

@@ -10,11 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/", name="main")
+     * @Route("/", name="m ain")
      */
-    public function index(BookingRepository $booking): Response
+    public function index(BookingRepository $repositoryBooking): Response
     {
-        $events = $booking->findAll();
+        $events = $repositoryBooking->findAll();
 
         $rdvs = [];
         foreach($events as $event)

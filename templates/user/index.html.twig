@@ -18,7 +18,7 @@
 									Administrateur
 								{% elseif is_granted("ROLE_ADMIN") %}
 									Commercial
-								{% elseif (is_granted("ROLE_USER")) and app.user.parent %}
+								{% elseif (is_granted("ROLE_uSER")) and app.user.parent %}
 									Collaborateur
 								{% else %}
 									Candidat
@@ -27,7 +27,6 @@
 						</div>
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item">{{ app.user.email }}</li>
-							<li class="list-group-item">{{ app.user.address }}</li>
 							<li class="list-group-item">{{ app.user.phone }}</li>
 						</ul>
 						<div class="card-body">
@@ -47,7 +46,7 @@
 	</div>
 	<div class="container">
 		<div class="overflow-auto">
-			<h1>Gestion des Experiences</h1>
+			<h1>Gestion des users</h1>
 
 			<table class="table table-hover">
 				<thead>
@@ -61,28 +60,33 @@
 					</tr>
 				</thead>
 				<tbody>
+					<div class="container text-center mt-5 bg-dark">
+						<h1 class="p-5 text-white">Liste des Réservation</h1>
+						<div class="d-flex start-flex p-4 ">
+							<label class="text-white " for="search">Recherche</label>
+							<input name="search" type="text">
+							<input type="submit">
+						</div>
+						<ul class="p-4">
+							{% for user in users %}
 
-					{% for experience in experiences %}
-
-						<tr class="table-active">
-							<th scope="row">{{ experience.id }}</th>
-							<td>{{ experience.company }}</td>
-							<td>{{ experience.company }}</td>
-							<td>{{ experience.startAt|date('d/m/Y') }}</td>
-							<td>{{ experience.endAt|date('d/m/Y') }}</td>
-							<td>
-								<a class="btn btn-secondary" href="{{ path("experience_show", {"id": experience.id}) }}">Plus d'informations</a>
-									<a class="btn btn-primary" href="{{ path("experience_edit", {"id": experience.id}) }}">Modifier</a>
-							</td>
-						</tr>
-
-					{% endfor %}
+								<li class="row bg-white m-2 rounded">
+									<p class="col-5">{{user.id}}</p>
+									<p class="col-5">{{user.firstname}}</p>
+									<p class="col-5">{{user.lastname}}</p>
+									<p class="col-5">{{user.phone}}</p>
+									<p class="col-5">{{user.email}}</p>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
 				</tbody>
 			</tbody>
 		</table>
-	{% if is_granted("ROLE_ADMIN") %}
-		<a class="btn btn-primary" href="{{ path("experience_new") }}">
-			<i class="fas fa-plus"></i>
-		</a>
-	{% endif %}
-</div></div>{% endblock %}
+		{% if is_granted("ROLE_ADMIN") %}
+			<a class="btn btn-primary" href="{{ path("user_new") }}">
+				<i class="fas fa-plus"></i>
+			</a>
+		{% endif %}
+	</div>
+</div>{% endblock %}
