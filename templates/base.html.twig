@@ -26,37 +26,53 @@
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 			<script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-            var calendarEl = document.getElementById('calendar-holder');
 
-console.log(calendarEl);
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                defaultView: 'dayGridMonth',
-                editable: true,
-                eventSources: [
-                    {
-                        url: "{{ path('main') }}",
-                        method: "POST",
-                        extraParams: {
-                            filters: JSON.stringify({})
-                        },
-                        failure: () => {
-                            // alert("There was an error while fetching FullCalendar!");
-                        },
-                    },
-                ],
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
-                },
-                plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
-				locale: 'fr',
-                timeZone: 'Europe/Paris'
-            });
-            calendar.render();
-        });
-    </script>
+				document.addEventListener('DOMContentLoaded', () => {
+let evenement = {{ data|raw }};
+let jsonEvent = [{
+id: evenement[1]['id'],
+title: evenement[1]['title'],
+'start': evenement[1]['start'].date,
+'end': evenement[1]['end'].date
+}];
+console.log(jsonEvent)
+var calendarEl = document.getElementById('calendar-holder');
+
+var calendar = new FullCalendar.Calendar(calendarEl, {
+defaultView: 'dayGridMonth',
+editable: true,
+eventSources: [
+{
+url: "{{ path('main') }}",
+method: "POST",
+extraParams: {
+filters: JSON.stringify({})
+},
+failure: () => { // alert("There was an error while fetching FullCalendar!");
+}
+},
+],
+header: {
+left: 'prev next today',
+center: 'title',
+right: 'dayGridMonth,timeGridWeek,timeGridDay'
+},
+buttonText: {
+today: 'Aujourd\'hui',
+day: 'Jour',
+month: 'Mois',
+week: 'Semaine'
+},
+plugins: [
+'interaction', 'dayGrid', 'timeGrid'
+], // https://fullcalendar.io/docs/plugin-index
+locale: 'fr',
+events: jsonEvent,
+timeZone: 'Europe/Paris'
+});
+calendar.render();
+});
+			</script>
 		</head>
 	{% endblock %}
 </html>
