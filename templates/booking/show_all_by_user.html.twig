@@ -12,16 +12,22 @@
 			<input name="search" type="text">
 			<input type="submit">
 		</div>
-		<ul class="p-4">
-			{% for booking in bookings %}
-				<li class="row bg-white m-2 rounded">
-					<p class="col-3">{{ booking.title }}</p>
-					<p class="col-3">{{ booking.startAt|date('Y-m-d') }}</p>
-					<p class="col-3">{{ booking.endAt|date('Y-m-d') }}</p>
-					<p class="col-3">{{ booking.userId.id }}</p>
-				</li>
-			{% endfor %}
-		</ul>
+		{{ dump(userId) }}
+		{{ dump(userAssociations) }}
+		{{ dump(bookingsByAssociation) }}
+		{% for name,association in bookingsByAssociation %}
+			<ul class="p-4">
+				<h1>{{ name }}</h1>
+				{% for booking in association %}
+					<li class="row bg-white m-2 rounded">
+						<p class="col-3">{{ booking.title }}</p>
+						<p class="col-3">{{ booking.startAt|date('Y-m-d') }}</p>
+						<p class="col-3">{{ booking.endAt|date('Y-m-d') }}</p>
+						<p class="col-3">{{ booking.status }}</p>
+					</li>
+				{% endfor %}
+			</ul>
+		{% endfor %}
 	</div>
 
 {% endblock %}
