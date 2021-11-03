@@ -61,7 +61,7 @@ class RoomType extends AbstractType
                 'by_reference' => false
             ])
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-primary']
+                'attr' => ['class' => 'mt-2 btn btn-secondary']
             ]);
     }
 

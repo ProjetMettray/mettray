@@ -35,7 +35,7 @@ class BookingController extends AbstractController
      */
     public function showAllByUser(): Response
     {
-        
+
         $bookings = $this->em->getRepository(Booking::class)->findAll();
         return $this->render('booking/show_all_by_user.html.twig', [
             'bookings' => $bookings
@@ -100,7 +100,7 @@ class BookingController extends AbstractController
      */
     public function delete(Request $request, Booking $booking): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$booking->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $booking->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($booking);
             $entityManager->flush();
@@ -109,4 +109,3 @@ class BookingController extends AbstractController
         return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
     }
 }
- 

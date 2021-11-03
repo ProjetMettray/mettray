@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AssociationController!{% endblock %}
+{% block title %}Hello AssociationController!
+{% endblock %}
 
 {% block body %}
 	<div class="container text-center mt-5 bg-dark">
@@ -11,7 +12,7 @@
 			<input type="submit">
 		</div>
 		<ul class="p-4">
-			{% for booking in bookings %}
+			{% for bookings in booking %}
 				<li class="row bg-white m-2 rounded">
 					<p class="col-2">{{booking.title}}</p>
 					<p class="col-2">{{booking.startAt|date('d/m/Y')}}</p>
