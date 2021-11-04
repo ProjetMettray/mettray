@@ -28,9 +28,13 @@
 							<td>{{ association.name }}</td>
 							<td>{{ association.telephone }}</td>
 							<td>{{ association.email }}</td>
+
 							<td>
+
 							<a href="{{ path("association_update", {"association": association.id}) }}" type="button" class="btn btn-outline-success">Modifier</a>
+
 							</td>
+
 					</tr>
 				{% endfor %}
 			</tbody>

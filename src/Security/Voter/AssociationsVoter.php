@@ -49,7 +49,7 @@ class AssociationsVoter extends Voter
                 break;
             case 'ASSOCIATION_DELETE':
                 // on vérifie si on peut supprimer
-                return$association->getId() == $user->getId();
+                return $association->getId() == $user->getId();
                 break;
         }
         return false;

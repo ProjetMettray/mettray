@@ -10,11 +10,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+
+
 
 class LocationController extends AbstractController
 {
-/**
-     * @Route("/location", name="location")
+     /**
+      * @IsGranted("ROLE_ADMIN")
+      * @Route("/location", name="location")
+      *
      */
     public function index(LocationRepository $locationRepository): Response
     {
@@ -24,6 +30,7 @@ class LocationController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/location/add", name="location_add")
      * 
      */
@@ -51,6 +58,7 @@ class LocationController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/locations/{id}/update", name="location_update")
      */
     public function updateLocation(Location $location, Request $request, EntityManagerInterface $entityManager)
@@ -70,6 +78,7 @@ class LocationController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/locations/{id}/delete", name="location_delete")
      */
     public function deleteLocation(Location $location, EntityManagerInterface $entityManager)
@@ -84,6 +93,7 @@ class LocationController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/locations/{id}", name="location_show")
      */
     public function showLocation(Location $location)

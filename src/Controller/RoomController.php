@@ -10,9 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class RoomController extends AbstractController
 {
+
     private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
@@ -21,7 +23,9 @@ class RoomController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/room", name="room")
+     *
      */
     public function index(RoomRepository $roomRepository): Response
     {
@@ -32,6 +36,7 @@ class RoomController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/room/add", name="room_add")
      * 
      */
@@ -59,6 +64,7 @@ class RoomController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/rooms/{room}/update", name="room_update")
      */
     public function updateRoom(Room $room, Request $request, EntityManagerInterface $entityManager)
@@ -78,6 +84,7 @@ class RoomController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/rooms/{room}/delete", name="room_delete")
      */
     public function deleteRoom(Room $room, EntityManagerInterface $entityManager)
@@ -92,6 +99,7 @@ class RoomController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/rooms/show", name="show_room")
      */
     public function show()
@@ -102,6 +110,7 @@ class RoomController extends AbstractController
         ]);
     }
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/rooms/{room}", name="room_show")
      */
     public function showRoom(Room $room)

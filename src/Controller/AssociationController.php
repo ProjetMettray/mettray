@@ -23,6 +23,7 @@ class AssociationController extends AbstractController
     }
      /**
      * @Route("/association", name="association")
+      *
      */
     public function index(AssociationRepository $associationRepository): Response
     {
@@ -33,6 +34,7 @@ class AssociationController extends AbstractController
 
     /**
      * @Route("/association/add", name="association_add")
+     * @IsGranted("ROLE_ADMIN")
      * 
      */
     public function addAssociation(Request $request, EntityManagerInterface $entityManager)
@@ -60,6 +62,7 @@ class AssociationController extends AbstractController
 
     /**
      * @Route("/associations/update/{association}", name="association_update")
+     *
      */
     public function updateAssociation(Association $association, Request $request, EntityManagerInterface $entityManager)
     {
@@ -79,7 +82,8 @@ class AssociationController extends AbstractController
     }
 
     /**
-     * @Route("/associations/{association}/delete", name="association_delete")
+     * @Route("/associations/delete/{association}", name="association_delete")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function deleteAssociation(Association $association, EntityManagerInterface $entityManager)
     {
