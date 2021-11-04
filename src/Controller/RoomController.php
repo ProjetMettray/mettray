@@ -30,7 +30,15 @@ class RoomController extends AbstractController
             'rooms' => $rooms,
         ]);
     }
-
+    /**
+     * @Route("/rooms/{id}", name="room_show")
+     */
+    public function showRoom(Room $id)
+    {
+        return $this->render('room/showOne.html.twig', [
+            'room' => $id
+        ]);
+    }
     /**
      * @Route("/room/add", name="room_add")
      * 
@@ -89,25 +97,5 @@ class RoomController extends AbstractController
         $this->addFlash('success', $deleteMessage);
 
         return $this->redirectToRoute('room');
-    }
-
-    /**
-     * @Route("/rooms/show", name="show_room")
-     */
-    public function show()
-    {
-        $room = $this->em->getRepository(Room::class)->findAll();
-        return $this->render('room/show.html.twig', [
-            'room' => $room
-        ]);
-    }
-    /**
-     * @Route("/rooms/{room}", name="room_show")
-     */
-    public function showRoom(Room $room)
-    {
-        return $this->render('room/showOne.html.twig', [
-            'room' => $room
-        ]);
     }
 }

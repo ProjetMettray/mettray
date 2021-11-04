@@ -49,4 +49,15 @@ class MainController extends AbstractController
 
         ]);
     }
+    /**
+     * @Route("/main/{id}", name="main_room")
+     */
+    public function showRoom(Room $id)
+    {
+        $asso = $this->em->getRepository(Association::class)->findAll();
+        return $this->render('main/room.html.twig', [
+            'room' => $id,
+            'asso' => $asso,
+        ]);
+    }
 }
