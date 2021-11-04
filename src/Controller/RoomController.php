@@ -117,14 +117,4 @@ class RoomController extends AbstractController
             'room' => $room
         ]);
     }
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/rooms/{room}", name="room_show")
-     */
-    public function showRoom(Room $room)
-    {
-        return $this->render('room/showOne.html.twig', [
-            'room' => $room
-        ]);
-    }
 }
