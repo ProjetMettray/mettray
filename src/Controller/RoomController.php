@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Room;
 use App\Form\RoomType;
+use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +13,25 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RoomController extends AbstractController
 {
-     /**
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+    /**
+     * @Route("/rooms/show", name="show_room")
+     */
+    public function showAllRoom(RoomRepository $roomRepository): Response
+    {
+        $rooms = $roomRepository->findAll();
+
+        return $this->render('room/show.html.twig', [
+            'room' => $rooms
+        ]);
+    }
+
+    /**
      * @Route("/room", name="room")
      */
     public function index(): Response
@@ -33,7 +52,7 @@ class RoomController extends AbstractController
 
         $addRoomForm->handleRequest($request);
 
-        if($addRoomForm->isSubmitted() && $addRoomForm->isValid()) {
+        if ($addRoomForm->isSubmitted() && $addRoomForm->isValid()) {
             $room = $addRoomForm->getData();
 
             $entityManager->persist($room);
@@ -58,7 +77,7 @@ class RoomController extends AbstractController
 
         $updateRoomForm->handleRequest($request);
 
-        if($updateRoomForm->isSubmitted() && $updateRoomForm->isValid()) {
+        if ($updateRoomForm->isSubmitted() && $updateRoomForm->isValid()) {
             $entityManager->flush();
         }
 
@@ -83,11 +102,21 @@ class RoomController extends AbstractController
     }
 
     /**
+     * @Route("/rooms/show", name="show_room")
+     */
+    public function show()
+    {
+        $room = $this->em->getRepository(Room::class)->findAll();
+        return $this->render('room/show.html.twig', [
+            'room' => $room
+        ]);
+    }
+    /**
      * @Route("/rooms/{room}", name="room_show")
      */
     public function showRoom(Room $room)
     {
-        return $this->render('room/show.html.twig', [
+        return $this->render('room/showOne.html.twig', [
             'room' => $room
         ]);
     }

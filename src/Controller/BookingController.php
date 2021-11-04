@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Association;
+use App\Entity\AssociationUser;
 use App\Entity\Booking;
+use App\Entity\User;
 use App\Form\BookingType;
 use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class BookingController extends AbstractController
 {
@@ -37,9 +39,22 @@ class BookingController extends AbstractController
     public function showAllByUser(): Response
     {
         $userId = $this->getUser()->getId();
-        $bookings = $this->em->getRepository(Booking::class)->findByUserId($userId);
+        $userAssociations = [];
+        $bookingsByAssociation = [];
+        
+        $userHasAssociations = $this->em->getRepository(AssociationUser::class)->findByUser($userId);
+        foreach ($userHasAssociations as $userHasAssociation) {
+            $userAssociations[$userHasAssociation->getAssociation()->getId()] = $userHasAssociation->getAssociation()->getName();
+        }
+        
+        foreach ($userAssociations as $associationId => $associationName) {
+            $bookingsByAssociation[$associationName] = $this->em->getRepository(Booking::class)->findByAssociation($associationId);
+        }
+
         return $this->render('booking/show_all_by_user.html.twig', [
-            'bookings' => $bookings
+            'userId' => $userId, 
+            'userAssociations' => $userAssociations,
+            'bookingsByAssociation' =>$bookingsByAssociation
         ]);
     }
 
@@ -101,7 +116,7 @@ class BookingController extends AbstractController
      */
     public function delete(Request $request, Booking $booking): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$booking->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $booking->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($booking);
             $entityManager->flush();
@@ -110,4 +125,3 @@ class BookingController extends AbstractController
         return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
     }
 }
- 
