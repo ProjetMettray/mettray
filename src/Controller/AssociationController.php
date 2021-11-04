@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AssociationController extends AbstractController
 {
+
     private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
@@ -58,10 +59,11 @@ class AssociationController extends AbstractController
     }
 
     /**
-     * @Route("/associations/{association}/update", name="association_update")
+     * @Route("/associations/update/{association}", name="association_update")
      */
     public function updateAssociation(Association $association, Request $request, EntityManagerInterface $entityManager)
     {
+        $this->denyAccessUnlessGranted('ASSOCIATION_EDIT',$association);
         $updateAssociationForm = $this->createForm(AssociationType::class, $association);
 
         $updateAssociationForm->handleRequest($request);
@@ -108,5 +110,6 @@ class AssociationController extends AbstractController
         return $this->render('association/show.html.twig', [
             'association' => $asso
         ]);
+        $this->denyAccessUnlessGranted('view', $post);
     }
 }
