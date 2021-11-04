@@ -4,9 +4,13 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Modifier
-		{{ locationName }}</h1>
+	<h1>Localisation</h1>
 
-	<hr>
+	{{ include('location/_form.html.twig', {'button_label': 'Update'}) }}
 
-	{{ form(updateLocationForm) }}{% endblock %}
+	<a href="{{ path('location') }}">back to list</a>
+
+	<div class="col-4">
+		<a class="badge rounded-pill bg-danger" href="/events/{{ locationId }}/delete">Delete</a>
+	</div>
+{% endblock %}
