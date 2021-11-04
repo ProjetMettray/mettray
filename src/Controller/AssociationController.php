@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AssociationController extends AbstractController
 {
+
     private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
@@ -22,6 +23,7 @@ class AssociationController extends AbstractController
     }
      /**
      * @Route("/association", name="association")
+      *
      */
     public function index(AssociationRepository $associationRepository): Response
     {
@@ -32,6 +34,7 @@ class AssociationController extends AbstractController
 
     /**
      * @Route("/association/add", name="association_add")
+     * @IsGranted("ROLE_ADMIN")
      * 
      */
     public function addAssociation(Request $request, EntityManagerInterface $entityManager)
@@ -58,10 +61,12 @@ class AssociationController extends AbstractController
     }
 
     /**
-     * @Route("/associations/{association}/update", name="association_update")
+     * @Route("/associations/update/{association}", name="association_update")
+     *
      */
     public function updateAssociation(Association $association, Request $request, EntityManagerInterface $entityManager)
     {
+        $this->denyAccessUnlessGranted('ASSOCIATION_EDIT',$association);
         $updateAssociationForm = $this->createForm(AssociationType::class, $association);
 
         $updateAssociationForm->handleRequest($request);
@@ -77,7 +82,8 @@ class AssociationController extends AbstractController
     }
 
     /**
-     * @Route("/associations/{association}/delete", name="association_delete")
+     * @Route("/associations/delete/{association}", name="association_delete")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function deleteAssociation(Association $association, EntityManagerInterface $entityManager)
     {
@@ -108,5 +114,6 @@ class AssociationController extends AbstractController
         return $this->render('association/show.html.twig', [
             'association' => $asso
         ]);
+        $this->denyAccessUnlessGranted('view', $post);
     }
 }

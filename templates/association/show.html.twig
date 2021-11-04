@@ -18,14 +18,23 @@
 				<p class="col-4">Name</p>
 				<p class="col-4">Email</p>
 				<p class="col-4">Téléphone</p>
+
 			</li>
 			{% for asso in association %}
 				<li class="row bg-white m-2 rounded">
 					<p class="col-4">{{ asso.name }}</p>
 					<p class="col-4">{{ asso.email }}</p>
 					<p class="col-4">{{ asso.telephone }}</p>
+					{% if is_granted("ASSOCIATION_EDIT", asso) %}
+						<button type="button">Edit Me!</button>
+					{% endif %}
+					{% if is_granted("ASSOCIATION_DELETE", asso) %}
+						<button type="button">Delete Me!</button>
+					{% endif %}
+
 				</li>
 			{% endfor %}
+
 		</ul>
 	</div>
 
