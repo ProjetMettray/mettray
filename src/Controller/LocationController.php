@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LocationController extends AbstractController
 {
-/**
+    /**
      * @Route("/location", name="location")
      */
     public function index(LocationRepository $locationRepository): Response
@@ -34,7 +34,7 @@ class LocationController extends AbstractController
 
         $addLocationForm->handleRequest($request);
 
-        if($addLocationForm->isSubmitted() && $addLocationForm->isValid()) {
+        if ($addLocationForm->isSubmitted() && $addLocationForm->isValid()) {
             $location = $addLocationForm->getData();
 
             $entityManager->persist($location);
@@ -59,30 +59,29 @@ class LocationController extends AbstractController
 
         $updateLocationForm->handleRequest($request);
 
-        if($updateLocationForm->isSubmitted() && $updateLocationForm->isValid()) {
+        if ($updateLocationForm->isSubmitted() && $updateLocationForm->isValid()) {
             $entityManager->flush();
         }
 
         return $this->render('location/update.html.twig', [
             'updateLocationForm' => $updateLocationForm->createView(),
-            'locationName' => $location->getName()
+            'locationName' => $location->getName(),
+            'locationId' => $location->getId()
         ]);
     }
 
     /**
      * @Route("/locations/{id}/delete", name="location_delete")
      */
-    public function deleteLocation(Request $request,Location $location, EntityManagerInterface $entityManager)
+    public function deleteLocation(Location $location, EntityManagerInterface $entityManager)
     {
-        if ($this->isCsrfTokenValid('delete' . $location->getId(), $request->request->get('_token'))) {
         $deleteMessage = $location->getName() . ' a bien été supprimé !';
         $entityManager->remove($location);
         $entityManager->flush();
-        }
 
         $this->addFlash('success', $deleteMessage);
 
-        return $this->redirectToRoute('location', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('location');
     }
 
     /**

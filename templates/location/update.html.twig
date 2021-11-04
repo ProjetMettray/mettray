@@ -4,11 +4,13 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Localisation</h1>
+	<h1>Localisation</h1>
 
-    {{ include('location/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('location/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('location') }}">back to list</a>
+	<a href="{{ path('location') }}">back to list</a>
 
-    {{ include('location/_delete_form.html.twig') }}
+	<div class="col-4">
+		<a class="badge rounded-pill bg-danger" href="/events/{{ locationId }}/delete">Delete</a>
+	</div>
 {% endblock %}
