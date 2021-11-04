@@ -72,8 +72,6 @@ class BookingController extends AbstractController
 
             $booking->setStatus('En attente');
 
-            //dd($form->getData());
-
             $formObject = $form->getData();
             $startDateForm = $formObject->getStartAt();
             $endDateForm = $formObject->getEndAt();
