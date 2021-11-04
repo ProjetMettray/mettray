@@ -19,33 +19,28 @@ class BookingType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre',
+                'label' => 'Nom de l\'évenement',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control input-form'
                 ],
             ])
             ->add('start_at', DateTimeType::class, array(
+                'label' => 'Date de début',
                 'input' => 'datetime_immutable',
                 'date_widget' => 'single_text',
             ))
             ->add('end_at', DateTimeType::class, array(
+                'label' => 'Date de fin',
                 'input' => 'datetime_immutable',
                 'date_widget' => 'single_text',
             ))
-            ->add('status', TextType::class, [
-                'label' => 'Status',
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control input-form'
-                ],
-            ])
             // ->add('user_id')
             ->add('room_id', EntityType::class, [
                 'class' => Room::class,
                 'label' => 'Selectionnez une salle',
                 'choice_label' => 'name',
-                'multiple' => true,
+                'multiple' => false,
                 'expanded' => false,
                 'by_reference' => false,
                 //'query_builder' => function (EntityRepository $er) {

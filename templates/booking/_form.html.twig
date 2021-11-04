@@ -1,4 +1,5 @@
 {{ form_start(form) }}
+
 {% set formErrors = form.start_at.vars.errors.form.getErrors(true) %}
 
 {# If there are errors in the form, display them in this unorganized list #}
@@ -11,15 +12,27 @@
 {% endif %}
 {% block form_row %}
 	<div class="row">
-		<div class="col-6">
+		<div class="col-3">
+			{{ form_label(form.title) }}
+			{{ form_widget(form.title) }}
+		</div>
+		<div class="col-3">
 			{{ form_label(form.start_at) }}
 			{{ form_widget(form.start_at) }}
 		</div>
-		<div class="col-6">
+		<div class="col-3">
 			{{ form_label(form.end_at) }}
 			{{ form_widget(form.end_at) }}
 		</div>
-	{% endblock form_row %}
-
-
-	{{ form_end(form) }}
+		<div class="col-3">
+			{{ form_label(form.room_id) }}
+			{{ form_widget(form.room_id) }}
+		</div>
+	</div>
+{% endblock form_row %}
+<div class="row">
+	<div class="col text-center">
+		{{ form_widget(form.submit) }}
+	</div>
+</div>
+{{ form_end(form) }}
