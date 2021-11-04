@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Room;
 use App\Entity\Booking;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -32,13 +33,6 @@ class BookingType extends AbstractType
                 'input' => 'datetime_immutable',
                 'date_widget' => 'single_text',
             ))
-            ->add('options', TextType::class, [
-                'label' => 'Options',
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control input-form'
-                ],
-            ])
             ->add('status', TextType::class, [
                 'label' => 'Status',
                 'required' => true,
@@ -52,8 +46,12 @@ class BookingType extends AbstractType
                 'label' => 'Selectionnez une salle',
                 'choice_label' => 'name',
                 'multiple' => true,
-                'expanded' => true,
-                'by_reference' => false
+                'expanded' => false,
+                'by_reference' => false,
+                //'query_builder' => function (EntityRepository $er) {
+                //    return $er->createQueryBuilder('r')
+                //        ->where('r.id' == $this->getId());
+                //}
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'mt-2 btn btn-secondary']

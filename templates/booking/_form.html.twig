@@ -1,5 +1,25 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
- 
+{% set formErrors = form.start_at.vars.errors.form.getErrors(true) %}
+
+{# If there are errors in the form, display them in this unorganized list #}
+{% if formErrors|length %}
+	<div class="alert alert-danger">
+		{% for error in formErrors %}
+			{{ error.message }}
+		{% endfor %}
+	</div>
+{% endif %}
+{% block form_row %}
+	<div class="row">
+		<div class="col-6">
+			{{ form_label(form.start_at) }}
+			{{ form_widget(form.start_at) }}
+		</div>
+		<div class="col-6">
+			{{ form_label(form.end_at) }}
+			{{ form_widget(form.end_at) }}
+		</div>
+	{% endblock form_row %}
+
+
+	{{ form_end(form) }}

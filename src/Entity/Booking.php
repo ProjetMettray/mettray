@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BookingRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,12 +48,17 @@ class Booking
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $room_id;
+    private $roomId;
 
     /**
      * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="bookings")
      */
     private $association;
+
+    //public function __construct()
+    //{
+    //    $this->roomId = new ArrayCollection();
+    //}
 
     public function getId(): ?int
     {
@@ -128,12 +135,12 @@ class Booking
     
     public function getRoomId(): ?Room
     {
-        return $this->room_id;
+        return $this->roomId;
     }
 
-    public function setRoomId(?Room $room_id): self
+    public function setRoomId(?Collection $roomId): self
     {
-        $this->room_id = $room_id;
+        $this->roomId = $roomId[0];
 
         return $this;
     }

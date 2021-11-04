@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 
 class BookingController extends AbstractController
 {
@@ -61,19 +62,53 @@ class BookingController extends AbstractController
     /**
      * @Route("/booking/new", name="booking_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request): ?Response
     {
         $booking = new Booking();
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($booking);
-            $entityManager->flush();
+        if($form->isSubmitted() && $form->isValid()) {
 
-            return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
+            //dd($form->getData());
+
+            $formObject = $form->getData();
+            $startDateForm = $formObject->getStartAt();
+            $endDateForm = $formObject->getEndAt();
+            $roomForm = $formObject->getRoomId();
+
+            $bookingsForRoom = $this->em->getRepository(Booking::class)->findByRoomId($roomForm);
+            
+            $sendForm = true;
+
+            foreach ($bookingsForRoom as $bookingForRoom) {
+                if (($startDateForm >= $bookingForRoom->getStartAt() && $startDateForm < $bookingForRoom->getEndAt()) || ($endDateForm > $bookingForRoom->getStartAt() && $endDateForm <= $bookingForRoom->getEndAt())) {
+                    $form->get('start_at')->addError(new FormError('Ce créneau de dates est déjà pris'));
+                    $this->addFlash('danger', 'Ce créneau de dates est déjà pris');
+                    $sendForm = false;
+                }
+            }
+
+            if ($sendForm) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($booking);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('main', [], Response::HTTP_SEE_OTHER);
+            }
         }
+
+        //$entityObject = $form->get('esame_0')->getData()
+        //$data = $entityObject->getId() or $entityObject->(Entity getter function)
+
+
+        //if ($form->isSubmitted() && $form->isValid()) {
+        //    $entityManager = $this->getDoctrine()->getManager();
+        //    $entityManager->persist($booking);
+        //    $entityManager->flush();
+
+        //    return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
+        //}
 
         return $this->renderForm('booking/new.html.twig', [
             'booking' => $booking,
