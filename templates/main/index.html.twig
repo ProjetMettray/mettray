@@ -9,30 +9,47 @@
 			<div class="col">
 
 				{% if app.user %}
-					<h2 class="m-4">Associations</h2>
-					{% for associations in asso %}
-						{% for assoUser in associations.associationUsers %}
-							{%  if app.user.id == assoUser.user.id%}
-								<div class="m-3 card" style="width: 18rem;">
-									<div class="card-header">
-										{{associations.name}}
+					{% if is_granted('ROLE_USER') %}
+						<h2 class="m-4">Associations</h2>
+						{% for associations in asso %}
+							{% for assoUser in associations.associationUsers %}
+								{%  if app.user.id == assoUser.user.id%}
+									<div class="m-3 card" style="width: 18rem;">
+										<div class="card-header">
+											{{associations.name}}
+										</div>
+										<ul class="list-group list-group-flush">
+											{% for rooms in associations.roomAssociations %}
+												<li class="list-group-item">
+													Salle :
+													<a href="{{path("main_room",{'id': rooms.room.id})}}" class="text-white btn btn-secondary">{{rooms.room.name}}</a>
+												</li>
+											{% endfor %}
+										</ul>
 									</div>
-									<ul class="list-group list-group-flush">
-										{% for rooms in associations.roomAssociations %}
-											<li class="list-group-item">
-												Salle :
-												<a href="{{path("main_room",{'id': rooms.room.id})}}" class="text-white btn btn-secondary">{{rooms.room.name}}</a>
-											</li>
-										{% endfor %}
-									</ul>
-								</div>
-							{% endif %}
+								{% endif %}
+							{% endfor %}
 						{% endfor %}
-					{% endfor %}
+					{% endif %}
+					{% if is_granted('ROLE_ADMIN') %}
+						<div class="m-3 card" style="width: 18rem;">
+							<div class="card-header">
+								Liste des salles
+							</div>
+							<ul class="list-group list-group-flush">
+								{% for rooms in room %}
+									<li class="list-group-item">
+										Salle :
+										<a href="{{path("main_room",{'id': rooms.id})}}" class="text-white btn btn-secondary">{{rooms.name}}</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
 				{% endif %}
 			</div>
 			<div class="col">
-				<div class="container" style="width: 548px; margin: 5rem">
+				<div class="p-0 container" style="width: 548px; margin: 5rem">
 					<div id="calendar-holder"></div>
 				</div>
 			</div>
