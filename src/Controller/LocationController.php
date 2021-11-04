@@ -41,7 +41,7 @@ class LocationController extends AbstractController
 
         $addLocationForm->handleRequest($request);
 
-        if($addLocationForm->isSubmitted() && $addLocationForm->isValid()) {
+        if ($addLocationForm->isSubmitted() && $addLocationForm->isValid()) {
             $location = $addLocationForm->getData();
 
             $entityManager->persist($location);
@@ -67,13 +67,14 @@ class LocationController extends AbstractController
 
         $updateLocationForm->handleRequest($request);
 
-        if($updateLocationForm->isSubmitted() && $updateLocationForm->isValid()) {
+        if ($updateLocationForm->isSubmitted() && $updateLocationForm->isValid()) {
             $entityManager->flush();
         }
 
         return $this->render('location/update.html.twig', [
             'updateLocationForm' => $updateLocationForm->createView(),
-            'locationName' => $location->getName()
+            'locationName' => $location->getName(),
+            'locationId' => $location->getId()
         ]);
     }
 

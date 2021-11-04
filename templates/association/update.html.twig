@@ -4,11 +4,37 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Modifier
-		{{ associationName }}</h1>
+	<div class="container">
+		<h1 class="text-center">
+			Modifier
+			{{ associationName }}
+		</h1>
 
-	<hr>
+		<hr>
 
-	{{ form(updateAssociationForm) }}
+		{{ form_start(updateAssociationForm) }}
 
+		{% block form_row %}
+			<div class="row">
+				<div class="col-4">
+					{{ form_label(updateAssociationForm.name) }}
+					{{ form_widget(updateAssociationForm.name) }}
+				</div>
+				<div class="col-4">
+					{{ form_label(updateAssociationForm.email) }}
+					{{ form_widget(updateAssociationForm.email) }}
+				</div>
+				<div class="col-4">
+					{{ form_label(updateAssociationForm.telephone) }}
+					{{ form_widget(updateAssociationForm.telephone) }}
+				</div>
+			</div>
+		{% endblock form_row %}
+		<div class="row">
+			<div class="col text-center">
+				{{ form_widget(updateAssociationForm.submit) }}
+			</div>
+		</div>
+		{{ form_end(updateAssociationForm) }}
+	</div>
 {% endblock %}

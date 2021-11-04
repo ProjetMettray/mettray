@@ -73,7 +73,7 @@ class BookingController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
 
-            //dd($form->getData());
+            $booking->setStatus('En attente');
 
             $formObject = $form->getData();
             $startDateForm = $formObject->getStartAt();

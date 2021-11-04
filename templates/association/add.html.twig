@@ -5,10 +5,35 @@
 
 {% block body %}
 	<div class="container">
-		<h1 class="text-center">Ajouter une association</h1>
+		<h1 class="text-center">
+			Ajouter une association
+		</h1>
 
 		<hr>
 
-		{{ form(addAssociationForm) }}
+		{{ form_start(addAssociationForm) }}
+
+		{% block form_row %}
+			<div class="row">
+				<div class="col-4">
+					{{ form_label(addAssociationForm.name) }}
+					{{ form_widget(addAssociationForm.name) }}
+				</div>
+				<div class="col-4">
+					{{ form_label(addAssociationForm.email) }}
+					{{ form_widget(addAssociationForm.email) }}
+				</div>
+				<div class="col-4">
+					{{ form_label(addAssociationForm.telephone) }}
+					{{ form_widget(addAssociationForm.telephone) }}
+				</div>
+			</div>
+		{% endblock form_row %}
+		<div class="row">
+			<div class="col text-center">
+				{{ form_widget(addAssociationForm.submit) }}
+			</div>
 		</div>
-	{% endblock %}
+		{{ form_end(addAssociationForm) }}
+	</div>
+{% endblock %}

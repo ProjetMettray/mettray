@@ -138,9 +138,9 @@ class Booking
         return $this->roomId;
     }
 
-    public function setRoomId(?Collection $roomId): self
+    public function setRoomId(?Room $roomId): self
     {
-        $this->roomId = $roomId[0];
+        $this->roomId = $roomId;
 
         return $this;
     }

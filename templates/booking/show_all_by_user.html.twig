@@ -12,9 +12,7 @@
 			<input name="search" type="text">
 			<input type="submit">
 		</div>
-		{{ dump(userId) }}
-		{{ dump(userAssociations) }}
-		{{ dump(bookingsByAssociation) }}
+
 		{% for name,association in bookingsByAssociation %}
 			<ul class="p-4">
 				<h1>{{ name }}</h1>

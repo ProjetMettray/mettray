@@ -1,0 +1,28 @@
+{{ form_start(updateLocationForm) }}
+
+{% block form_row %}
+	<div class="row">
+		<div class="col-3">
+			{{ form_label(updateLocationForm.name) }}
+			{{ form_widget(updateLocationForm.name) }}
+		</div>
+		<div class="col-3">
+			{{ form_label(updateLocationForm.cp) }}
+			{{ form_widget(updateLocationForm.cp) }}
+		</div>
+		<div class="col-3">
+			{{ form_label(updateLocationForm.road) }}
+			{{ form_widget(updateLocationForm.road) }}
+		</div>
+		<div class="col-3">
+			{{ form_label(updateLocationForm.city) }}
+			{{ form_widget(updateLocationForm.city) }}
+		</div>
+	</div>
+{% endblock form_row %}
+<div class="row">
+	<div class="col text-center">
+		{{ form_widget(updateLocationForm.submit) }}
+	</div>
+</div>
+{{ form_end(updateLocationForm) }}
