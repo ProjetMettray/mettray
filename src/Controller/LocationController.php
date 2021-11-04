@@ -72,15 +72,17 @@ class LocationController extends AbstractController
     /**
      * @Route("/locations/{id}/delete", name="location_delete")
      */
-    public function deleteLocation(Location $location, EntityManagerInterface $entityManager)
+    public function deleteLocation(Request $request,Location $location, EntityManagerInterface $entityManager)
     {
+        if ($this->isCsrfTokenValid('delete' . $location->getId(), $request->request->get('_token'))) {
         $deleteMessage = $location->getName() . ' a bien été supprimé !';
         $entityManager->remove($location);
         $entityManager->flush();
+        }
 
         $this->addFlash('success', $deleteMessage);
 
-        return $this->redirectToRoute('location');
+        return $this->redirectToRoute('location', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
