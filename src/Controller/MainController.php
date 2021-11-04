@@ -26,6 +26,7 @@ class MainController extends AbstractController
     public function index(LocationRepository $location): Response
     {
         $asso = $this->em->getRepository(Association::class)->findAll();
+        $room = $this->em->getRepository(Room::class)->findAll();
 
 
         $locations = $location->findAll();
@@ -45,7 +46,8 @@ class MainController extends AbstractController
         return $this->render('main/index.html.twig', [
             // 'data' => $data,
             'locations' => $locations,
-            'asso' => $asso
+            'asso' => $asso,
+            'room' => $room,
 
         ]);
     }
@@ -55,9 +57,11 @@ class MainController extends AbstractController
     public function showRoom(Room $id)
     {
         $asso = $this->em->getRepository(Association::class)->findAll();
+        $room = $this->em->getRepository(Room::class)->findAll();
         return $this->render('main/room.html.twig', [
-            'room' => $id,
+            'roomid' => $id,
             'asso' => $asso,
+            'room' => $room
         ]);
     }
 }
