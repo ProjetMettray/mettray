@@ -4,85 +4,39 @@
 {% endblock %}
 
 {% block body %}
+
 	<div class="container">
-		<div class="row justify-content-md-center">
-			<div class="col-auto ">
-				<div class="card formulaire-connexion">
-					<div class="card-body">
-						<div class="form-holder">
-							<div class="form-content">
-								<div class="form-items">
-									<form class="row g-3">
-										<div class="col-auto">
-											<label for="staticEmail2" class="visually-hidden">Email</label>
-											<input type="text" class="form-control input-form" id="staticEmail2" placeholder="Votre email">
-										</div>
-										<div class="col-auto">
-											<label for="inputPassword2" class="visually-hidden">Password</label>
-											<input type="password" class="form-control input-form" id="inputPassword2" placeholder="Votre mot de passe">
-											<div class="btn-group"></div>
-											<div class="col-auto">
-												<button type="button" class="btn btn-light dropdown-toggle btn-form" data-bs-toggle="dropdown" aria-expanded="false">
-													Action
-												</button>
-												<ul class="dropdown-menu">
-													<li>
-														<a class="dropdown-item" href="#">Action</a>
-													</li>
-													<li>
-														<a class="dropdown-item" href="#">Another action</a>
-													</li>
-													<li>
-														<a class="dropdown-item" href="#">Something else here</a>
-													</li>
-													<li><hr class="dropdown-divider"></li>
-													<li>
-														<a class="dropdown-item" href="#">Separated link</a>
-													</li>
-												</ul>
-											</div>
-										</div>
-										<div class="col-auto">
-											<button type="submit" class="btn mb-3 btn-light btn-form">Se connecter</button>
-										</div>
+		<div>
+			{{dump(asso)}}
 
-									</form>
+		</div>
+	</div>
+	<div class="container">
 
-
-								</div>
-								<div class="card card-salle" style="width:20rem; height:auto;">
-									<div class="accordion accordion-overflow" style="width:18rem; height:70vh;" id="accordionPanelsStayOpenExample">
-										{% for location in locations %}
-											<div class="accordion-item">
-												<h2 class="accordion-header" id="panelsStayOpen-headingOne">
-													<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-														{{location.name}}
-													</button>
-												</h2>
-												<div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
-													<div class="accordion-body">
-														<div class="d-grid gap-2 col-auto mx-auto">
-															{% for room in location.getRooms() %}
-																<a href="{{ path('show_room', {"id": room.id})}}" class="btn btn-primary btn-form" type="button">{{room.name}}</a>
-															</div>
-														{% endfor %}
-													</div>
-												</div>
-											</div>
-										{% endfor %}
+		<div class="card card-salle" style="width:20rem; height:auto;">
+			<div class="accordion accordion-overflow" style="width:18rem; height:70vh;" id="accordionPanelsStayOpenExample">
+				{% for location in locations %}
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="panelsStayOpen-headingOne">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+								{{location.name}}
+							</button>
+						</h2>
+						<div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+							<div class="accordion-body">
+								<div class="d-grid gap-2 col-auto mx-auto">
+									{% for room in location.getRooms() %}
+										<a href="{{ path('show_room', {"id": room.id})}}" class="btn btn-primary btn-form" type="button">{{room.name}}</a>
 									</div>
-								</div>
+								{% endfor %}
 							</div>
 						</div>
 					</div>
-
-				</div>
-
+				{% endfor %}
 			</div>
 		</div>
 	</div>
 
-	<div class="container" style="width: 548px; margin: 5rem">
-		<div id="calendar-holder"></div>
-	</div>
-{% endblock %}
+	{# <div class="container" style="width: 548px; margin: 5rem">
+																																																								<div id="calendar-holder"></div> #}
+</div>{% endblock %}

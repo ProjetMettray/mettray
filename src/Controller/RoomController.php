@@ -19,17 +19,6 @@ class RoomController extends AbstractController
     {
         $this->em = $em;
     }
-    /**
-     * @Route("/rooms/show", name="show_room")
-     */
-    public function showAllRoom(RoomRepository $roomRepository): Response
-    {
-        $rooms = $roomRepository->findAll();
-
-        return $this->render('room/show.html.twig', [
-            'room' => $rooms
-        ]);
-    }
 
     /**
      * @Route("/room", name="room")
