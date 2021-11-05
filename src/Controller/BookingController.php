@@ -87,7 +87,6 @@ class BookingController extends AbstractController
             foreach ($bookingsForRoom as $bookingForRoom) {
                 if (($startDateForm >= $bookingForRoom->getStartAt() && $startDateForm < $bookingForRoom->getEndAt()) || ($endDateForm > $bookingForRoom->getStartAt() && $endDateForm <= $bookingForRoom->getEndAt())) {
                     $form->get('start_at')->addError(new FormError('Ce créneau de dates est déjà pris'));
-                    $this->addFlash('danger', 'Ce créneau de dates est déjà pris');
                     $sendForm = false;
                 }
             }
