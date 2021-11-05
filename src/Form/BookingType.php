@@ -37,16 +37,7 @@ class BookingType extends AbstractType
             ))
             // ->add('user_id')
             ->add('room', EntityType::class, [
-                'class' => Room::class,
-                'label' => 'Selectionnez une salle',
-                'choice_label' => 'name',
-                'multiple' => false,
-                'expanded' => false,
-                'by_reference' => false,
-                //'query_builder' => function (EntityRepository $er) {
-                //    return $er->createQueryBuilder('r')
-                //        ->where('r.id' == $this->getId());
-                //}
+                'class' => Room::class
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'mt-2 btn btn-secondary']
