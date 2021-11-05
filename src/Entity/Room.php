@@ -52,14 +52,20 @@ class Room
     private $rooms;
 
     /**
-     * @ORM\OneToMany(targetEntity=RoomAssociation::class, mappedBy="room")
+     * @ORM\OneToMany(targetEntity=UserRoom::class, mappedBy="room")
      */
-    private $roomAssociations;
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="room")
+     */
+    private $bookings;
 
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
-        $this->roomAssociations = new ArrayCollection();
+        $this->user = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
 
@@ -165,29 +171,59 @@ class Room
     }
 
     /**
-     * @return Collection|RoomAssociation[]
+     * @return Collection|UserRoom[]
      */
-    public function getRoomAssociations(): Collection
+    public function getUser(): Collection
     {
-        return $this->roomAssociations;
+        return $this->user;
     }
 
-    public function addRoomAssociation(RoomAssociation $roomAssociation): self
+    public function addUser(UserRoom $user): self
     {
-        if (!$this->roomAssociations->contains($roomAssociation)) {
-            $this->roomAssociations[] = $roomAssociation;
-            $roomAssociation->setRoom($this);
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeRoomAssociation(RoomAssociation $roomAssociation): self
+    public function removeUser(UserRoom $user): self
     {
-        if ($this->roomAssociations->removeElement($roomAssociation)) {
+        if ($this->user->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($roomAssociation->getRoom() === $this) {
-                $roomAssociation->setRoom(null);
+            if ($user->getRoom() === $this) {
+                $user->setRoom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getRoom() === $this) {
+                $booking->setRoom(null);
             }
         }
 

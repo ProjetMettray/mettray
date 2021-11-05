@@ -30,21 +30,9 @@ class MainController extends AbstractController
 
 
         $locations = $location->findAll();
-        $events = $location->findAll();
-
-        // $rdvs = [];
-        // foreach ($events as $event) {
-        //     $rdvs[] = [
-        //         'id' => $event->getId(),
-        //         'start' => $event->getStartAt(),
-        //         'end' => $event->getEndAt(),
-        //         'title' => $event->getTitle(),
-        //     ];
-        // }
-
-        // $data = json_encode($rdvs);
+        
         return $this->render('main/index.html.twig', [
-            // 'data' => $data,
+           
             'locations' => $locations,
             'asso' => $asso,
             'room' => $room,
@@ -58,7 +46,25 @@ class MainController extends AbstractController
     {
         $asso = $this->em->getRepository(Association::class)->findAll();
         $room = $this->em->getRepository(Room::class)->findAll();
+
+        $bookings = $this->em->getRepository(Room::class)->findBy(['id' => $id]);
+
+        dd($bookings->getBookings()));
+
+                // $rdvs = [];
+        // foreach ($events as $event) {
+        //     $rdvs[] = [
+        //         'id' => $event->getId(),
+        //         'start' => $event->getStartAt(),
+        //         'end' => $event->getEndAt(),
+        //         'title' => $event->getTitle(),
+        //     ];
+        // }
+
+        // $data = json_encode($rdvs);
+
         return $this->render('main/room.html.twig', [
+             // 'data' => $data,
             'roomid' => $id,
             'asso' => $asso,
             'room' => $room
