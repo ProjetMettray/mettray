@@ -130,7 +130,7 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/booking/{id}/edit", name="booking_edit", methods={"GET","POST"})
+     * @Route("/booking/edit/{id}", name="booking_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Booking $booking): Response
     {

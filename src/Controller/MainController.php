@@ -30,9 +30,9 @@ class MainController extends AbstractController
 
 
         $locations = $location->findAll();
-        
+
         return $this->render('main/index.html.twig', [
-           
+
             'locations' => $locations,
             'asso' => $asso,
             'room' => $room,
@@ -48,6 +48,7 @@ class MainController extends AbstractController
         $room = $this->em->getRepository(Room::class)->findAll();
 
         $bookings = $this->em->getRepository(Room::class)->findBy(['id' => $id]);
+        
 
         $bookings = $bookings[0]->getBookings();
 
