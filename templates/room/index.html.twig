@@ -29,15 +29,15 @@
 						<td>{{ room.getNbPlace }}</td>
 						<td>{{ room.description }}</td>
 						<td>{{ room.getLocation().getName() }}</td>
-
-						<td>
-							{# {{ path('_files_manage', {project: project.id, user: user.id}) }} #}
-							<a href="{{ path("room_show", {'id': room.id}) }}" type="button" class="btn btn-outline-success">Détail</a>
-						</td>
-
+						{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+							<td>
+								{# {{ path('_files_manage', {project: project.id, user: user.id}) }} #}
+								<a href="{{ path("room_show", {'id': room.id}) }}" type="button" class="btn btn-outline-success">Détail</a>
+							</td>
+						{% endif %}
 					</tr>
 				{% endfor %}
 			</tbody>
-		</table>
-	</div>
-{% endblock %}
+		</tbody>
+	</table>
+</div>{% endblock %}
