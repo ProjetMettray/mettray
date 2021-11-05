@@ -45,15 +45,14 @@ class Booking
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="events")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $roomId;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="bookings")
      */
     private $association;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="bookings")
+     */
+    private $room;
 
     //public function __construct()
     //{
@@ -132,18 +131,6 @@ class Booking
 
         return $this;
     }
-    
-    public function getRoomId(): ?Room
-    {
-        return $this->roomId;
-    }
-
-    public function setRoomId(?Room $roomId): self
-    {
-        $this->roomId = $roomId;
-
-        return $this;
-    }
 
     public function getAssociation(): ?Association
     {
@@ -153,6 +140,18 @@ class Booking
     public function setAssociation(?Association $association): self
     {
         $this->association = $association;
+
+        return $this;
+    }
+
+    public function getRoom(): ?Room
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?Room $room): self
+    {
+        $this->room = $room;
 
         return $this;
     }
