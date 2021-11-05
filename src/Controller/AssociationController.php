@@ -114,6 +114,6 @@ class AssociationController extends AbstractController
         return $this->render('association/show.html.twig', [
             'association' => $asso
         ]);
-        $this->denyAccessUnlessGranted('view', $post);
+        $this->denyAccessUnlessGranted('', $post);
     }
 }
