@@ -36,7 +36,7 @@ class BookingType extends AbstractType
                 'date_widget' => 'single_text',
             ))
             // ->add('user_id')
-            ->add('room_id', EntityType::class, [
+            ->add('room', EntityType::class, [
                 'class' => Room::class,
                 'label' => 'Selectionnez une salle',
                 'choice_label' => 'name',

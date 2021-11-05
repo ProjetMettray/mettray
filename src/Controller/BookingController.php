@@ -78,9 +78,9 @@ class BookingController extends AbstractController
             $formObject = $form->getData();
             $startDateForm = $formObject->getStartAt();
             $endDateForm = $formObject->getEndAt();
-            $roomForm = $formObject->getRoomId();
+            $roomForm = $formObject->getRoom();
 
-            $bookingsForRoom = $this->em->getRepository(Booking::class)->findByRoomId($roomForm);
+            $bookingsForRoom = $this->em->getRepository(Booking::class)->findByRoom($roomForm);
             
             $sendForm = true;
 
