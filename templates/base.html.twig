@@ -43,13 +43,30 @@
 							};
 							jsonEvent.push(jsonNewEvent)
 						});
-
-						console.log(jsonEvent)
 						var calendarEl = document.getElementById('calendar-holder');
 
 						var calendar = new FullCalendar.Calendar(calendarEl, {
 							defaultView: 'dayGridMonth',
 							editable: true,
+							eventDrop: (datas) => {
+								if(!confirm("Êtes vous sûr de vouloir modifier la date de cet évenement ?")){
+									datas.revert()
+								} else {
+									let url = `/api/${datas.event.id}/edit`
+									console.log(datas.event.start);
+									let donnees = {
+										"title": datas.event.title,
+										"start": datas.event.start,
+										"end": datas.event.end
+									}
+									let xhr = new XMLHttpRequest
+									xhr.open("PUT", url)
+									xhr.send(JSON.stringify(donnees))
+								}
+							},
+							eventClick: (datas) => {
+								
+							},
 							eventSources: [
 								{
 									url: "{{ path('main') }}",
@@ -79,6 +96,8 @@
 							events: jsonEvent,
 							timeZone: 'Europe/Paris'
 						});
+
+
 						calendar.render();
 				});		
 			</script>
