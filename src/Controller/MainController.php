@@ -48,10 +48,9 @@ class MainController extends AbstractController
         $room = $this->em->getRepository(Room::class)->findAll();
 
         $bookings = $this->em->getRepository(Room::class)->findBy(['id' => $id]);
+        
 
-        dd($bookings->getBookings());
-
-        // $rdvs = [];
+                // $rdvs = [];
         // foreach ($events as $event) {
         //     $rdvs[] = [
         //         'id' => $event->getId(),
