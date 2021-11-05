@@ -1,35 +1,45 @@
-{% extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Gestion
-{% endblock %}
+{% block title %}User index{% endblock %}
 
 {% block body %}
-	<div class="card text-center">
-		<div class="card-body overflow-auto">
-			<div class="row row-cols-1 row-cols-md-6 g-4 overflow-auto">
-				<div class="container d-flex justify-content-center w-100">
-					<div class="card w-100">
-						<div class="card-body">
-							<h5 class="card-title">{{ app.user.firstname }}
-								{{ app.user.lastname }}</h5>
-						</div>
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">{{ app.user.email }}</li>
-							<li class="list-group-item">{{ app.user.phone }}</li>
-						</ul>
-						<div class="card-body">
-							{% if is_granted("ROLE_SUPER_ADMIN") %}
-								<a class="btn btn-primary" href="{{ path("user_edit_admin", {"id": app.user.id}) }}">Modifier</a>
-							{% else %}
-								<a class="btn btn-primary" href="{{ path("user_edit", {"id": app.user.id}) }}">Modifier</a>
-							{% endif %}
+    <h1>User index</h1>
 
-							<a class="btn btn-secondary" href="{{ path("user_show", {"id": app.user.id}) }}">Plus d'informations</a>
-							<a class="btn btn-danger" href="{{ path('user_delete', {'id': app.user.id}) }}">Supprimer</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>{% endblock %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Phone</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.phone }}</td>
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_new') }}">Create new</a>
+{% endblock %}
