@@ -54,10 +54,6 @@ class Booking
      */
     private $room;
 
-    //public function __construct()
-    //{
-    //    $this->roomId = new ArrayCollection();
-    //}
 
     public function getId(): ?int
     {
