@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class RoomController extends AbstractController
 {
@@ -104,17 +105,5 @@ class RoomController extends AbstractController
         $this->addFlash('success', $deleteMessage);
 
         return $this->redirectToRoute('room');
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/rooms/show", name="show_room")
-     */
-    public function show()
-    {
-        $room = $this->em->getRepository(Room::class)->findAll();
-        return $this->render('room/show.html.twig', [
-            'room' => $room
-        ]);
     }
 }

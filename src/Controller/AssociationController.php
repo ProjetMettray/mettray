@@ -77,7 +77,8 @@ class AssociationController extends AbstractController
 
         return $this->render('association/update.html.twig', [
             'updateAssociationForm' => $updateAssociationForm->createView(),
-            'associationName' => $association->getName()
+            'associationName' => $association->getName(),
+            "associationId" => $association->getId(),
         ]);
     }
 
@@ -115,5 +116,6 @@ class AssociationController extends AbstractController
             'association' => $asso
         ]);
         $this->denyAccessUnlessGranted('', $post);
+        // $this->denyAccessUnlessGranted('view', $association);
     }
 }
