@@ -24,7 +24,6 @@ class RoomController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_ADMIN")
      * @Route("/room", name="room")
      *
      */
