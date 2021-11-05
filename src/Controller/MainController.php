@@ -30,9 +30,9 @@ class MainController extends AbstractController
 
 
         $locations = $location->findAll();
-        
+
         return $this->render('main/index.html.twig', [
-           
+
             'locations' => $locations,
             'asso' => $asso,
             'room' => $room,
@@ -49,9 +49,9 @@ class MainController extends AbstractController
 
         $bookings = $this->em->getRepository(Room::class)->findBy(['id' => $id]);
 
-        dd($bookings->getBookings()));
+        dd($bookings->getBookings());
 
-                // $rdvs = [];
+        // $rdvs = [];
         // foreach ($events as $event) {
         //     $rdvs[] = [
         //         'id' => $event->getId(),
@@ -64,7 +64,7 @@ class MainController extends AbstractController
         // $data = json_encode($rdvs);
 
         return $this->render('main/room.html.twig', [
-             // 'data' => $data,
+            // 'data' => $data,
             'roomid' => $id,
             'asso' => $asso,
             'room' => $room
