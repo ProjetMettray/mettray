@@ -42,7 +42,8 @@ class RoomController extends AbstractController
     public function showRoom(Room $id)
     {
         return $this->render('room/showOne.html.twig', [
-            'room' => $id
+            'room' => $id,
+            'bookings' => $id->getEvents()
         ]);
     }
     /**

@@ -217,7 +217,7 @@ class AllFixtures extends Fixture
             ->setEndAt($end_at)
             ->setOptions($fakeBooking[3])
             ->setStatus($fakeBooking[4])
-            ->setRoomId($manager->getRepository(Room::class)->findOneByName($fakeBooking[6]))
+            ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeBooking[6]))
             ->setAssociation($manager->getRepository(Association::class)->findOneByName($fakeBooking[7]))
             ;
 
