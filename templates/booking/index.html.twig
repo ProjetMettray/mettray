@@ -30,7 +30,7 @@
 					<td>{{booking.title}}</td>
 						<td>{{booking.startAt|date('d/m/Y')}}</td>
 						<td>{{booking.endAt|date('d/m/Y')}}</td>
-						<td>{{booking.getRoomId().getName()}}</td>
+						<td>{{booking.getRoom().getName()}}</td>
 						<td>{{booking.status}}</td>
 						{% if booking.getAssociation() %}
 							<td>{{booking.getAssociation().getName()}}</td>
