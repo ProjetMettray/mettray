@@ -49,22 +49,21 @@ class MainController extends AbstractController
 
         $bookings = $this->em->getRepository(Room::class)->findBy(['id' => $id]);
 
-        dd($bookings->getBookings()));
+        $bookings = $bookings[0]->getBookings();
 
-                // $rdvs = [];
-        // foreach ($events as $event) {
-        //     $rdvs[] = [
-        //         'id' => $event->getId(),
-        //         'start' => $event->getStartAt(),
-        //         'end' => $event->getEndAt(),
-        //         'title' => $event->getTitle(),
-        //     ];
-        // }
-
-        // $data = json_encode($rdvs);
+        $rdvs = [];
+        foreach ($bookings as $booking) {
+            $rdvs[] = [
+                'id' => $booking->getId(),
+                'start' => $booking->getStartAt(),
+                'end' => $booking->getEndAt(),
+                'title' => $booking->getTitle(),
+            ];
+        }
+        $data = json_encode($rdvs);
 
         return $this->render('main/room.html.twig', [
-             // 'data' => $data,
+             'data' => $data,
             'roomid' => $id,
             'asso' => $asso,
             'room' => $room
