@@ -160,6 +160,6 @@ class BookingController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('booking', [], Response::HTTP_SEE_OTHER);
     }
 }
