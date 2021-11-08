@@ -1,10 +1,6 @@
-
-document.addEventListener('DOMContentLoaded', () => {
-
-    let evenement = data;
-    console.log(evenement)
-    evenement = JSON.parse(evenement);
-
+document.addEventListener('DOMContentLoaded', function () {
+    let evenement = '{{ data | raw }}'
+    evenement = JSON.parse(evenement)
 
     let jsonEvent = [];
     evenement.forEach(element => {
@@ -27,11 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 let url = `/api/${datas.event.id
                     }/edit`
-                console.log(datas.event.start);
+                console.log(datas.event.end)
                 let donnees = {
                     "title": datas.event.title,
                     "start": datas.event.start,
-                    "end": datas.event.end
+                    "end": datas.event.end,
+                    "roomId": evenement[0].roomId
                 }
                 let xhr = new XMLHttpRequest
                 xhr.open("PUT", url)
