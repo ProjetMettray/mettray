@@ -45,18 +45,22 @@
 								{% endfor %}
 							</ul>
 						</div>
-
 					{% endif %}
 				{% endif %}
 			</div>
-			<div class="az"
-			<div class="col">
-				<h2 class="m-4 text-center">Salle:
-					{{roomid.name}}</h2>
-				<div class="p-0 container" style="width: 548px; margin: 5rem">
-					<div id="calendar-holder"></div>
+			<div class="az">
+				<div class="col">
+					<h2 class="m-4 text-center">Salle:
+						{{roomid.name}}</h2>
+					<div class="p-0 container" style="width: 548px; margin: 5rem">
+						<div id="calendar-holder"></div>
+					</div>
+					<div class="row">
+						<div class="col-4 mx-auto">
+							<a href="{{path("booking_new")}}" class="text-white btn btn-secondary">Réserver</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}
