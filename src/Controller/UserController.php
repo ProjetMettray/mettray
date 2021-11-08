@@ -3,17 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\User1Type;
 use App\Repository\UserRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @Route("/user")
+ */
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -27,10 +30,8 @@ class UserController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $user = $this->getUser();
-
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(User1Type::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -38,7 +39,7 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_skill', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/new.html.twig', [
@@ -50,7 +51,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
-    public function show(user $user): Response
+    public function show(User $user): Response
     {
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -62,60 +63,16 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user): Response
     {
-        $actualUser = $this->getUser();
-        if ($actualUser->getId() == $user->getId() || in_array('ROLE_SUPER_ADMIN', $actualUser->getRoles(), true)) {
-            $form = $this->createForm(UserType::class, $user);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
-
-                return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
-            }
-
-            return $this->renderForm('user/edit.html.twig', [
-                'user' => $user,
-                'form' => $form,
-            ]);
-        } else {
-            return $this->redirectToRoute('user');
-        }
-    }
-
-    /**
-     * @Route("/{id}/edit_team", name="user_edit_team", methods={"GET","POST"})
-     */
-    public function editTeam(Request $request, User $user): Response
-    {
-
-        $form = $this->createForm(UserHierarchyType::class, $user);
+        $form = $this->createForm(User1Type::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->renderForm('user/edit_team.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-    }
 
-    /**
-     * @Route("/{id}/edit_admin", name="user_edit_admin", methods={"GET","POST"})
-     */
-    public function editAdmin(Request $request, User $user): Response
-    {
-        $form = $this->createForm(UserAdminType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
-        }
-        return $this->renderForm('user/edit_admin.html.twig', [
+        return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
@@ -126,16 +83,12 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
-        $actualUser = $this->getUser();
-        if (($actualUser->getId() == $user->getId() || in_array('ROLE_ADMIN', $actualUser->getRoles(), true))) {
-            if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($user);
-                $entityManager->flush();
-            }
-            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
-        } else {
-            return $this->redirectToRoute('user');
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
         }
+
+        return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
     }
 }

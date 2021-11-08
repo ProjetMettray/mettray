@@ -23,4 +23,41 @@
 		</div>
 	</div>
 
+	<table class="table table-striped table-success table-hover">
+		<thead>
+			<tr class="table-success">
+				<th scope="col">N°</th>
+				<th scope="col">Type de réservation</th>
+				<th scope="col">Date de début</th>
+				<th scope="col">Date de fin</th>
+				<th scope="col">Salle</th>
+				<th scope="col">Status</th>
+				<th scope="col">Nom de l'association</th>
+				<th scope="col">Modifier</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for booking in room.bookings %}
+				<tr class="table-active ts">
+					<td>{{ booking.id }}</td>
+					<td>{{booking.title}}</td>
+					<td>{{booking.startAt|date('d/m/Y')}}</td>
+					<td>{{booking.endAt|date('d/m/Y')}}</td>
+					<td>{{booking.getRoom().getName()}}</td>
+					<td>{{booking.status}}</td>
+					{% if booking.getAssociation() %}
+						<td>{{booking.getAssociation().getName()}}</td>
+					{% endif %}
+
+					<td>
+
+						<a href="{{ path("booking_edit", {"id": booking.id}) }}" type="button" class="btn btn-outline-success">Modifier</a>
+
+					</td>
+
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
 {% endblock %}
