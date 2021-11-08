@@ -59,6 +59,7 @@ class MainController extends AbstractController
                 'start' => $booking->getStartAt(),
                 'end' => $booking->getEndAt(),
                 'title' => $booking->getTitle(),
+                'roomId' => $booking->getRoom()->getId(),
             ];
         }
         $data = json_encode($rdvs);
