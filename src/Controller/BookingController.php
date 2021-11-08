@@ -68,7 +68,20 @@ class BookingController extends AbstractController
     public function new(Request $request): ?Response
     {
         $booking = new Booking();
-        $form = $this->createForm(BookingType::class, $booking);
+
+        $userId = $this->getUser()->getId();
+        $userAssociations = [];
+
+        $userHasAssociations = $this->em->getRepository(AssociationUser::class)->findByUser($userId);
+        foreach ($userHasAssociations as $userHasAssociation) {
+            $userAssociations[] = $this->em->getRepository(Association::class)->findById($userHasAssociation->getAssociation());
+        }
+
+        $form = $this->createForm(BookingType::class, $booking
+        //, array(
+        //    'userAssociations' => $userAssociations
+        //)
+        );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -100,21 +113,9 @@ class BookingController extends AbstractController
             }
         }
 
-        //$entityObject = $form->get('esame_0')->getData()
-        //$data = $entityObject->getId() or $entityObject->(Entity getter function)
-
-
-        //if ($form->isSubmitted() && $form->isValid()) {
-        //    $entityManager = $this->getDoctrine()->getManager();
-        //    $entityManager->persist($booking);
-        //    $entityManager->flush();
-
-        //    return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
-        //}
-
         return $this->renderForm('booking/new.html.twig', [
             'booking' => $booking,
-            'bookingForm' => $form,
+            'bookingForm' => $form
         ]);
     }
 

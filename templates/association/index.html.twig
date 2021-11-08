@@ -4,6 +4,9 @@
 {% endblock %}
 
 {% block body %}
+
+	{{ dump(test) }}
+
 	<div class="container text-center mt-5 bg-dark">
 		<h1 class="p-5 text-white">Liste des Associations</h1>
 		<div class="d-flex start-flex p-4 ">
@@ -24,16 +27,16 @@
 			<tbody>
 				{% for association in associations %}
 					<tr class="table-active ts">
-							<td scope="row">{{ association.id }}</td>
-							<td>{{ association.name }}</td>
-							<td>{{ association.telephone }}</td>
-							<td>{{ association.email }}</td>
+						<td scope="row">{{ association.id }}</td>
+						<td>{{ association.name }}</td>
+						<td>{{ association.telephone }}</td>
+						<td>{{ association.email }}</td>
 
-							<td>
+						<td>
 
 							<a href="{{ path("association_update", {"association": association.id}) }}" type="button" class="btn btn-outline-success">Modifier</a>
 
-							</td>
+						</td>
 
 					</tr>
 				{% endfor %}
