@@ -140,7 +140,7 @@ class BookingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('booking', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('booking/edit.html.twig', [
