@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Room;
 use DateTimeImmutable;
 use App\Entity\Booking;
+use App\Repository\RoomRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,6 +14,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiController extends AbstractController
 {
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+    
     /**
      * @Route("/api", name="api")
      */
@@ -24,32 +34,41 @@ class ApiController extends AbstractController
     /**
      * @Route("/api/{id}/edit", name="api_event_edit", methods={"PUT"})
      */
-    public function majEvent(?Booking $booking, Request $request)
+    public function majEvent(?Booking $booking, Request $request, RoomRepository $roomRepository )
     {
-        // On récupère les données
         $donnees = json_decode($request->getContent());
 
-        if(
+        $startDateForm = $donnees->start;
+        $endDateForm = $donnees->end;
+
+        $room = $roomRepository->findBy(['id' => $donnees->roomId]);
+
+        $bookingsForRoom = $this->em->getRepository(Booking::class)->findBy(['room' => $room]);
+
+        $sendForm = true;
+
+        foreach ($bookingsForRoom as $bookingForRoom) {
+            if (($startDateForm >= $bookingForRoom->getStartAt() && $startDateForm < $bookingForRoom->getEndAt()) || ($endDateForm > $bookingForRoom->getStartAt() && $endDateForm <= $bookingForRoom->getEndAt())) {
+                $sendForm = false;
+            }
+        }
+        if (
             isset($donnees->title) && !empty($donnees->title) &&
             isset($donnees->start) && !empty($donnees->start) &&
-            isset($donnees->end) && !empty($donnees->end)
-        ){
-            // Les données sont complètes
-            // On initialise un code
+            isset($donnees->end) && !empty($donnees->end) &&
+            isset($donnees->roomId) && !empty($donnees->roomId)
+             &&
+            $sendForm
+        ) {
             $code = 200;
 
-            // On vérifie si l'id existe
-            if(!$booking){
-                // On instancie un rendez-vous
+            if (!$booking) {
                 $booking = new Booking;
 
-                // On change le code
                 $code = 201;
             }
 
-            // On hydrate l'objet avec les données
             $booking->setTitle($donnees->title);
-            // $booking->setDescription($donnees->description);
             $booking->setStartAt(new DateTimeImmutable($donnees->start));
             $booking->setEndAt(new DateTimeImmutable($donnees->end));
 
@@ -57,14 +76,10 @@ class ApiController extends AbstractController
             $em->persist($booking);
             $em->flush();
 
-            // On retourne le code
             return new Response('Ok', $code);
-        }else{
-            // Les données sont incomplètes
-            return new Response('Données incomplètes', 404);
+        } else {
+            return new Response('Mauvaise demande', 404);
         }
-
-
         return $this->render('api/index.html.twig', [
             'controller_name' => 'ApiController',
         ]);

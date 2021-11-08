@@ -53,11 +53,12 @@
 									datas.revert()
 								} else {
 									let url = `/api/${datas.event.id}/edit`
-									console.log(datas.event.start);
+									console.log(datas.event.end)
 									let donnees = {
 										"title": datas.event.title,
 										"start": datas.event.start,
-										"end": datas.event.end
+										"end": datas.event.end,
+										"roomId": evenement[0].roomId
 									}
 									let xhr = new XMLHttpRequest
 									xhr.open("PUT", url)
