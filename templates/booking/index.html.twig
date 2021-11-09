@@ -22,6 +22,7 @@
 					<th scope="col">Status</th>
 					<th scope="col">Nom de l'association</th>
 					<th scope="col">Modifier</th>
+					<th scope="col">Supprimez</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,6 +41,9 @@
 						</td>
 						<td>
 							<a href="{{ path("booking_edit", {"id": booking.id}) }}" type="button" class="btn btn-outline-success">Modifier</a>
+						</td>
+						<td>
+							<a href="{{ path("booking_delete", {"id": booking.id}) }}" type="button" class="btn btn-outline-success">Supprimez</a>
 						</td>
 					</tr>
 				{% endfor %}
