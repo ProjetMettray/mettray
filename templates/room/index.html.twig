@@ -10,8 +10,10 @@
 			<label class="text-white " for="search">Recherche</label>
 			<input name="search" type="text">
 			<input type="submit">
-			{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
-				<a class="btn btn-light ml-3" href="{{ path('room_add') }}">Ajouter</a>
+			{% if app.user %}
+				{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+					<a class="btn btn-light ml-3" href="{{ path('room_add') }}">Ajouter</a>
+				{% endif %}
 			{% endif %}
 		</div>
 		<table class="table table-striped table-success table-hover">
@@ -32,10 +34,12 @@
 						<td>{{ room.getNbPlace }}</td>
 						<td>{{ room.description }}</td>
 						<td>{{ room.getLocation().getName() }}</td>
-						{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
-							<td>
-								<a href="{{ path("room_show", {'id': room.id}) }}" type="button" class="btn btn-outline-success">Détail</a>
-							</td>
+						{% if app.user %}
+							{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+								<td>
+									<a href="{{ path("room_show", {'id': room.id}) }}" type="button" class="btn btn-outline-success">Détail</a>
+								</td>
+							{% endif %}
 						{% endif %}
 					</tr>
 				{% endfor %}
