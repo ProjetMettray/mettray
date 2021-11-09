@@ -29,10 +29,10 @@ class AllFixtures extends Fixture
     ];
 
     public const FAKE_ROOM = [
-        ['wiki',100,'salle de cours wiki','Cauvin','Arobase',2],
-        ['cookie',50,'salle de cours cookie','Cauvin','Arobase',5],
-        ['404',50,'salle de cours 404','Cauvin','Arobase',4],
-        ['battle',60,'salle de cours battle','Guillon','Arobase',4]
+        ['wiki',100,'salle de cours wiki','Cauvin','Arobase',2,0],
+        ['cookie',50,'salle de cours cookie','Cauvin','Arobase',5,1],
+        ['404',50,'salle de cours 404','Cauvin','Arobase',4,0],
+        ['battle',60,'salle de cours battle','Guillon','Arobase',4,1]
     ];
 
     public const FAKE_LOCATION = [
@@ -173,7 +173,8 @@ class AllFixtures extends Fixture
                  ->setDescription($fakeRoomParent[2])
                  //->addRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[3]))
                  ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoomParent[4]))
-                 ->setLocation($manager->getRepository(Location::class)->findOneByName('bat1'));
+                 ->setLocation($manager->getRepository(Location::class)->findOneByName('bat1'))
+                 ->setVisibility($fakeRoomParent[5]);
 
             $manager->persist($room);
             
@@ -187,7 +188,8 @@ class AllFixtures extends Fixture
                  ->setDescription($fakeRoom[2])
                  //->addRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[3]))
                  ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[4]))
-                 ->setLocation($manager->getRepository(Location::class)->findOneByName('bat1'));
+                 ->setLocation($manager->getRepository(Location::class)->findOneByName('bat1'))
+                 ->setVisibility($fakeRoom[5]);
 
             $manager->persist($room);
             
@@ -217,7 +219,7 @@ class AllFixtures extends Fixture
             ->setEndAt($end_at)
             ->setOptions($fakeBooking[3])
             ->setStatus($fakeBooking[4])
-            ->setRoomId($manager->getRepository(Room::class)->findOneByName($fakeBooking[6]))
+            ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeBooking[6]))
             ->setAssociation($manager->getRepository(Association::class)->findOneByName($fakeBooking[7]))
             ;
 

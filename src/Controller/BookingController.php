@@ -45,20 +45,20 @@ class BookingController extends AbstractController
         $userId = $this->getUser()->getId();
         $userAssociations = [];
         $bookingsByAssociation = [];
-        
+
         $userHasAssociations = $this->em->getRepository(AssociationUser::class)->findByUser($userId);
         foreach ($userHasAssociations as $userHasAssociation) {
             $userAssociations[$userHasAssociation->getAssociation()->getId()] = $userHasAssociation->getAssociation()->getName();
         }
-        
+
         foreach ($userAssociations as $associationId => $associationName) {
             $bookingsByAssociation[$associationName] = $this->em->getRepository(Booking::class)->findByAssociation($associationId);
         }
 
         return $this->render('booking/show_all_by_user.html.twig', [
-            'userId' => $userId, 
+            'userId' => $userId,
             'userAssociations' => $userAssociations,
-            'bookingsByAssociation' =>$bookingsByAssociation
+            'bookingsByAssociation' => $bookingsByAssociation
         ]);
     }
 
@@ -68,26 +68,38 @@ class BookingController extends AbstractController
     public function new(Request $request): ?Response
     {
         $booking = new Booking();
-        $form = $this->createForm(BookingType::class, $booking);
+
+        $userId = $this->getUser()->getId();
+        $userAssociations = [];
+
+        $userHasAssociations = $this->em->getRepository(AssociationUser::class)->findByUser($userId);
+        foreach ($userHasAssociations as $userHasAssociation) {
+            $userAssociations[] = $this->em->getRepository(Association::class)->findById($userHasAssociation->getAssociation());
+        }
+
+        $form = $this->createForm(BookingType::class, $booking
+        //, array(
+        //    'userAssociations' => $userAssociations
+        //)
+        );
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $booking->setStatus('En attente');
 
             $formObject = $form->getData();
             $startDateForm = $formObject->getStartAt();
             $endDateForm = $formObject->getEndAt();
-            $roomForm = $formObject->getRoomId();
+            $roomForm = $formObject->getRoom();
 
-            $bookingsForRoom = $this->em->getRepository(Booking::class)->findByRoomId($roomForm);
-            
+            $bookingsForRoom = $this->em->getRepository(Booking::class)->findByRoom($roomForm);
+
             $sendForm = true;
 
             foreach ($bookingsForRoom as $bookingForRoom) {
                 if (($startDateForm >= $bookingForRoom->getStartAt() && $startDateForm < $bookingForRoom->getEndAt()) || ($endDateForm > $bookingForRoom->getStartAt() && $endDateForm <= $bookingForRoom->getEndAt())) {
                     $form->get('start_at')->addError(new FormError('Ce créneau de dates est déjà pris'));
-                    $this->addFlash('danger', 'Ce créneau de dates est déjà pris');
                     $sendForm = false;
                 }
             }
@@ -101,21 +113,9 @@ class BookingController extends AbstractController
             }
         }
 
-        //$entityObject = $form->get('esame_0')->getData()
-        //$data = $entityObject->getId() or $entityObject->(Entity getter function)
-
-
-        //if ($form->isSubmitted() && $form->isValid()) {
-        //    $entityManager = $this->getDoctrine()->getManager();
-        //    $entityManager->persist($booking);
-        //    $entityManager->flush();
-
-        //    return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
-        //}
-
         return $this->renderForm('booking/new.html.twig', [
             'booking' => $booking,
-            'form' => $form,
+            'bookingForm' => $form
         ]);
     }
 
@@ -130,7 +130,7 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/booking/{id}/edit", name="booking_edit", methods={"GET","POST"})
+     * @Route("/booking/edit/{id}", name="booking_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Booking $booking): Response
     {
@@ -140,12 +140,12 @@ class BookingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('booking', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('booking/edit.html.twig', [
             'booking' => $booking,
-            'form' => $form,
+            'bookingForm' => $form
         ]);
     }
 
@@ -160,6 +160,6 @@ class BookingController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('booking_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('booking', [], Response::HTTP_SEE_OTHER);
     }
 }

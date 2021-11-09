@@ -28,7 +28,7 @@ class AssociationController extends AbstractController
     public function index(AssociationRepository $associationRepository): Response
     {
         return $this->render('association/index.html.twig', [
-            'associations' => $associationRepository->findAll(),
+            'associations' => $associationRepository->findAll()
         ]);
     }
 
@@ -50,7 +50,7 @@ class AssociationController extends AbstractController
             $entityManager->persist($association);
             $entityManager->flush();
 
-            return $this->redirectToRoute('association_show', [
+            return $this->redirectToRoute('association', [
                 'association' => $association->getId()
             ]);
         }
@@ -73,11 +73,14 @@ class AssociationController extends AbstractController
 
         if($updateAssociationForm->isSubmitted() && $updateAssociationForm->isValid()) {
             $entityManager->flush();
+
+            return $this->redirectToRoute('association');
         }
 
         return $this->render('association/update.html.twig', [
             'updateAssociationForm' => $updateAssociationForm->createView(),
-            'associationName' => $association->getName()
+            'associationName' => $association->getName(),
+            "associationId" => $association->getId(),
         ]);
     }
 
@@ -114,6 +117,7 @@ class AssociationController extends AbstractController
         return $this->render('association/show.html.twig', [
             'association' => $asso
         ]);
-        $this->denyAccessUnlessGranted('view', $post);
+        $this->denyAccessUnlessGranted('', $post);
+        // $this->denyAccessUnlessGranted('view', $association);
     }
 }

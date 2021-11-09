@@ -1,6 +1,6 @@
-{{ form_start(form) }}
+{{ form_start(bookingForm) }}
 
-{% set formErrors = form.start_at.vars.errors.form.getErrors(true) %}
+{% set formErrors = bookingForm.start_at.vars.errors.form.getErrors(true) %}
 
 {# If there are errors in the form, display them in this unorganized list #}
 {% if formErrors|length %}
@@ -12,27 +12,30 @@
 {% endif %}
 {% block form_row %}
 	<div class="row">
-		<div class="col-3">
-			{{ form_label(form.title) }}
-			{{ form_widget(form.title) }}
+		<div class="col-4">
+			{{ form_label(bookingForm.title) }}
+			{{ form_widget(bookingForm.title) }}
 		</div>
-		<div class="col-3">
-			{{ form_label(form.start_at) }}
-			{{ form_widget(form.start_at) }}
+		<div class="col-4">
+			{{ form_label(bookingForm.start_at) }}
+			{{ form_widget(bookingForm.start_at) }}
 		</div>
-		<div class="col-3">
-			{{ form_label(form.end_at) }}
-			{{ form_widget(form.end_at) }}
-		</div>
-		<div class="col-3">
-			{{ form_label(form.room_id) }}
-			{{ form_widget(form.room_id) }}
+		<div class="col-4">
+			{{ form_label(bookingForm.end_at) }}
+			{{ form_widget(bookingForm.end_at) }}
 		</div>
 	</div>
-{% endblock form_row %}
-<div class="row">
-	<div class="col text-center">
-		{{ form_widget(form.submit) }}
+	<div class="row text-center my-5">
+		<div class="col-6">
+			{{ form_label(bookingForm.room) }}
+			{{ form_widget(bookingForm.room) }}
+		</div>
+		<div class="col-6">
+			{{ form_label(bookingForm.association) }}
+			{{ form_widget(bookingForm.association) }}
+		</div>
 	</div>
-</div>
-{{ form_end(form) }}
+</div>{% endblock form_row %}<div class="row">
+<div class="col text-center">
+	{{ form_widget(bookingForm.submit) }}
+</div></div>{{ form_end(bookingForm) }}

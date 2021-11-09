@@ -1,17 +1,4 @@
 {{ form_start(form) }}
-        {{ form_row(form.company, {
-        label: 'Nom de l\'entreprise'
-        }) }}
-        {{ form_row(form.start_at, {
-        label: 'Date de début'
-        }) }}
-        {{ form_row(form.end_at, {
-        label: 'Date de fin'
-        }) }}
-        {{ form_row(form.details, {
-        label: 'Détails'
-        }) }}
-        {{ form_row(form.register, {
-        label: 'Modifier'
-        }) }}
+{{ form_widget(form) }}
+<button class="btn btn-dark m-1">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Association;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\AST\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,6 +19,23 @@ class AssociationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Association::class);
     }
+
+    public function queryOwnedBy($userId) {
+
+        $query = $this->createQueryBuilder('a')      
+                ->innerJoin('a.associationUsers', 'au')
+                ->andWhere('au.user = :id')                
+                ->setParameter('id', $userId);
+    
+        return $query;
+    }
+
+    public function findOwnedBy($user) {
+        return $this->queryOwnedBy($user)
+                ->getQuery()
+                ->getResult();
+    }
+
 
     // /**
     //  * @return Association[] Returns an array of Association objects

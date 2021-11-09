@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use PharIo\Manifest\Email;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class MailerController extends AbstractController
@@ -16,10 +17,8 @@ class MailerController extends AbstractController
             ->to('dimitri.guillon331@gmail.com')
             ->subject('Test')
             ->html('<p> Test </p>');
-        $mailer->send($email );
+        $mailer->send($email);
 
         return new Response('Email sent');
-
     }
-
 }

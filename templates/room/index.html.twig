@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RoomController!{% endblock %}
+{% block title %}Hello AssociationController!
+{% endblock %}
 
 {% block body %}
 	<div class="container text-center mt-5 bg-dark">
@@ -9,16 +10,40 @@
 			<label class="text-white " for="search">Recherche</label>
 			<input name="search" type="text">
 			<input type="submit">
+			{% if app.user %}
+				{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+					<a class="btn btn-light ml-3" href="{{ path('room_add') }}">Ajouter</a>
+				{% endif %}
+			{% endif %}
 		</div>
-		<ul class="p-4">
-			{% for room in rooms %}
-				<li class="row bg-white m-2 rounded">
-					<p class="col-2">{{room.name}}</p>
-					<p class="col-2">{{room.getNbPlace}}</p>
-					<p class="col-2">{{room.description}}</p>
-					<p class="col-2">{{room.getLocation().getName()}}</p>
-				</li>
-			{% endfor %}
-		</ul>
-	</div>
-{% endblock %}
+		<table class="table table-striped table-success table-hover">
+			<thead>
+				<tr class="table-success">
+					<th scope="col">Id</th>
+					<th scope="col">Nom de la salle</th>
+					<th scope="col">Nombre de places</th>
+					<th scope="col">Description</th>
+					<th scope="col">Détail</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for room in rooms %}
+					<tr class="table-active ts">
+						<td scope="row">{{ room.id }}</td>
+						<td>{{ room.name }}</td>
+						<td>{{ room.getNbPlace }}</td>
+						<td>{{ room.description }}</td>
+						<td>{{ room.getLocation().getName() }}</td>
+						{% if app.user %}
+							{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+								<td>
+									<a href="{{ path("room_show", {'id': room.id}) }}" type="button" class="btn btn-outline-success">Détail</a>
+								</td>
+							{% endif %}
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</tbody>
+	</table>
+</div>{% endblock %}
