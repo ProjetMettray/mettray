@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\ChoiceList\ChoiceList;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -46,19 +47,20 @@ class RoomType extends AbstractType
             ->add('location', EntityType::class, [
                 'class' => Location::class,
                 'label' => 'Location',
-                'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => true,
-                'by_reference' => false
+                'choice_label' => 'name'
             ])
             //->add('room_has_user')
             ->add('room', EntityType::class, [
                 'class' => Room::class,
                 'label' => 'Room',
-                'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => true,
-                'by_reference' => false
+                'choice_label' => 'name'
+            ])
+            ->add('visibility', ChoiceType::class, [
+                'choices' => [
+                    'Public' => 1,
+                    'Privé' => 0
+                ],
+                'label' => 'Visibilité'
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'mt-2 btn btn-secondary']

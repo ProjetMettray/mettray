@@ -83,6 +83,10 @@ class RoomController extends AbstractController
 
         if ($updateRoomForm->isSubmitted() && $updateRoomForm->isValid()) {
             $entityManager->flush();
+
+            return $this->redirectToRoute('room_show', [
+                'id' => $room->getId()
+            ]);
         }
 
         return $this->render('room/update.html.twig', [
