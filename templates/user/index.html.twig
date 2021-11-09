@@ -25,10 +25,10 @@
 								<li class="list-group-item">Téléphone:
 									{{user.phone}}</li>
 							</ul>
+							<a class="btn btn-secondary" href="{{path('user_edit',{'id': user.id})}}">Modifier mon profil</a>
 						</div>
 					</div>
 					<div class="col">
-
 						<h2>Mes Associations
 							<a class="m-5 btn btn-secondary" href="{{path('booking_show_all_by_user')}}">Voir mes réservation</a>
 						</h2>
