@@ -22,9 +22,22 @@
 		<label for="inputPassword">Password</label>
 		<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+		<input
+		type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+		{#
+									Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+									See https://symfony.com/doc/current/security/remember_me.html
+												
+									<div class="checkbox mb-3">
+										<label>
+											<input type="checkbox" name="_remember_me"> Remember me
+										</label>
+									</div>
+								#}
+
 		<button class="btn btn-lg btn-primary" type="submit">
-			Sign in
+			Se connecter
 		</button>
 	</form>
 </form>
@@ -38,7 +51,7 @@
 						{% set foo = foo + 1 %}
 						<li class="list-group-item">
 							Salle :
-							<a href="{{path("app_login_room",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
+							<a href="{{path("calendar_login",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
 							<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
 								<i class="fas fa-eye "></i>
 							</a>
@@ -65,7 +78,10 @@
 		<div class="row text-center">
 			<div class="col">
 				<h2 class="m-4 text-center">Salle:
-					{{roomid.name}}</h2>
+				{% if roomId is defined %}
+					{{roomid.name}}
+				{% endif %}
+				</h2>
 				<div class="row">
 					<div class="col-4 mx-auto">
 						<a href="{{path("booking_new")}}" class="text-white btn btn-secondary">Réserver</a>

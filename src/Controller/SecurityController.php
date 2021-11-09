@@ -40,36 +40,37 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_login_room")
+     * @Route("/calendar/{id}", name="calendar_login")
      */
-    public function loginRooms(AuthenticationUtils $authenticationUtils, RoomRepository $roomRepository, Room $room): Response
+    public function loginRooms(AuthenticationUtils $authenticationUtils, RoomRepository $roomRepository, ?Room $room): Response
     {
         $rooms = $roomRepository->findAll();
         $rdvs = [];
         $publicRooms = [];
-        $bookings = $roomRepository->findBy(['id' => $room]);
         foreach ($rooms as $roo) {
             if ($roo->getVisibility() == 1) {
                 array_push($publicRooms, $roo);
             }
         }
-        foreach ($room->getBookings() as $booking) {
-            if ($room->getVisibility() == 1) {
-                $rdvs[] = [
-                    'id' => $booking->getId(),
-                    'start' => $booking->getStartAt(),
-                    'end' => $booking->getEndAt(),
-                    'title' => 'Informations indisponible',
-                    'roomId' => $booking->getRoom()->getId(),
-                    'phone' => "",
-                    'email' => ""
-                ];
+        if($room){
+            foreach ($room->getBookings() as $booking) {
+                if ($room->getVisibility() == 1) {
+                    $rdvs[] = [
+                        'id' => $booking->getId(),
+                        'start' => $booking->getStartAt(),
+                        'end' => $booking->getEndAt(),
+                        'title' => 'Informations indisponible',
+                        'roomId' => $booking->getRoom()->getId(),
+                        'phone' => "",
+                        'email' => ""
+                    ];
+                }
             }
         }
 
         $data = json_encode($rdvs);
         // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
+        //     return $this->redirectToRoute('app_logout');
         // }
 
         // get the login error if there is one

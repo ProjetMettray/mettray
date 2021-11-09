@@ -51,7 +51,7 @@
 						{% set foo = foo + 1 %}
 						<li class="list-group-item">
 							Salle :
-							<a href="{{path("app_login_room",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
+							<a href="{{path("calendar_login",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
 							<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
 								<i class="fas fa-eye "></i>
 							</a>
