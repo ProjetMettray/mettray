@@ -50,7 +50,7 @@ class AssociationController extends AbstractController
             $entityManager->persist($association);
             $entityManager->flush();
 
-            return $this->redirectToRoute('association_show', [
+            return $this->redirectToRoute('association', [
                 'association' => $association->getId()
             ]);
         }
@@ -73,6 +73,8 @@ class AssociationController extends AbstractController
 
         if($updateAssociationForm->isSubmitted() && $updateAssociationForm->isValid()) {
             $entityManager->flush();
+
+            return $this->redirectToRoute('association');
         }
 
         return $this->render('association/update.html.twig', [

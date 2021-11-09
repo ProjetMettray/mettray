@@ -12,27 +12,30 @@
 {% endif %}
 {% block form_row %}
 	<div class="row">
-		<div class="col-3">
+		<div class="col-4">
 			{{ form_label(bookingForm.title) }}
 			{{ form_widget(bookingForm.title) }}
 		</div>
-		<div class="col-3">
+		<div class="col-4">
 			{{ form_label(bookingForm.start_at) }}
 			{{ form_widget(bookingForm.start_at) }}
 		</div>
-		<div class="col-3">
+		<div class="col-4">
 			{{ form_label(bookingForm.end_at) }}
 			{{ form_widget(bookingForm.end_at) }}
 		</div>
-		<div class="col-3">
+	</div>
+	<div class="row text-center my-5">
+		<div class="col-6">
 			{{ form_label(bookingForm.room) }}
 			{{ form_widget(bookingForm.room) }}
 		</div>
+		<div class="col-6">
+			{{ form_label(bookingForm.association) }}
+			{{ form_widget(bookingForm.association) }}
+		</div>
 	</div>
-{% endblock form_row %}
-<div class="row">
-	<div class="col text-center">
-		{{ form_widget(bookingForm.submit) }}
-	</div>
-</div>
-{{ form_end(bookingForm) }}
+</div>{% endblock form_row %}<div class="row">
+<div class="col text-center">
+	{{ form_widget(bookingForm.submit) }}
+</div></div>{{ form_end(bookingForm) }}
