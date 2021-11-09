@@ -70,6 +70,9 @@ class UserType extends AbstractType
                     ->orderBy('u.name', 'ASC');
                 }
             ])
+            ->add('save', ButtonType::class, [
+                'attr' => ['class' => 'save'],
+            ]);
         ;
     }
 
