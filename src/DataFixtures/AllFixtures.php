@@ -105,11 +105,11 @@ class AllFixtures extends Fixture
     ];
 
     public const FAKE_BOOKING = [
-        ['Match amical', '2021-11-10 08:00:00.00', '2021-11-10 18:00:00.00', [], 'En attente', 'Brault', 'battle', 'FC Mettray'],
+        ['Match amical', '2021-11-10 08:00:00.00', '2021-11-10 18:00:00.00', [], 'En attente', 'Brault', 'Demi terrain A', 'FC Mettray'],
         ['Entrainement', '2021-11-05 06:00:00.00', '2021-11-05 12:30:00.00', [], 'Validé', 'Brault', 'Terrain entier', 'Natation Club Mettray'],
-        ['Match retour', '2021-11-13 13:00:00.00', '2021-11-13 17:30:00.00', [], 'Supprimé', 'Cauvin', '404', 'Hockey Boys'],
-        ['Anniversaire', '2021-12-02 15:30:00.00', '2021-12-02 23:30:00.00', [], 'Validé', 'Daunay', 'battle', 'Hockey Boys'],
-        ['Interville', '2021-12-05 07:00:00.00', '2021-12-05 19:00:00.00', [], 'Validé', 'Daunay', 'wiki', 'Judo Karate Club']
+        ['Match retour', '2021-11-13 13:00:00.00', '2021-11-13 17:30:00.00', [], 'Supprimé', 'Cauvin', 'Katta 1', 'Hockey Boys'],
+        ['Anniversaire', '2021-12-02 15:30:00.00', '2021-12-02 23:30:00.00', [], 'Validé', 'Daunay', 'Battle', 'Hockey Boys'],
+        ['Interville', '2021-12-05 07:00:00.00', '2021-12-05 19:00:00.00', [], 'Validé', 'Daunay', 'Katta', 'Judo Karate Club']
     ];
 
     private UserPasswordHasherInterface $userPasswordHasher;
