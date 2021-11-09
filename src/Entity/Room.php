@@ -61,6 +61,11 @@ class Room
      */
     private $bookings;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $visibility;
+
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
@@ -226,6 +231,18 @@ class Room
                 $booking->setRoom(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVisibility(): ?int
+    {
+        return $this->visibility;
+    }
+
+    public function setVisibility(int $visibility): self
+    {
+        $this->visibility = $visibility;
 
         return $this;
     }
