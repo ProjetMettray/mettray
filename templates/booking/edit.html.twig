@@ -4,11 +4,16 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Edit booking</h1>
+	<div class="container">
+		<h1 class="text-center">Edit booking</h1>
 
-	{{ include('booking/_form.html.twig', {'button_label': 'Update'}) }}
+		<hr>
 
-	<a href="{{ path('booking') }}">back to list</a>
+		{{ include('booking/_form.html.twig', {'button_label': 'Update'}) }}
 
-	{{ include('booking/_delete_form.html.twig') }}
+		<div class="row">
+			{{ include('booking/_delete_form.html.twig') }}
+			<a class="btn btn-light" href="{{ path('booking') }}">back to list</a>
+		</div>
+	</div>
 {% endblock %}
