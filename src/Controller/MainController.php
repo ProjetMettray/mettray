@@ -26,7 +26,7 @@ class MainController extends AbstractController
     private EntityManagerInterface $em;
 
     /**
-     * @Route("/", name="main")
+     * @Route("/main", name="main")
      */
     public function index(LocationRepository $location): Response
     {
