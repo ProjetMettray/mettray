@@ -64,7 +64,8 @@ class BookingType extends AbstractType
                 'choice_label' => 'name',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->queryOwnedBy($this->security->getUser()->getId());
-                }
+                },
+                'required' => false
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'mt-2 btn btn-secondary']
