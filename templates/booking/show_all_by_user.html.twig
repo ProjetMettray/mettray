@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Event
+{% block title %}Mes Réservation
 {% endblock %}
 
 {% block body %}
@@ -15,7 +15,7 @@
 
 		{% for name,association in bookingsByAssociation %}
 			<ul class="p-4">
-				<h1>{{ name }}</h1>
+				<h1 class="text-white">{{ name }}</h1>
 				{% for booking in association %}
 					<li class="row bg-white m-2 rounded">
 						<p class="col-3">{{ booking.title }}</p>
