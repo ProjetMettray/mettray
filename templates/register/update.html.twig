@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un évènement{% endblock %}
+
+{% block body %}
+    <h1>Modifier {{ userLastname }}</h1>
+
+    <hr>
+
+    {{ form(updateUserForm) }}
+
+{% endblock %}
