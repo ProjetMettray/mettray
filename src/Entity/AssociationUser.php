@@ -32,6 +32,11 @@ class AssociationUser
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return $this->id;
+    }
+
     public function getAssociation(): ?Association
     {
         return $this->association;

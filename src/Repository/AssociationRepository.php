@@ -22,10 +22,18 @@ class AssociationRepository extends ServiceEntityRepository
 
     public function queryOwnedBy($userId) {
 
-        $query = $this->createQueryBuilder('a')      
-                ->innerJoin('a.associationUsers', 'au')
-                ->andWhere('au.user = :id')                
-                ->setParameter('id', $userId);
+        $query = $this  ->createQueryBuilder('a')      
+                        ->innerJoin('a.associationUsers', 'au')
+                        ->andWhere('au.user = :id')                
+                        ->setParameter('id', $userId);
+    
+        return $query;
+    }
+
+    public function queryAssociations() {
+
+        $query = $this  ->createQueryBuilder('a')
+                        ->orderBy('a.name', 'ASC');
     
         return $query;
     }
