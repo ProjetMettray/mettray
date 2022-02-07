@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block body %}
+{% if app.user == null %}
 	<form method="post">
 		{% if error %}
 			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -26,93 +27,91 @@
 		type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 		{#
-									Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-									See https://symfony.com/doc/current/security/remember_me.html
-												
-									<div class="checkbox mb-3">
-										<label>
-											<input type="checkbox" name="_remember_me"> Remember me
-										</label>
-									</div>
-								#}
+											Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+											See https://symfony.com/doc/current/security/remember_me.html
+														
+											<div class="checkbox mb-3">
+												<label>
+													<input type="checkbox" name="_remember_me"> Remember me
+												</label>
+											</div>
+										#}
 
 		<button class="btn btn-lg btn-primary" type="submit">
 			Se connecter
 		</button>
 	</form>
-</form>
-<div class="container">
-	<div class="row">
-		<div class="col">
-			<div class="m-3 card" style="width: 18rem;">
-				<ul class="list-group list-group-flush">
-					{% set foo = 0 %}
-					{% for room in rooms %}
-						{% set foo = foo + 1 %}
-						<li class="list-group-item">
-							Salle :
-							<a href="{{path("calendar_login",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
-							<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
-								<i class="fas fa-eye "></i>
-							</a>
-							<div class="collapse" id="collapseExample{{foo}}">
-								<div class="card card-body">
-									<ul class="list-group">
-										<li class="text-secondary">Description:
-											<span class="text-dark">{{room.description}}</span>
-										</li>
-										<li class="text-secondary">Nombres de places:
-											<span class="text-dark">{{room.nbPlace}}</span>
-										</li>
-										<li class="text-secondary">Localisation:
-											<span class="text-dark">{{room.location}}</span>
-										</li>
-									</ul>
-								</div>
+</form>{% endif %}<div class="container">
+<div class="row">
+	<div class="col">
+		<div class="m-3 card" style="width: 18rem;">
+			<ul class="list-group list-group-flush">
+				{% set foo = 0 %}
+				{% for room in rooms %}
+					{% set foo = foo + 1 %}
+					<li class="list-group-item">
+						Salle :
+						<a href="{{path("calendar_login",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
+						<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
+							<i class="fas fa-eye "></i>
+						</a>
+						<div class="collapse" id="collapseExample{{foo}}">
+							<div class="card card-body">
+								<ul class="list-group">
+									<li class="text-secondary">Description:
+										<span class="text-dark">{{room.description}}</span>
+									</li>
+									<li class="text-secondary">Nombres de places:
+										<span class="text-dark">{{room.nbPlace}}</span>
+									</li>
+									<li class="text-secondary">Localisation:
+										<span class="text-dark">{{room.location}}</span>
+									</li>
+								</ul>
 							</div>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
 		</div>
-		<div class="row text-center">
-			<div class="col">
-				<h2 class="m-4 text-center">Salle:
+	</div>
+	<div class="row text-center">
+		<div class="col">
+			<h2 class="m-4 text-center">Salle:
 				{% if roomId is defined %}
 					{{roomid.name}}
 				{% endif %}
-				</h2>
-				<div class="row">
-					<div class="col-4 mx-auto">
-						<a href="{{path("booking_new")}}" class="text-white btn btn-secondary">Réserver</a>
-					</div>
-				</div>
-				<div class="p-0 container" style="width: 548px; margin: 5rem">
-					<div id="calendar-holder"></div>
+			</h2>
+			<div class="row">
+				<div class="col-4 mx-auto">
+					<a href="{{path("booking_new")}}" class="text-white btn btn-secondary">Réserver</a>
 				</div>
 			</div>
-		</div>
-		<div class="col">
 			<div class="p-0 container" style="width: 548px; margin: 5rem">
 				<div id="calendar-holder"></div>
-				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
-							</div>
-							<div class="modal-body">
-								<p id="date"></p>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
-							</div>
+			</div>
+		</div>
+	</div>
+	<div class="col">
+		<div class="p-0 container" style="width: 548px; margin: 5rem">
+			<div id="calendar-holder"></div>
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+						</div>
+						<div class="modal-body">
+							<p id="date"></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save changes</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-{% endblock %}
+</div>{% endblock %}
