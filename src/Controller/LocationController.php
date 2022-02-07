@@ -18,7 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class LocationController extends AbstractController
 {
      /**
-      * @IsGranted("ROLE_ADMIN")
       * @Route("/location", name="location")
       *
      */
@@ -30,7 +29,6 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_ADMIN")
      * @Route("/location/add", name="location_add")
      * 
      */
@@ -58,7 +56,6 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_ADMIN")
      * @Route("/locations/{id}/update", name="location_update")
      */
     public function updateLocation(Location $location, Request $request, EntityManagerInterface $entityManager)
@@ -79,7 +76,6 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_ADMIN")
      * @Route("/locations/{id}/delete", name="location_delete")
      */
     public function deleteLocation(Location $location, EntityManagerInterface $entityManager)
@@ -94,7 +90,6 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_ADMIN")
      * @Route("/locations/{id}", name="location_show")
      */
     public function showLocation(Location $location)

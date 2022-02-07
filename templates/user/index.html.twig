@@ -4,10 +4,23 @@
 {% endblock %}
 
 {% block body %}
-	{% for user in users %}
-
-		<li>{{user.firstname}}</li>
-
-	{% endfor %}
-
+	<div class="container text-center mt-5 bg-dark">
+		<h1 class="p-5 text-white">Liste des Utilisateur par Association</h1>
+		{% for asso in associations %}
+			<ul class="p-4">
+				<h1 class="text-white">{{asso.name}}</h1>
+				<div>
+					{% for user in users %}
+						{% for assoUser in user.associationUsers %}
+							{% if assoUser.association.id == asso.id %}
+								<li style="list-style:none;" class="bg-white ">
+									{{user.firstname}}
+								</li>
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+				</div>
+			{% endfor %}
+		</ul>
+	</div>
 {% endblock %}
