@@ -36,7 +36,6 @@
 								<td>{{ room.name }}</td>
 								<td>{{ room.getNbPlace }}</td>
 								<td>{{ room.description }}</td>
-								<td>{{ room.getLocation().getName() }}</td>
 								{% if app.user %}
 									{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
 										<td>
