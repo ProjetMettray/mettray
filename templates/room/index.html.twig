@@ -39,7 +39,7 @@
 								{% if app.user %}
 									{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
 										<td>
-											<a href="{{ path("room_delete", {'room': room.id}) }}" type="button" class="btn btn-outline-success">Supprimez</a>
+											<a href="{{ path("room_delete", {'room': room.id}) }}" type="button" class="btn btn-outline-success">Supprimer</a>
 											<a href="{{ path("room_update", {'room': room.id}) }}" type="button" class="btn btn-outline-success">Editer</a>
 										</td>
 									{% endif %}
