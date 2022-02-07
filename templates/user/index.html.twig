@@ -5,56 +5,9 @@
 
 {% block body %}
 	{% for user in users %}
-		{% if user.id == app.user.id %}
-			<h2 class="text-center m-2">Bienvenue
-				{{user.Firstname}}</h2>
-			<div class="container m-3">
-				<div class="row">
-					<div class="col-4">
-						<div class="card" style="width: 18rem;">
-							<div class="card-header">
-								<img src="https://picsum.photos/200" class="rounded-circle mx-auto d-block">
-							</div>
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item">Nom:
-									{{user.lastname}}
-									{{user.firstname}}
-								</li>
-								<li class="list-group-item">Email:
-									{{user.email}}</li>
-								<li class="list-group-item">Téléphone:
-									{{user.phone}}</li>
-							</ul>
-							<a class="btn btn-secondary" href="{{path('user_edit',{'id': user.id})}}">Modifier mon profil</a>
-						</div>
-					</div>
-					<div class="col">
-						<h2>Mes Associations
-							<a class="m-5 btn btn-secondary" href="{{path('booking_show_all_by_user')}}">Voir mes réservation</a>
-						</h2>
-						<div class="row">
-							{% for asso in user.associationUsers %}
-								<div class="col">
-									{%  if app.user.id == asso.user.id%}
-										<div class="card" style="width: 18rem;">
-											<div class="card-header">
-												{{asso.association.Name}}
-											</div>
-											<ul class="list-group list-group-flush">
-												<li class="list-group-item">Email:
-													{{asso.association.email}}</li>
-												<li class="list-group-item">Téléphone:
-													{{asso.association.telephone}}</li>
-											</ul>
-										</div>
 
-									{% endif %}
-								</div>
-							{% endfor %}
-						</div>
-					</div>
-				</div>
-			</div>
-		{% endif %}
+		<li>{{user.firstname}}</li>
+
 	{% endfor %}
+
 {% endblock %}

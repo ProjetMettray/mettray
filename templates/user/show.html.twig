@@ -1,46 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Hello User!
+{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+	<h2 class="text-center m-2">Bienvenue
+		{{user.Firstname}}</h2>
+	<div class="container m-3">
+		<div class="row">
+			<div class="col-4">
+				<div class="card" style="width: 18rem;">
+					<div class="card-header">
+						<img src="https://picsum.photos/200" class="rounded-circle mx-auto d-block">
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">Nom:
+							{{user.lastname}}
+							{{user.firstname}}
+						</li>
+						<li class="list-group-item">Email:
+							{{user.email}}</li>
+						<li class="list-group-item">Téléphone:
+							{{user.phone}}</li>
+					</ul>
+					<a class="btn btn-secondary" href="{{path('user_edit',{'id': user.id})}}">Modifier mon profil</a>
+				</div>
+			</div>
+			<div class="col">
+				<h2>Mes Associations
+					<a class="m-5 btn btn-secondary" href="{{path('booking_show_all_by_user')}}">Voir mes réservation</a>
+				</h2>
+				<div class="row">
+					{% for asso in user.associationUsers %}
+						<div class="col">
+							{%  if app.user.id == asso.user.id%}
+								<div class="card" style="width: 18rem;">
+									<div class="card-header">
+										{{asso.association.Name}}
+									</div>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item">Email:
+											{{asso.association.email}}</li>
+										<li class="list-group-item">Téléphone:
+											{{asso.association.telephone}}</li>
+									</ul>
+								</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ user.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ user.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ user.phone }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('user_index') }}">back to list</a>
-
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-
-    {{ include('user/_delete_form.html.twig') }}
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
