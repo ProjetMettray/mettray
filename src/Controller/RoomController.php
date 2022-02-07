@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Entity\Room;
 use App\Form\RoomType;
 use App\Repository\RoomRepository;
+use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class RoomController extends AbstractController
@@ -27,10 +28,12 @@ class RoomController extends AbstractController
      * @Route("/room", name="room")
      *
      */
-    public function index(RoomRepository $roomRepository): Response
+    public function index(RoomRepository $roomRepository,LocationRepository $locationRepository): Response
     {
+        $location = $locationRepository->findAll();
         $rooms = $roomRepository->findAll();
         return $this->render('room/index.html.twig', [
+            'location'=>$location,
             'rooms' => $rooms,
         ]);
     }

@@ -16,35 +16,40 @@
 				{% endif %}
 			{% endif %}
 		</div>
-		<table class="table table-striped table-success table-hover">
-			<thead>
-				<tr class="table-success">
-					<th scope="col">Id</th>
-					<th scope="col">Nom de la salle</th>
-					<th scope="col">Nombre de places</th>
-					<th scope="col">Description</th>
-					<th scope="col">Détail</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for room in rooms %}
-					<tr class="table-active ts">
-						<td scope="row">{{ room.id }}</td>
-						<td>{{ room.name }}</td>
-						<td>{{ room.getNbPlace }}</td>
-						<td>{{ room.description }}</td>
-						<td>{{ room.getLocation().getName() }}</td>
-						{% if app.user %}
-							{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
-								<td>
-									<a href="{{ path("room_show", {'id': room.id}) }}" type="button" class="btn btn-outline-success">Détail</a>
-									<a href="{{ path("room_update", {'room': room.id}) }}" type="button" class="btn btn-outline-success">Editer</a>
-								</td>
-							{% endif %}
-						{% endif %}
+		{% for loc in location %}
+			<table class="table table-striped table-success table-hover">
+				<thead>
+					<tr class="table-success">
+						<th scope="col">Id</th>
+						<th scope="col">Nom de la salle</th>
+						<th scope="col">Nombre de places</th>
+						<th scope="col">Description</th>
+						<th scope="col">Détail</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</tbody>
-	</table>
-</div>{% endblock %}
+				</thead>
+				<tbody>
+					<h2 class="text-white">{{loc.name}}</h2>
+					{% for room in rooms %}
+						{% if room.location.id == loc.id %}
+							<tr class="table-active ts">
+								<td scope="row">{{ room.id }}</td>
+								<td>{{ room.name }}</td>
+								<td>{{ room.getNbPlace }}</td>
+								<td>{{ room.description }}</td>
+								<td>{{ room.getLocation().getName() }}</td>
+								{% if app.user %}
+									{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+										<td>
+											<a href="{{ path("room_delete", {'room': room.id}) }}" type="button" class="btn btn-outline-success">Supprimez</a>
+											<a href="{{ path("room_update", {'room': room.id}) }}" type="button" class="btn btn-outline-success">Editer</a>
+										</td>
+									{% endif %}
+								{% endif %}
+							</tr>
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endfor %}
+	</div>
+{% endblock %}
