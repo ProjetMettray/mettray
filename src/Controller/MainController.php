@@ -85,11 +85,9 @@ class MainController extends AbstractController
                     'end' => $booking->getEndAt(),
                     'title' => $booking->getTitle(),
                     'roomId' => $booking->getRoom()->getId(),
-                    'asso' => $booking->getAssociation()->getName(),
-                    'phone' => $booking->getAssociation()->getTelephone(),
-                    'email' => $booking->getAssociation()->getEmail(),
-                    // 'lastname' => $booking->getAssociation()->getAssociationUsers()->getUser()->getLastName(),
-                    // 'firstname' => $booking->getAssociation()->getAssociationUsers()->getUser()->getFirstName(),
+                    'asso' => $booking->getAssociation() ? $booking->getAssociation()->getName() : '',
+                    'phone' => $booking->getAssociation() ? $booking->getAssociation()->getTelephone() : '',
+                    'email' => $booking->getAssociation() ? $booking->getAssociation()->getEmail() : '',
                 ];
             } else {
                 $rdvs[] = [
