@@ -52,11 +52,11 @@ class AllFixtures extends Fixture
     ];
 
     public const FAKE_LOCATION = [
-        ['Grand Gymnase', '46', 'Rue National', 'Mettray'],
-        ['Piscine Municiapl', '89', 'Rue du charme', 'Mettray'],
-        ['Salle des fêtes', '98', 'Avenue des saules', 'Mettray'],
-        ['Hôtel de ville', '37', 'Rue tabaga', 'Mettray'],
-        ['Dojo', '35', 'Rue National', 'Mettray']
+        ['Grand Gymnase', '37390', 'Rue National', 'Mettray'],
+        ['Piscine Municiapl', '37390', 'Rue du charme', 'Mettray'],
+        ['Salle des fêtes', '37390', 'Avenue des saules', 'Mettray'],
+        ['Hôtel de ville', '37390', 'Rue tabaga', 'Mettray'],
+        ['Dojo', '37390', 'Rue National', 'Mettray']
     ];
 
     public const FAKE_USER = [
