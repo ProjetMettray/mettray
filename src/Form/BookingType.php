@@ -54,18 +54,18 @@ class BookingType extends AbstractType
                 'input' => 'datetime_immutable',
                 'date_widget' => 'single_text',
             ))
-            // ->add('user_id')
-            ->add('room', EntityType::class, [
-                'class' => Room::class
-            ])
             ->add('association', EntityType::class, [
                 'class' => Association::class,
                 'label' => 'Association',
                 'choice_label' => 'name',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->queryOwnedBy($this->security->getUser()->getId());
+                'query_builder' => function(AssociationRepository $er) {
+                    if($this->security->isGranted('ROLE_ADMIN')){
+                        return $er->createQueryBuilder('s');
+                    } else {
+                        return $er->queryOwnedBy($this->security->getUser()->getId());
+                    }
                 },
-                'required' => false
+                'required' => true
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'mt-2 btn btn-secondary']

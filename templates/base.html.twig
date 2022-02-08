@@ -78,7 +78,6 @@
 								let myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
 								myModal.toggle()
 
-console.log(datas.event.start.toLocaleDateString())
 								let concatDate = 
 								"Date : Du " +
 								datas.event.start.toLocaleDateString()
@@ -97,6 +96,7 @@ console.log(datas.event.start.toLocaleDateString())
 								let date = document.querySelector('#date');
 								let phone = document.querySelector('#phone');
 								let email = document.querySelector('#email');
+								let button = document.querySelector('#edit-booking');
 
 								title.textContent = datas.event.extendedProps[0].asso
 								+ ": "
@@ -107,6 +107,8 @@ console.log(datas.event.start.toLocaleDateString())
 								phone.textContent = "Numéro de Téléphone: " + datas.event.extendedProps[0].phone;
 
 								email.textContent = "Email : " + datas.event.extendedProps[0].email;
+
+								button.href = window.location.replace = window.location.origin + '/booking/edit/' + datas.event.id
 							},
 							eventSources: [
 								{
