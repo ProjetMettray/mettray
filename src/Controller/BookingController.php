@@ -2,19 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Room;
+use App\Entity\User;
+use App\Entity\Booking;
+use App\Form\BookingType;
 use App\Entity\Association;
 use App\Entity\AssociationUser;
-use App\Entity\Booking;
-use App\Entity\User;
-use App\Form\BookingType;
 use App\Repository\BookingRepository;
+use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormError;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BookingController extends AbstractController
 {
@@ -63,9 +64,9 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/booking/new", name="booking_new", methods={"GET","POST"})
+     * @Route("/booking/new/{room}", name="booking_new", methods={"GET","POST"})
      */
-    public function new(Request $request): ?Response
+    public function new(Request $request, Room $room): ?Response
     {
         $booking = new Booking();
 
@@ -86,6 +87,7 @@ class BookingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $booking->setRoom($room);
             $booking->setStatus('En attente');
 
             $formObject = $form->getData();
@@ -142,6 +144,7 @@ class BookingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('booking', [], Response::HTTP_SEE_OTHER);
