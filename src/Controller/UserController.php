@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
@@ -30,7 +31,7 @@ class UserController extends AbstractController
      * @Route("/user/add", name="user_add")
      * 
      */
-    public function addUser(Request $request, EntityManagerInterface $entityManager)
+    public function addUser(Request $request, EntityManagerInterface $entityManager,UserPasswordEncoderInterface $encodeur)
     {
         $user = new User();
         $addUserForm = $this->createForm(UserType::class, $user);
@@ -39,14 +40,14 @@ class UserController extends AbstractController
 
         if ($addUserForm->isSubmitted() && $addUserForm->isValid()) {
             $user = $addUserForm->getData();
-
+            $user->setPassword($encodeur->encodePassword($user,$user->getPassword()));
             $entityManager->persist($user);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('user/add.html.twig', [
+        return $this->render('user/new.html.twig', [
             'addUserForm' => $addUserForm->createView()
         ]);
     }
@@ -100,7 +101,7 @@ class UserController extends AbstractController
 
         return $this->renderForm('user/edit.html.twig', [
             'user' => $id,
-            'form' => $form,
+            'form' => $form>createView(),
         ]);
     }
 

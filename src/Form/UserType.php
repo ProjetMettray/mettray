@@ -16,6 +16,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+
+
 
 class UserType extends AbstractType
 {
@@ -46,12 +50,24 @@ class UserType extends AbstractType
                     'class' => 'form-control'
             ],
             ])
+            ->add('password',RepeatedType::class,[
+
+                'type' => PasswordType::class,
+                'invalid_message'=> "Les mdp sont pas identique",
+                'first_options'=> [
+                    'label'=>'Votre mot de passe',
+
+                ],
+                'second_options' => [
+                    'label'=>'Votre mot de passe a nouveau ' ,
+                ],
+            ])
             ->add('phone', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
             ],
             ])
-            ->add('associationUsers', EntityType::class, [
+            ->add('associationUser', EntityType::class, [
                 'class' => Association::class,
                 'expanded' => true,
                 'multiple' => true,

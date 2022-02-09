@@ -4,12 +4,11 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="text-center">Modifiez mon profil</h1>
+	<h1 class="text-center">Modifier le profil</h1>
 	<div class="container">
 
-		{{ include('user/_form.html.twig') }}
 
-
+		{{ form(updateRoomForm) }}
 		<a class="btn btn-secondary" href="{{ path('user_index') }}">Revenir au profil</a>
 
 	</div>
