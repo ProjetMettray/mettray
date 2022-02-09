@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Association;
+use App\Entity\AssociationUser;
 use App\Form\UserType;
 use App\Form\User1Type;
+use App\Form\AssociationUserType;
+use App\Form\UserPasswordType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AssociationRepository;
@@ -15,7 +19,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
+
 {
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
     /**
      * @Route("/user", name="user_index", methods={"GET"})
      */
@@ -35,48 +46,70 @@ class UserController extends AbstractController
     {
         $user = new User();
         $addUserForm = $this->createForm(UserType::class, $user);
-
         $addUserForm->handleRequest($request);
 
         if ($addUserForm->isSubmitted() && $addUserForm->isValid()) {
-            $user = $addUserForm->getData();
+            $user = $addUserForm->getData();       
             $user->setPassword($encodeur->encodePassword($user,$user->getPassword()));
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('user_add_association', ['id'=> $user->getId()]);
         }
 
         return $this->render('user/new.html.twig', [
             'addUserForm' => $addUserForm->createView()
         ]);
     }
-
     /**
-     * @Route("/user/password", name="user_password", methods={"GET","POST"})
+     * @Route("/user/{id}/addassociation", name="user_add_association")
+     * 
      */
-    public function register(Request $request): Response
+    public function addAssociation(User $id, Request $request, EntityManagerInterface $entityManager)
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        $association = New AssociationUser();
+        $user = $this->em->getRepository(User::class)->findOneById($id);
+        $addAssociationUserForm = $this->createForm(AssociationUserType::class, $association);
+        $addAssociationUserForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+        if ($addAssociationUserForm->isSubmitted() && $addAssociationUserForm->isValid()) {
+            $association = $addAssociationUserForm->getData();
+            $association->setUser($user);
+            $entityManager->persist($association);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_index');
         }
 
-        return $this->renderForm('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
+        return $this->render('user/addAssociation.html.twig', [
+            'addAssociationUserForm' => $addAssociationUserForm->createView()
+        ]);
+    }
+    /**
+     * @Route("/user/password/{id}", name="user_password", methods={"GET","POST"})
+     */
+    public function register(User $id,EntityManagerInterface $entityManager,Request $request,UserPasswordEncoderInterface $encodeur): Response
+    {
+        $updatePassWordForm = $this->createForm(UserPasswordType::class, $id);
+        $updatePassWordForm->handleRequest($request);
+        if($updatePassWordForm->isSubmitted() && $updatePassWordForm->isValid()) {
+            $password = $updatePassWordForm->getData();
+
+            $password->setPassword($encodeur->encodePassword($password,$password->getPassword()));
+
+
+            $entityManager->persist($password);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_index');
+        }
+        return $this->render('user/password.html.twig',[
+            'update_password_form' => $updatePassWordForm->createView()
         ]);
     }
 
     /**
-     * @Route("/user/{id}", name="user_show", methods={"GET"})
+     * @Route("/user/{id}", name="user_show")
      */
     public function show(User $user): Response
     {
@@ -86,7 +119,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/user/{id}/edit", name="user_edit")
      */
     public function edit(Request $request, User $id): Response
     {
@@ -96,26 +129,23 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('main', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->renderForm('user/edit.html.twig', [
             'user' => $id,
-            'form' => $form>createView(),
+            'UserUpdateForm' => $form,
         ]);
     }
 
     /**
-     * @Route("/user/{id}", name="user_delete", methods={"POST"})
+     * @Route("/user/delete/{id}", name="user_delete")
      */
-    public function delete(Request $request, User $user): Response
+    public function delete(User $id): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+        $this->em->remove($id);
+        $this->em->flush();
+        return $this->redirectToRoute('user_index');
     }
+    
 }

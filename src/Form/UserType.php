@@ -6,6 +6,7 @@ use App\Entity\Room;
 use App\Entity\User;
 use App\Entity\Association;
 use App\Entity\AssociationUser;
+use App\Form\AssociationUserType;
 use App\Repository\RoomRepository;
 use Symfony\Component\Form\AbstractType;
 use App\Repository\AssociationRepository;
@@ -14,6 +15,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -62,20 +64,10 @@ class UserType extends AbstractType
                     'label'=>'Votre mot de passe a nouveau ' ,
                 ],
             ])
-            ->add('phone', TextType::class, [
+            ->add('phone', TelType::class, [
                 'attr' => [
                     'class' => 'form-control'
             ],
-            ])
-            ->add('associationUser', EntityType::class, [
-                'class' => Association::class,
-                'expanded' => true,
-                'multiple' => true,
-                'choice_label' => 'name',
-                'query_builder' => function (AssociationRepository $er) {
-                    return $er->createQueryBuilder('u')                 
-                    ->orderBy('u.name', 'ASC');
-                }
             ])
         ;
     }

@@ -28,22 +28,25 @@
 							<th scope="col">Email</th>
 							<th scope="col">téléphone</th>
 							<th scope="col">Modifier</th>
+							<th scope="col">Mot de passe</th>
 							<th scope="col">Supprimer</th>
 						</tr>
 					</thead>
 					{% for user in users %}
 						{% for assoUser in user.associationUsers %}
 							{% if assoUser.association.id == asso.id %}
-
 								<tbody>
 									<tr class="table-active ts">
 										<td>{{ user.firstname }}
 											{{ user.lastname }}</td>
 										<td>{{ user.email }}</td>
 										<td>{{ user.phone }}</td>
-
 										<td>
 											<a href="{{path("user_edit",{'id': user.id})}}" type="button" class="btn btn-outline-success">Modifier</a>
+
+										</td>
+										<td>
+											<a href="{{path("user_password",{'id': user.id})}}" type="button" class="btn btn-outline-success">Changer mot de passe</a>
 
 										</td>
 										<td>
