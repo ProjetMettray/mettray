@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class User1Type extends AbstractType
@@ -35,13 +36,15 @@ class User1Type extends AbstractType
                     'class' => 'form-control input-form'
                 ],
             ])
-            ->add('phone', TextType::class, [
+            ->add('phone', TelType::class, [
                 'label' => 'Téléphone',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control input-form'
                 ],
-            ]);
+            ])
+            ->add('Modifier', SubmitType::class)
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

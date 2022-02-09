@@ -57,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     /**
-     * @ORM\OneToMany(targetEntity=AssociationUser::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=AssociationUser::class, mappedBy="user",cascade={"persist", "remove"})
      */
     private $associationUsers;
 
