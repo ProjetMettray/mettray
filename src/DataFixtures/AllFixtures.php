@@ -27,36 +27,36 @@ class AllFixtures extends Fixture
     ];
 
     public const FAKE_ROOM_PARENT = [
-        ['Terrain entier', 100, 'Grand gymnase entier', 'Daunay', NULL, 1, 1],
-        ['Grand bassin', 50, 'Grand bassin, 8 lignes d\'eau', 'Guillon', NULL, 2, 1],
-        ['Salle 1', 100, 'Salle des fêtes, salle 1, 1er étage', 'Cauvin', NULL, 4, 1],
-        ['Salle 2', 80, 'Salle des fêtes, salle 2', 'Cauvin', NULL, 4, 1],
-        ['Salle Victor Hugo', 100, 'Salle de réunion Victor Hugo, 1er étage', 'Cauvin', NULL, 4, 0],
-        ['Katta', 35, 'Salle d\'entrainement', 'Cauvin', NULL, 4, 1],
-        ['Battle', 70, 'Arène de tournoi', 'Cauvin', NULL, 4, 1]
+        ['Terrain entier', 100, 'Grand gymnase entier', 'Daunay', NULL, 1, 1, 'Grand Gymnase'],
+        ['Grand bassin', 50, 'Grand bassin, 8 lignes d\'eau', 'Guillon', NULL, 2, 1, 'Piscine Municipale'],
+        ['Salle 1', 100, 'Salle des fêtes, salle 1, 1er étage', 'Cauvin', NULL, 4, 1, 'Salle des fêtes'],
+        ['Salle 2', 80, 'Salle des fêtes, salle 2', 'Cauvin', NULL, 4, 1, 'Salle des fêtes'],
+        ['Salle Victor Hugo', 100, 'Salle de réunion Victor Hugo, 1er étage', 'Cauvin', NULL, 4, 0, 'Hôtel de ville'],
+        ['Katta', 35, 'Salle d\'entrainement', 'Cauvin', NULL, 4, 1, 'Dojo'],
+        ['Battle', 70, 'Arène de tournoi', 'Cauvin', NULL, 4, 1, 'Dojo']
     ];
 
     public const FAKE_ROOM = [
-        ['Demi terrain A', 60, 'Grand gymnase, demi terrain A', 'Daunay', 'Terrain entier', 1, 1],
-        ['Demi terrain B', 40, 'Grand gymnase, demi terrain B', 'Daunay', 'Terrain entier', 1, 1],
-        ['Ligne 1', 1, 'Grand bassin ligne 1', 'Guillon', 'Grand bassin', 2, 1],
-        ['Ligne 2', 1, 'Grand bassin ligne 2', 'Guillon', 'Grand bassin', 2, 1],
-        ['Ligne 3', 1, 'Grand bassin ligne 3', 'Guillon', 'Grand bassin', 2, 1],
-        ['Ligne 4', 1, 'Grand bassin ligne 4', 'Guillon', 'Grand bassin', 2, 1],
-        ['Ligne 5', 1, 'Grand bassin ligne 5', 'Guillon', 'Grand bassin', 2, 1],
-        ['Ligne 6', 1, 'Grand bassin ligne 6', 'Guillon', 'Grand bassin', 2, 1],
-        ['Ligne 7', 1, 'Grand bassin ligne 7', 'Guillon', 'Grand bassin', 2, 1],
-        ['Ligne 8', 1, 'Grand bassin ligne 8', 'Guillon', 'Grand bassin', 2, 1],
-        ['Katta 1', 50, 'Demi tatami 1', 'Bertaux', 'Katta', 5, 1],
-        ['Katta 2', 50, 'Demi tatami 2', 'Bertaux', 'Katta', 5, 1]
+        ['Demi terrain A', 60, 'Grand gymnase, demi terrain A', 'Daunay', 'Terrain entier', 1, 1, 'Grand Gymnase'],
+        ['Demi terrain B', 40, 'Grand gymnase, demi terrain B', 'Daunay', 'Terrain entier', 1, 1, 'Grand Gymnase'],
+        ['Ligne 1', 1, 'Grand bassin ligne 1', 'Guillon', 'Grand bassin', 2, 1, 'Piscine Municipale'],
+        ['Ligne 2', 1, 'Grand bassin ligne 2', 'Guillon', 'Grand bassin', 2, 1, 'Piscine Municipale'],
+        ['Ligne 3', 1, 'Grand bassin ligne 3', 'Guillon', 'Grand bassin', 2, 1, 'Piscine Municipale'],
+        ['Ligne 4', 1, 'Grand bassin ligne 4', 'Guillon', 'Grand bassin', 2, 1, 'Piscine Municipale'],
+        ['Ligne 5', 1, 'Grand bassin ligne 5', 'Guillon', 'Grand bassin', 2, 1, 'Piscine Municipale'],
+        ['Ligne 6', 1, 'Grand bassin ligne 6', 'Guillon', 'Grand bassin', 2, 1, 'Piscine Municipale'],
+        ['Ligne 7', 1, 'Grand bassin ligne 7', 'Guillon', 'Grand bassin', 2, 1, 'Piscine Municipale'],
+        ['Ligne 8', 1, 'Grand bassin ligne 8', 'Guillon', 'Grand bassin', 2, 1, 'Piscine Municipale'],
+        ['Katta 1', 50, 'Demi tatami 1', 'Bertaux', 'Katta', 5, 1, 'Dojo'],
+        ['Katta 2', 50, 'Demi tatami 2', 'Bertaux', 'Katta', 5, 1, 'Dojo']
     ];
 
     public const FAKE_LOCATION = [
-        ['Grand Gymnase', '37390', 'Rue National', 'Mettray'],
-        ['Piscine Municiapl', '37390', 'Rue du charme', 'Mettray'],
-        ['Salle des fêtes', '37390', 'Avenue des saules', 'Mettray'],
-        ['Hôtel de ville', '37390', 'Rue tabaga', 'Mettray'],
-        ['Dojo', '37390', 'Rue National', 'Mettray']
+        ['Grand Gymnase', '46', 'Rue National', 'Mettray'],
+        ['Piscine Municipale', '89', 'Rue du charme', 'Mettray'],
+        ['Salle des fêtes', '98', 'Avenue des saules', 'Mettray'],
+        ['Hôtel de ville', '37', 'Rue tabaga', 'Mettray'],
+        ['Dojo', '35', 'Rue National', 'Mettray']
     ];
 
     public const FAKE_USER = [
@@ -196,7 +196,7 @@ class AllFixtures extends Fixture
                 ->setDescription($fakeRoomParent[2])
                 //->addRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[3]))
                 ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoomParent[4]))
-                ->setLocation($manager->getRepository(Location::class)->findOneByName('Grand Gymnase'))
+                ->setLocation($manager->getRepository(Location::class)->findOneByName($fakeRoomParent[7]))
                 ->setVisibility($fakeRoomParent[6]);
 
             $manager->persist($room);
@@ -211,7 +211,7 @@ class AllFixtures extends Fixture
                 ->setDescription($fakeRoom[2])
                 //->addRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[3]))
                 ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[4]))
-                ->setLocation($manager->getRepository(Location::class)->findOneByName('Grand Gymnase'))
+                ->setLocation($manager->getRepository(Location::class)->findOneByName($fakeRoom[7]))
                 ->setVisibility($fakeRoom[6]);
 
             $manager->persist($room);
