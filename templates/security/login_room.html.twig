@@ -82,11 +82,13 @@
 					{{roomid.name}}
 				{% endif %}
 			</h2>
-			<div class="row">
-				<div class="col-4 mx-auto">
-					<a href="{{path("booking_new")}}" class="text-white btn btn-secondary">Réserver</a>
+			{% if app.user %}
+				<div class="row">
+					<div class="col-4 mx-auto">
+						<a href="{{ path("booking_new", {'room': roomid.id}) }}" class="text-white btn btn-primary">Réserver</a>
+					</div>
 				</div>
-			</div>
+			{% endif %}
 			<div class="p-0 container" style="width: 548px; margin: 5rem">
 				<div id="calendar-holder"></div>
 			</div>
