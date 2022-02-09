@@ -6,6 +6,7 @@ use App\Entity\Room;
 use App\Entity\User;
 use App\Entity\Association;
 use App\Entity\AssociationUser;
+use App\Form\AssociationUserType;
 use App\Repository\RoomRepository;
 use Symfony\Component\Form\AbstractType;
 use App\Repository\AssociationRepository;
@@ -14,8 +15,13 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+
+
 
 class UserType extends AbstractType
 {
@@ -46,20 +52,22 @@ class UserType extends AbstractType
                     'class' => 'form-control'
             ],
             ])
-            ->add('phone', TextType::class, [
+            ->add('password',RepeatedType::class,[
+
+                'type' => PasswordType::class,
+                'invalid_message'=> "Les mdp sont pas identique",
+                'first_options'=> [
+                    'label'=>'Votre mot de passe',
+
+                ],
+                'second_options' => [
+                    'label'=>'Votre mot de passe a nouveau ' ,
+                ],
+            ])
+            ->add('phone', TelType::class, [
                 'attr' => [
                     'class' => 'form-control'
             ],
-            ])
-            ->add('associationUsers', EntityType::class, [
-                'class' => Association::class,
-                'expanded' => true,
-                'multiple' => true,
-                'choice_label' => 'name',
-                'query_builder' => function (AssociationRepository $er) {
-                    return $er->createQueryBuilder('u')                 
-                    ->orderBy('u.name', 'ASC');
-                }
             ])
         ;
     }

@@ -35,7 +35,7 @@ class Room
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="rooms")
+     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="rooms",cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="location_id", referencedColumnName="id", nullable=true)
      */
     private $location;
