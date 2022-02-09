@@ -18,12 +18,12 @@ class AssociationUser
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="associationUsers")
+     * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="associationUsers",cascade={"persist", "remove"})
      */
     private $association;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="associationUsers")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="associationUsers",cascade={"persist", "remove"})
      */
     private $user;
 

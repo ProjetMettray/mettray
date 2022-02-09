@@ -113,6 +113,7 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
+        $this->denyAccessUnlessGranted('USER_SHOW',$user);
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -123,6 +124,7 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $id): Response
     {
+        $this->denyAccessUnlessGranted('USER_EDIT',$id);
         $form = $this->createForm(User1Type::class, $id);
         $form->handleRequest($request);
 
@@ -143,6 +145,7 @@ class UserController extends AbstractController
      */
     public function delete(User $id): Response
     {
+        $this->denyAccessUnlessGranted('USER_DELETE',$id);
         $this->em->remove($id);
         $this->em->flush();
         return $this->redirectToRoute('user_index');

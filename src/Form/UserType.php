@@ -30,8 +30,8 @@ class UserType extends AbstractType
         $builder
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    'Utilisateur' => 'ROLE_USER',
-                    'Mairie' => 'ROLE_ADMIN',
+                    'Utilisateur' => "ROLE_USER",
+                    'Mairie' => "ROLE_ADMIN",
                 ],
                 'expanded' => true,
                 'multiple' => true,
