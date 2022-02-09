@@ -45,9 +45,9 @@ class Association
     private $associationUsers;
 
     /**
-     * @ORM\OneToMany(targetEntity=RoomAssociation::class, mappedBy="association")
+     * @ORM\ManyToMany(targetEntity=Room::class, inversedBy="associations")
      */
-    private $roomAssociations;
+    private $rooms;
 
     public function __construct()
     {
@@ -55,6 +55,8 @@ class Association
         $this->bookings = new ArrayCollection();
         $this->associationUsers = new ArrayCollection();
         $this->roomAssociations = new ArrayCollection();
+        $this->associationRooms = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,31 +166,25 @@ class Association
     }
 
     /**
-     * @return Collection|RoomAssociation[]
+     * @return Collection|Room[]
      */
-    public function getRoomAssociations(): Collection
+    public function getRooms(): Collection
     {
-        return $this->roomAssociations;
+        return $this->rooms;
     }
 
-    public function addRoomAssociation(RoomAssociation $roomAssociation): self
+    public function addRoom(Room $room): self
     {
-        if (!$this->roomAssociations->contains($roomAssociation)) {
-            $this->roomAssociations[] = $roomAssociation;
-            $roomAssociation->setAssociation($this);
+        if (!$this->rooms->contains($room)) {
+            $this->rooms[] = $room;
         }
 
         return $this;
     }
 
-    public function removeRoomAssociation(RoomAssociation $roomAssociation): self
+    public function removeRoom(Room $room): self
     {
-        if ($this->roomAssociations->removeElement($roomAssociation)) {
-            // set the owning side to null (unless already changed)
-            if ($roomAssociation->getAssociation() === $this) {
-                $roomAssociation->setAssociation(null);
-            }
-        }
+        $this->rooms->removeElement($room);
 
         return $this;
     }
