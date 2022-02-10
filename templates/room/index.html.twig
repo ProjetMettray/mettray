@@ -4,11 +4,12 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container text-center mt-5 bg-dark">
-		<h1 class="p-5 text-white">Liste des Salles</h1>
+	<div class="container text-center mt-5 pb-2 bg-dark">
+		<h1 class="p-5 text-white">Liste des salles par adresse</h1>
 		<div class="d-flex start-flex p-4 ">
 			{% if app.user %}
 				{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+					<a class="btn btn-light ml-3" href="{{ path('location_add') }}">Ajouter une adresse</a>
 					<a class="btn btn-light ml-3" href="{{ path('room_add') }}">Ajouter une salle</a>
 				{% endif %}
 			{% endif %}
@@ -34,7 +35,7 @@
 					{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
 						<div class="m-2">
 							<a type="button" class="btn btn-primary" href="{{path("location_update",{'id': loc.id})}}">Modifier</a>
-							<a type="button" class="btn btn-danger" href="{{path("location_delete",{'id': loc.id})}}">Suprimmer</a>
+							<a type="button" class="btn btn-danger" href="{{path("location_delete",{'id': loc.id})}}">Supprimer</a>
 						</div>
 					{% endif %}
 					{% for room in rooms %}

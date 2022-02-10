@@ -13,17 +13,17 @@
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('booking_show_all_by_user') }}">Mes réservation</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="{{ path('room') }}">Liste des salles</a>
+					</li>
 				{% endif %}
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="{{ path('room') }}">Salles</a>
-				</li>
 				{% if app.user %}
 					{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('user_index') }}">Utilisateur</a>
+							<a class="nav-link" href="{{ path('user_index') }}">Liste des associations</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('booking') }}">Réservation</a>
+							<a class="nav-link" href="{{ path('booking') }}">Liste des réservations</a>
 						</li>
 					{% endif %}
 				{% endif %}
@@ -39,10 +39,6 @@
 						<a class="nav-link" href="{{ path('user_show',{'id': app.user.id}) }}">Profil</a>
 					</li>
 				{% else %}
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
-					</li>
-
 				{% endif %}
 			</ul>
 		</div>
