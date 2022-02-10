@@ -24,29 +24,41 @@
 					<th scope="col">Supprimez</th>
 				</tr>
 			</thead>
-			<tbody>
-				{% for booking in bookings %}
-					<tr class="table-active ts">
-						<td>{{ booking.id }}</td>
-						<td>{{booking.title}}</td>
-						<td>{{booking.startAt|date('d/m/Y')}}</td>
-						<td>{{booking.endAt|date('d/m/Y')}}</td>
-						<td>{{booking.getRoom().getName()}}</td>
-						<td>{{booking.status}}</td>
-						<td>
-							{% if booking.getAssociation() %}
-								{{booking.getAssociation().getName()}}
-							{% endif %}
-						</td>
-						<td>
-							<a href="{{ path("booking_edit", {"id": booking.id}) }}" type="button" class="btn btn-outline-success">Modifier</a>
-						</td>
-						<td>
-							<a href="{{ path("booking_delete", {"id": booking.id}) }}" type="button" class="btn btn-outline-success">Supprimez</a>
-						</td>
-					</tr>
-				{% endfor %}
-			</tbody>
 		</table>
+
+		{% for room in rooms %}
+			{% if room.bookings|length > 0 %}
+				<h2>{{room.name}}</h2>
+				<table class="table table-striped table-success table-hover">
+					<tbody>
+					{# {% if room|length > 0 %} #}	
+						{% for booking in bookings %}
+							{% if booking.room.name == room.name %}
+								<tr class="table-active ts">
+									<td>{{booking.id}}</td>
+									<td>{{booking.title}}</td>
+									<td>{{booking.startAt|date('d/m/Y')}}</td>
+									<td>{{booking.endAt|date('d/m/Y')}}</td>
+									<td>{{booking.getRoom().getName()}}</td>
+									<td>{{booking.status}}</td>
+									<td>
+										{% if booking.getAssociation() %}
+											{{booking.getAssociation().getName()}}
+										{% endif %}
+									</td>
+									<td>
+										<a href="{{ path("booking_edit", {"id": booking.id}) }}" type="button" class="btn btn-outline-success">Modifier</a>
+									</td>
+									<td>
+									<a href="{{ path("booking_delete", {"id": booking.id}) }}" type="button" class="btn btn-outline-success">Supprimez</a>
+									</td>
+								</tr>
+							{% endif %}
+							
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+		{% endfor %}
 	</div>
 {% endblock %}

@@ -8,6 +8,7 @@ use App\Entity\Booking;
 use App\Form\BookingType;
 use App\Entity\Association;
 use App\Entity\AssociationUser;
+use App\Repository\RoomRepository;
 use App\Repository\BookingRepository;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,10 +32,11 @@ class BookingController extends AbstractController
      * @Route("/booking", name="booking")
      * 
      */
-    public function index(BookingRepository $BookingRepository): Response
+    public function index(BookingRepository $BookingRepository, RoomRepository $RoomRepository): Response
     {
         return $this->render('booking/index.html.twig', [
             'bookings' => $BookingRepository->findAll(),
+            'rooms' => $RoomRepository->findAll()
         ]);
     }
 
