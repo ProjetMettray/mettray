@@ -41,8 +41,9 @@ class AssociationType extends AbstractType
                 ],
             ])
             //->add('user_has_association')
-            ->add('Envoyer', SubmitType::class, [
-                'attr' => ['class' => 'mt-2 btn btn-secondary']
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'label'=> 'Envoyer'
             ])
             ->add('rooms', EntityType::class, [
                 'class' => Room::class,
