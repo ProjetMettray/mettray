@@ -10,7 +10,10 @@
 			<div class="col">
 				{% if app.user %}
 					{% if is_granted('ROLE_USER') %}
-						<h2 class="m-4">Associations</h2>
+						<h2 class="m-4">Mes salles</h2>
+						{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+							<a class="btn btn-secondary ml-3" href="{{ path('room_add') }}">Ajouter une salle</a>
+						{% endif %}
 						{% for associations in asso %}
 							{% for assoUser in associations.associationUsers %}
 								{%  if app.user.id == assoUser.user.id%}
