@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Entity;
-
 use App\Repository\AssociationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity(repositoryClass=AssociationRepository::class)
  */
@@ -18,96 +15,72 @@ class Association
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $email;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $telephone;
-
     /**
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="association")
-     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $bookings;
-
     /**
      * @ORM\OneToMany(targetEntity=AssociationUser::class, mappedBy="association")
-     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $associationUsers;
-
     /**
-     * @ORM\ManyToMany(targetEntity=Room::class, inversedBy="associations")
-     * @ORM\JoinColumn(onDelete="CASCADE") 
+     * @ORM\OneToMany(targetEntity=RoomAssociation::class, mappedBy="association")
      */
-    private $rooms;
-
+    private $roomAssociations;
     public function __construct()
     {
         $this->user_has_association = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->associationUsers = new ArrayCollection();
         $this->roomAssociations = new ArrayCollection();
-        $this->associationRooms = new ArrayCollection();
-        $this->rooms = new ArrayCollection();
     }
-
     public function getId(): ?int
     {
         return $this->id;
     }
-
     public function getName(): ?string
     {
         return $this->name;
     }
-
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
-
     public function __toString()
     {
         return $this->name;
     }
-
     public function getEmail(): ?string
     {
         return $this->email;
     }
-
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
-
     public function getTelephone(): ?string
     {
         return $this->telephone;
     }
-
     public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
-
         return $this;
     }
-
     /**
      * @return Collection|Booking[]
      */
@@ -115,17 +88,14 @@ class Association
     {
         return $this->bookings;
     }
-
     public function addBooking(Booking $booking): self
     {
         if (!$this->bookings->contains($booking)) {
             $this->bookings[] = $booking;
             $booking->setAssociation($this);
         }
-
         return $this;
     }
-
     public function removeBooking(Booking $booking): self
     {
         if ($this->bookings->removeElement($booking)) {
@@ -134,10 +104,8 @@ class Association
                 $booking->setAssociation(null);
             }
         }
-
         return $this;
     }
-
     /**
      * @return Collection|AssociationUser[]
      */
@@ -145,17 +113,14 @@ class Association
     {
         return $this->associationUsers;
     }
-
     public function addAssociationUser(AssociationUser $associationUser): self
     {
         if (!$this->associationUsers->contains($associationUser)) {
             $this->associationUsers[] = $associationUser;
             $associationUser->setAssociation($this);
         }
-
         return $this;
     }
-
     public function removeAssociationUser(AssociationUser $associationUser): self
     {
         if ($this->associationUsers->removeElement($associationUser)) {
@@ -164,31 +129,31 @@ class Association
                 $associationUser->setAssociation(null);
             }
         }
-
         return $this;
     }
-
     /**
-     * @return Collection|Room[]
+     * @return Collection|RoomAssociation[]
      */
-    public function getRooms(): Collection
+    public function getRoomAssociations(): Collection
     {
-        return $this->rooms;
+        return $this->roomAssociations;
     }
-
-    public function addRoom(Room $room): self
+    public function addRoomAssociation(RoomAssociation $roomAssociation): self
     {
-        if (!$this->rooms->contains($room)) {
-            $this->rooms[] = $room;
+        if (!$this->roomAssociations->contains($roomAssociation)) {
+            $this->roomAssociations[] = $roomAssociation;
+            $roomAssociation->setAssociation($this);
         }
-
         return $this;
     }
-
-    public function removeRoom(Room $room): self
+    public function removeRoomAssociation(RoomAssociation $roomAssociation): self
     {
-        $this->rooms->removeElement($room);
-
+        if ($this->roomAssociations->removeElement($roomAssociation)) {
+            // set the owning side to null (unless already changed)
+            if ($roomAssociation->getAssociation() === $this) {
+                $roomAssociation->setAssociation(null);
+            }
+        }
         return $this;
     }
 }
