@@ -8,7 +8,7 @@
 	<h1 class="text-center">Modifier le profil</h1>
 	<div class="container">
 		{{ form(UserUpdateForm) }}
-		<a class="btn btn-secondary" href="{{ path('user_index') }}">Revenir au profil</a>
+		<a class="btn btn-secondary" href="{{path('user_show',{'id': user.id})}}">Revenir au profil</a>
 
 	</div>
 {% endblock %}
