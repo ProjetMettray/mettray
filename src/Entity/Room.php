@@ -21,6 +21,7 @@ class Room
 
     /**
      * @ORM\Column(type="string", length=45)
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $name;
 
@@ -43,11 +44,13 @@ class Room
     /**
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="rooms")
      * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $room;
 
     /**
      * @ORM\OneToMany(targetEntity=Room::class, mappedBy="room")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $rooms;
 

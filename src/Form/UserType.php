@@ -39,18 +39,22 @@ class UserType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'form-control'
-            ],
+                    'class' => 'form-control',
+                ],
+                'label' => 'Email'
             ])
             ->add('lastname', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
-            ],
+                    'class' => 'form-control',      
+                ],
+                'label' => 'Nom'
+                
             ])
             ->add('firstname', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
-            ],
+                ],
+                'label' => 'Prénom'
             ])
             ->add('password',RepeatedType::class,[
 
@@ -67,7 +71,8 @@ class UserType extends AbstractType
             ->add('phone', TelType::class, [
                 'attr' => [
                     'class' => 'form-control'
-            ],
+                ],
+                'label' => 'Téléphone'
             ])
         ;
     }

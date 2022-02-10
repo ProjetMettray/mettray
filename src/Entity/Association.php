@@ -36,16 +36,19 @@ class Association
 
     /**
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="association")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $bookings;
 
     /**
      * @ORM\OneToMany(targetEntity=AssociationUser::class, mappedBy="association")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $associationUsers;
 
     /**
      * @ORM\ManyToMany(targetEntity=Room::class, inversedBy="associations")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $rooms;
 
