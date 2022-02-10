@@ -9,7 +9,7 @@
 		<div class="d-flex start-flex p-4 ">
 			{% if app.user %}
 				{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
-					<a class="btn btn-light ml-3" href="{{ path('room_add') }}">Ajouter</a>
+					<a class="btn btn-light ml-3" href="{{ path('room_add') }}">Ajouter une salle</a>
 				{% endif %}
 			{% endif %}
 		</div>
