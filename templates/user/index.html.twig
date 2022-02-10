@@ -34,7 +34,7 @@
 						<tr class="table-success">
 							<th scope="col">Nom</th>
 							<th scope="col">Email</th>
-							<th scope="col">téléphone</th>
+							<th scope="col">Téléphone</th>
 						{% if is_granted('ROLE_ADMIN') %}
 							<th scope="col">Ajouter association</th>
 							<th scope="col">Mot de passe</th>
@@ -60,10 +60,10 @@
 											<a href="{{path("user_password",{'id': user.id})}}" type="button" class="btn btn-outline-success">mot de passe</a>
 										</td>
 										<td>
-											<a href="{{path("user_delete",{'id': user.id})}}" type="button" class="btn btn-outline-success">Supprimer</a>
+											<a href="{{path("user_edit",{'id': user.id})}}" type="button" class="btn btn-outline-success">Modifier</a>
 										</td>
 										<td>
-											<a href="{{path("user_edit",{'id': user.id})}}" type="button" class="btn btn-outline-success">Modifier</a>
+											<a href="{{path("user_delete",{'id': user.id})}}" type="button" class="btn btn-outline-success">Supprimer</a>
 										</td>
 									{% endif %}
 									</tr>

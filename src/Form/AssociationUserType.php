@@ -23,7 +23,8 @@ class AssociationUserType extends AbstractType
             'query_builder' => function (AssociationRepository $er) {
                 return $er->createQueryBuilder('u')                 
                 ->orderBy('u.name', 'ASC');
-            }
+            },
+            'label' => 'Association'
         ])
         ->add('Ajouter', SubmitType::class)
         ;

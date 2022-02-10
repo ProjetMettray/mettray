@@ -96,7 +96,7 @@ class AssociationController extends AbstractController
 
         $this->addFlash('success', $deleteMessage);
 
-        return $this->redirectToRoute('association');
+        return $this->redirectToRoute('user_index');
     }
 
     /**

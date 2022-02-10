@@ -46,11 +46,13 @@ class Booking
 
     /**
      * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="bookings")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $association;
 
     /**
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="bookings")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $room;
 

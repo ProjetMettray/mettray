@@ -19,11 +19,13 @@ class RoomAssociation
 
     /**
      * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="roomAssociations")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $association;
 
     /**
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="roomAssociations")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $room;
 
