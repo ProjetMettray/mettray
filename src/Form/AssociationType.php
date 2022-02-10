@@ -47,6 +47,7 @@ class AssociationType extends AbstractType
             ])
             ->add('rooms', EntityType::class, [
                 'class' => Room::class,
+                'mapped' => false,
                 'expanded' => true,
                 'multiple' => true,
                 'choice_label' => 'name',
