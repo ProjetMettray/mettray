@@ -151,6 +151,11 @@ class Room
     /**
      * @return Collection|self[]
      */
+    // public function __toString()
+    // {
+    //     return $this->name;
+    // }
+
     public function getRooms(): Collection
     {
         return $this->rooms;
