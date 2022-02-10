@@ -11,6 +11,7 @@
 			{% if app.user %}
 				{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
 					<a class="btn btn-light ml-3" href="{{ path('user_add') }}">Ajouter</a>
+								<a class="btn btn-light ml-3" href="{{ path('association_add') }}">Ajouter une association</a>
 				{% endif %}
 			{% endif %}
 		</div>
