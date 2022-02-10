@@ -34,10 +34,12 @@
 
 						{{loc.cp}}
 						{{loc.city}}</p>
-					<div class="m-2">
-						<a type="button" class="btn btn-primary" href="{{path("location_update",{'id': loc.id})}}">Modifier</a>
-						<a type="button" class="btn btn-danger" href="{{path("location_delete",{'id': loc.id})}}">Suprimmer</a>
-					</div>
+					{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+						<div class="m-2">
+							<a type="button" class="btn btn-primary" href="{{path("location_update",{'id': loc.id})}}">Modifier</a>
+							<a type="button" class="btn btn-danger" href="{{path("location_delete",{'id': loc.id})}}">Suprimmer</a>
+						</div>
+					{% endif %}
 					{% for room in rooms %}
 						{% if room.location.id == loc.id %}
 							<tr class="table-active ts ">
