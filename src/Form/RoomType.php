@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use App\Repository\RoomRepository;
 
 
 class RoomType extends AbstractType
@@ -53,6 +54,7 @@ class RoomType extends AbstractType
             ->add('room', EntityType::class, [
                 'class' => Room::class,
                 'label' => 'Room',
+                'required' => false,
                 'choice_label' => 'name'
             ])
             ->add('visibility', ChoiceType::class, [
