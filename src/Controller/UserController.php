@@ -3,17 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\AssociationUser;
 use App\Form\UserType;
 use App\Form\User1Type;
-use App\Form\AssociationUserType;
 use App\Form\UserPasswordType;
+use App\Entity\AssociationUser;
+use App\Form\AssociationUserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AssociationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 

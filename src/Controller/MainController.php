@@ -10,6 +10,7 @@ use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -27,6 +28,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/main", name="main")
+     * @IsGranted("ROLE_USER")
      */
     public function index(LocationRepository $location): Response
     {
@@ -46,6 +48,7 @@ class MainController extends AbstractController
     }
     /**
      * @Route("/main/{id}", name="main_room")
+     * @IsGranted("ROLE_USER")
      */
     public function showRoom(Room $id)
     {

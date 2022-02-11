@@ -30,6 +30,7 @@ class BookingController extends AbstractController
     /**
      * 
      * @Route("/booking", name="booking")
+     * @IsGranted("ROLE_USER")
      * 
      */
     public function index(BookingRepository $BookingRepository, RoomRepository $RoomRepository): Response
@@ -42,6 +43,7 @@ class BookingController extends AbstractController
 
     /**
      * @Route("/booking/show_all_by_user", name="booking_show_all_by_user")
+     * @IsGranted("ROLE_USER")
      */
     public function showAllByUser(): Response
     {
@@ -67,6 +69,7 @@ class BookingController extends AbstractController
 
     /**
      * @Route("/booking/new/{room}", name="booking_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request, Room $room): ?Response
     {
@@ -129,6 +132,7 @@ class BookingController extends AbstractController
 
     /**
      * @Route("/booking/{id}", name="booking_show", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function show(Booking $booking): Response
     {
@@ -139,6 +143,7 @@ class BookingController extends AbstractController
 
     /**
      * @Route("/booking/edit/{id}", name="booking_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Booking $booking): Response
     {
@@ -160,6 +165,7 @@ class BookingController extends AbstractController
 
     /**
      * @Route("/booking/{id}", name="booking_delete", methods={"POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, Booking $booking): Response
     {

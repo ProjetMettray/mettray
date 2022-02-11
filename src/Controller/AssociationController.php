@@ -23,6 +23,7 @@ class AssociationController extends AbstractController
     }
      /**
      * @Route("/association", name="association")
+     * @IsGranted("ROLE_USER")
      */
     public function index(AssociationRepository $associationRepository): Response
     {
@@ -100,6 +101,7 @@ class AssociationController extends AbstractController
 
     /**
      * @Route("/associations/{association}", name="association_show")
+     * @IsGranted("ROLE_USER")
      */
     public function showAssociation(Association $association)
     {
@@ -109,6 +111,7 @@ class AssociationController extends AbstractController
     }
     /**
      * @Route("/associations/show", name="association_show")
+     * @IsGranted("ROLE_USER")
      */
     public function showAsso()
     {
