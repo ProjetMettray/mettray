@@ -46,7 +46,7 @@ class LocationController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('location_show', [
-                'location' => $location->getId()
+                'id' => $location->getId()
             ]);
         }
 
