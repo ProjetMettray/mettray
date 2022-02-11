@@ -45,9 +45,7 @@ class LocationController extends AbstractController
             $entityManager->persist($location);
             $entityManager->flush();
 
-            return $this->redirectToRoute('location_show', [
-                'id' => $location->getId()
-            ]);
+            return $this->redirectToRoute('room');
         }
 
         return $this->render('location/add.html.twig', [
