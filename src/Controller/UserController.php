@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\Association;
 use App\Entity\AssociationUser;
 use App\Form\UserType;
 use App\Form\User1Type;
