@@ -19,7 +19,7 @@ class LocationController extends AbstractController
 {
      /**
       * @Route("/location", name="location")
-      *
+      * @IsGranted("ROLE_ADMIN")
      */
     public function index(LocationRepository $locationRepository): Response
     {
@@ -30,7 +30,7 @@ class LocationController extends AbstractController
 
     /**
      * @Route("/location/add", name="location_add")
-     * 
+     * @IsGranted("ROLE_ADMIN")
      */
     public function addLocation(Request $request, EntityManagerInterface $entityManager)
     {
@@ -55,6 +55,7 @@ class LocationController extends AbstractController
 
     /**
      * @Route("/locations/{id}/update", name="location_update")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function updateLocation(Location $location, Request $request, EntityManagerInterface $entityManager)
     {
@@ -75,6 +76,7 @@ class LocationController extends AbstractController
 
     /**
      * @Route("/locations/{id}/delete", name="location_delete")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function deleteLocation(Location $location, EntityManagerInterface $entityManager)
     {
@@ -89,6 +91,7 @@ class LocationController extends AbstractController
 
     /**
      * @Route("/locations/{id}", name="location_show")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function showLocation(Location $location)
     {

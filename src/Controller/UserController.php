@@ -28,6 +28,7 @@ class UserController extends AbstractController
     }
     /**
      * @Route("/user", name="user_index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(UserRepository $userRepository ,AssociationRepository $association): Response
     {
@@ -39,7 +40,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user/add", name="user_add")
-     * 
+     * @IsGranted("ROLE_ADMIN")
      */
     public function addUser(Request $request, EntityManagerInterface $entityManager,UserPasswordEncoderInterface $encodeur)
     {
@@ -62,7 +63,7 @@ class UserController extends AbstractController
     }
     /**
      * @Route("/user/{id}/addassociation", name="user_add_association")
-     * 
+     * @IsGranted("ROLE_ADMIN")
      */
     public function addAssociation(User $id, Request $request, EntityManagerInterface $entityManager)
     {
@@ -86,6 +87,7 @@ class UserController extends AbstractController
     }
     /**
      * @Route("/user/password/{id}", name="user_password", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function register(User $id,EntityManagerInterface $entityManager,Request $request,UserPasswordEncoderInterface $encodeur): Response
     {
@@ -109,6 +111,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user/{id}", name="user_show")
+     * @IsGranted("ROLE_USER")
      */
     public function show(User $user): Response
     {
@@ -120,6 +123,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user/{id}/edit", name="user_edit")
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, User $id): Response
     {
@@ -141,6 +145,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user/delete/{id}", name="user_delete")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(User $id): Response
     {

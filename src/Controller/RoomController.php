@@ -26,6 +26,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/room", name="room")
+     * @IsGranted("ROLE_USER")
      *
      */
     public function index(RoomRepository $roomRepository,LocationRepository $locationRepository): Response
