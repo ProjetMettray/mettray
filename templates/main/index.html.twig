@@ -5,15 +5,17 @@
 
 {% block body %}
 	<div class="container">
-		<div class="row d-flex justify-content-center mt-2">
-		{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
-			<nav class="navbar navbar-expand-lg navbar-light bg-secondary mt-0 rounded">
-				<a class="btn btn-light ml-3" href="{{ path('location_add') }}">Ajouter une adresse</a>
-				<a class="btn btn-light ml-3" href="{{ path('room_add') }}">Ajouter une salle</a>
-				<a class="btn btn-light ml-3" href="{{ path('association_add') }}">Ajouter une association</a>
-				<a class="btn btn-light ml-3" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
-			</nav>
+			{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+			<div>
+				<nav class="navbar navbar-expand-lg navbar-light bg-secondary rounded text-center d-flex justify-content-around">
+					<a class="btn btn-light ml-3" href="{{ path('location_add') }}">Ajouter une adresse</a>
+					<a class="btn btn-light ml-3" href="{{ path('room_add') }}">Ajouter une salle</a>
+					<a class="btn btn-light ml-3" href="{{ path('association_add') }}">Ajouter une association</a>
+					<a class="btn btn-light ml-3" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
+				</nav>
+			</div>
 			{% endif %}
+		<div class="row d-flex justify-content-center mt-2">
 			<div class="col">
 				{% if app.user %}
 					{% if is_granted('ROLE_USER') %}
