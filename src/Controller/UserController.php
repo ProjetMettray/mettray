@@ -88,7 +88,7 @@ class UserController extends AbstractController
     }
     /**
      * @Route("/user/password/{id}", name="user_password", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_USER")
      */
     public function register(User $id,EntityManagerInterface $entityManager,Request $request,UserPasswordEncoderInterface $encodeur): Response
     {
