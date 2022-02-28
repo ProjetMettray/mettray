@@ -68,7 +68,8 @@ class BookingType extends AbstractType
                 'required' => true
             ])
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'mt-2 btn btn-secondary']
+                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'label'=> 'Envoyer'
             ]);
     }
 

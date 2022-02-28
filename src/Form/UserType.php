@@ -10,6 +10,7 @@ use App\Form\AssociationUserType;
 use App\Repository\RoomRepository;
 use Symfony\Component\Form\AbstractType;
 use App\Repository\AssociationRepository;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
@@ -73,6 +74,11 @@ class UserType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'label' => 'Téléphone'
+            ])
+
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'label'=> 'Envoyer'
             ])
         ;
     }

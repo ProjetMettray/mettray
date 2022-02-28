@@ -42,8 +42,10 @@ class LocationType extends AbstractType
                     'class' => 'form-control input-form'
                 ],
             ])
+
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'mt-2 btn btn-secondary']
+                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'label'=> 'Envoyer'
             ]);
     }
 

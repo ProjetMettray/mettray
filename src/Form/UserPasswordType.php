@@ -27,7 +27,10 @@ class UserPasswordType extends AbstractType
                 'label'=>'Votre mot de passe a nouveau ' ,
             ],
         ])
-        ->add('Modifier', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'label'=> 'Envoyer'
+            ])
         ;
     }
 

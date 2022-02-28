@@ -43,7 +43,10 @@ class User1Type extends AbstractType
                     'class' => 'form-control input-form'
                 ],
             ])
-            ->add('Modifier', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'label'=> 'Envoyer'
+            ])
             ;
     }
 

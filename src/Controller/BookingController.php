@@ -164,17 +164,16 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/booking/{id}", name="booking_delete", methods={"POST"})
+     * @Route("/booking/delete/{id}", name="booking_delete", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, Booking $booking): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $booking->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($booking);
-            $entityManager->flush();
-        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($booking);
+        $entityManager->flush();
 
-        return $this->redirectToRoute('booking', [], Response::HTTP_SEE_OTHER);
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 }

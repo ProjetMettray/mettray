@@ -10,10 +10,5 @@
 		<hr>
 
 		{{ include('booking/_form.html.twig', {'button_label': 'Update'}) }}
-
-		<div class="row">
-			{{ include('booking/_delete_form.html.twig') }}
-			<a class="btn btn-light" href="{{ path('booking') }}">back to list</a>
-		</div>
 	</div>
 {% endblock %}
