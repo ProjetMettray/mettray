@@ -17,6 +17,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AllFixtures extends Fixture
 {
     public const FAKE_ASSO = [
+        ['Mairie', 'mairie@gmail.com', '07.25.63.53.00'],
         ['FC Mettray', 'fcmettray@gmail.com', '07.25.63.53.54'],
         ['Natation Club Mettray', 'natationclub@gmail.com', '07.22.35.65.32'],
         ['Hockey Boys', 'hockeyboys@gmail.com', '07.46.53.51.53'],
@@ -101,7 +102,9 @@ class AllFixtures extends Fixture
         ['Vaillant', 'Amical des Gardes Champêtres'],
         ['Vaillant', 'Hockey Boys'],
         ['Daunay', 'Natation Club Mettray'],
-        ['Bertaux', 'Judo Karate Club']
+        ['Bertaux', 'Judo Karate Club'],
+        ['Bertaux', 'Mairie'],
+        ['Metayer', 'Mairie']
     ];
 
     public const FAKE_BOOKING = [
