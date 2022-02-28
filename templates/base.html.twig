@@ -98,9 +98,14 @@
 								let email = document.querySelector('#email');
 								let button = document.querySelector('#edit-booking');
 
-								title.textContent = datas.event.extendedProps[0].asso
-								+ ": "
-								+ datas.event.title;
+								if (datas.event.extendedProps[0].asso != undefined){
+									title.textContent = datas.event.extendedProps[0].asso
+											+ ": "
+											+ datas.event.title;
+								} else {
+									title.textContent = 'Informations non disponible';
+								}
+
 
 								date.textContent = concatDate;
 
