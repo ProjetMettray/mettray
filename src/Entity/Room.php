@@ -36,20 +36,19 @@ class Room
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="rooms",cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="location_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="rooms")
+     * @ORM\JoinColumn(name="location_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $location;
 
     /**
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="rooms")
-     * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=true)
-     * @ORM\JoinColumn(onDelete="CASCADE") 
+     * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $room;
 
     /**
-     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="room")
+     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="room",orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $rooms;

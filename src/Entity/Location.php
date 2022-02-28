@@ -40,7 +40,7 @@ class Location
     private $city;
 
     /**
-     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="location")
+     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="location",orphanRemoval=true)
      */
     private $rooms;
 
