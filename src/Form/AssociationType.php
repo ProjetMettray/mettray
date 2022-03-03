@@ -5,8 +5,10 @@ namespace App\Form;
 use App\Entity\User;
 use App\Entity\Association;
 use App\Entity\Room;
+use App\Entity\RoomAssociation;
 use Doctrine\ORM\EntityRepository;
 use App\Repository\RoomRepository;
+use App\Repository\RoomAssociationRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -41,11 +43,7 @@ class AssociationType extends AbstractType
                 ],
             ])
             //->add('user_has_association')
-            ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'mt-2 btn btn-secondary'],
-                'label'=> 'Envoyer'
-            ])
-            ->add('rooms', EntityType::class, [
+            ->add('roomAssociations', EntityType::class, [
                 'class' => Room::class,
                 'mapped' => false,
                 'expanded' => true,
@@ -55,6 +53,10 @@ class AssociationType extends AbstractType
                     return $er->createQueryBuilder('u')                 
                     ->orderBy('u.name', 'ASC');
                 }
+            ])
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'label'=> 'Envoyer'
             ]);
     }
 
