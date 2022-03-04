@@ -106,13 +106,19 @@ class BookingController extends AbstractController
 
             $sendForm = true;
 
+            /*
             foreach ($bookingsForRoom as $bookingForRoom) {
+                if (($startDateForm >= $bookingForRoom->getStartAt() && $startDateForm < $bookingForRoom->getEndAt()) || ($endDateForm > $bookingForRoom->getStartAt() && $endDateForm <= $bookingForRoom->getEndAt())) {
+                    $form->get('start_at')->addError(new FormError('Ce créneau de dates est déjà pris!'));
+                    $sendForm = false;
+                }
                 if ($bookingForRoom->getEndAt() < $bookingForRoom->getStartAt()) {
                     $form->get('end_at')->addError(new FormError('La date de fin doit être supérieure à la date de début!'));
                     $sendForm = false;
                 }
             }
-
+            */
+            
             if ($sendForm) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($booking);
