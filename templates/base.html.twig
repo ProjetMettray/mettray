@@ -28,127 +28,114 @@
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 			{% if data is defined %}
-			<script type="text/javascript">
+				<script type="text/javascript">
 
-				document.addEventListener('DOMContentLoaded', () => {
+					document.addEventListener('DOMContentLoaded', () => {
 
-						let evenement = '{{ data | raw }}'
-						evenement = JSON.parse(evenement)
+let evenement = '{{ data | raw }}'
+evenement = JSON.parse(evenement)
 
-						let jsonEvent = [];
-						evenement.forEach(element => {
-							let jsonNewEvent = {
-								id: element.id,
-								title: element.title,
-								'start': element.start.date,
-								'end': element.end.date,
-								'extendedProps': [{
-									'asso': element.asso,
-									'lastname': element.lastname,
-									'firstname': element.firstname,
-									'phone': element.phone,
-									'email': element.email,
-								}]
-							};
-							jsonEvent.push(jsonNewEvent)
-						});
-						let calendarEl = document.getElementById('calendar-holder');
+let jsonEvent = [];
+evenement.forEach(element => {
+let jsonNewEvent = {
+id: element.id,
+title: element.title,
+'start': element.start.date,
+'end': element.end.date,
+'extendedProps': [
+{
+'asso': element.asso,
+'lastname': element.lastname,
+'firstname': element.firstname,
+'phone': element.phone,
+'email': element.email
+}
+]
+};
+jsonEvent.push(jsonNewEvent)
+});
+let calendarEl = document.getElementById('calendar-holder');
 
-						let calendar = new FullCalendar.Calendar(calendarEl, {
-							defaultView: 'dayGridMonth',
-							editable: true,
-							eventDrop: (datas) => {
-								if(!confirm("Êtes vous sûr de vouloir modifier la date de cet évenement ?")){
-									datas.revert()
-								} else {
-									let url = `/api/${datas.event.id}/edit`
-									console.log(datas.event.end)
-									let donnees = {
-										"title": datas.event.title,
-										"start": datas.event.start,
-										"end": datas.event.end,
-										"roomId": evenement[0].roomId
-									}
-									let xhr = new XMLHttpRequest
-									xhr.open("PUT", url)
-									xhr.send(JSON.stringify(donnees))
-								}
-							},
-							eventClick: (datas) => {
-								let myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
-								myModal.toggle()
+let calendar = new FullCalendar.Calendar(calendarEl, {
+defaultView: 'dayGridMonth',
+editable: true,
+eventDrop: (datas) => {
+if (!confirm("Êtes vous sûr de vouloir modifier la date de cet évenement ?")) {
+datas.revert()
+} else {
+let url = `/api/${
+datas.event.id
+}/edit`
+console.log(datas.event.end)
+let donnees = {
+"title": datas.event.title,
+"start": datas.event.start,
+"end": datas.event.end,
+"roomId": evenement[0].roomId
+}
+let xhr = new XMLHttpRequest
+xhr.open("PUT", url)
+xhr.send(JSON.stringify(donnees))
+}
+},
+eventClick: (datas) => {
+let myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
+myModal.toggle()
 
-								let concatDate = 
-								"Date : Du " +
-								datas.event.start.toLocaleDateString()
-								+ " " +
-								 datas.event.start.getHours() + 
-								 "h" + 
-								 datas.event.start.getMinutes() + 
-								 " au " + 
-								 datas.event.end.toLocaleDateString() + 
-								 " " + 
-								 datas.event.end.getHours() + 
-								 "h" + 
-								 datas.event.end.getMinutes();
+let concatDate = "Date : Du " + datas.event.start.toLocaleDateString() + " " + datas.event.start.getHours() + "h" + datas.event.start.getMinutes() + " au " + datas.event.end.toLocaleDateString() + " " + datas.event.end.getHours() + "h" + datas.event.end.getMinutes();
 
-								let title = document.querySelector('#exampleModalLabel')
-								let date = document.querySelector('#date');
-								let phone = document.querySelector('#phone');
-								let email = document.querySelector('#email');
-								let button = document.querySelector('#edit-booking');
+let title = document.querySelector('#exampleModalLabel')
+let date = document.querySelector('#date');
+let phone = document.querySelector('#phone');
+let email = document.querySelector('#email');
+let button = document.querySelector('#edit-booking');
 
-								if (datas.event.extendedProps[0].asso != undefined){
-									title.textContent = datas.event.extendedProps[0].asso
-											+ ": "
-											+ datas.event.title;
-								} else {
-									title.textContent = 'Informations non disponible';
-								}
+if (datas.event.extendedProps[0].asso != undefined) {
+title.textContent = datas.event.extendedProps[0].asso + ": " + datas.event.title;
+} else {
+title.textContent = 'Informations non disponible';
+} date.textContent = concatDate;
 
+phone.textContent = "Numéro de Téléphone: " + datas.event.extendedProps[0].phone;
 
-								date.textContent = concatDate;
+email.textContent = "Email : " + datas.event.extendedProps[0].email;
 
-								phone.textContent = "Numéro de Téléphone: " + datas.event.extendedProps[0].phone;
-
-								email.textContent = "Email : " + datas.event.extendedProps[0].email;
-
-								button.href = window.location.replace = window.location.origin + '/booking/edit/' + datas.event.id
-							},
-							eventSources: [
-								{
-									url: "{{ path('main') }}",
-									method: "POST",
-									extraParams: {
-										filters: JSON.stringify({})
-									},
-									failure: () => { // alert("There was an error while fetching FullCalendar!");
-									}
-								},
-							],
-							header: {
-								left: 'prev next today',
-								center: 'title',
-								right: 'dayGridMonth,timeGridWeek,timeGridDay'
-							},
-							buttonText: {
-								today: 'Aujourd\'hui',
-								day: 'Jour',
-								month: 'Mois',
-								week: 'Semaine'
-							},
-							plugins: [
-								'interaction', 'dayGrid', 'timeGrid'
-							], // https://fullcalendar.io/docs/plugin-index
-							locale: 'fr',
-							events: jsonEvent,
-							selectable: true,
-						});
+button.href = window.location.replace = window.location.origin + '/booking/edit/' + datas.event.id
+},
+eventSources: [
+{
+url: "{{ path('main') }}",
+method: "POST",
+extraParams: {
+filters: JSON.stringify({})
+},
+failure: () => { // alert("There was an error while fetching FullCalendar!");
+}
+},
+],
+header: {
+left: 'prev next today',
+center: 'title',
+right: 'dayGridMonth,timeGridWeek,timeGridDay'
+},
+buttonText: {
+today: 'Aujourd\'hui',
+day: 'Jour',
+month: 'Mois',
+week: 'Semaine'
+},
+plugins: [
+'interaction', 'dayGrid', 'timeGrid'
+], // https://fullcalendar.io/docs/plugin-index
+locale: 'fr',
+events: jsonEvent,
+selectable: true
+});
 
 
-						calendar.render();
-				});	
-			</script>
+calendar.render();
+});
+				</script>
 			{% endif %}
 		</head>
 	{% endblock %}
