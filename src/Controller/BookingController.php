@@ -91,7 +91,9 @@ class BookingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            if ($booking->getDays() === []){
+                $booking->setDays([0,1,2,3,4,5,6]);
+            }
             $booking->setRoom($room);
             $booking->setStatus('En attente');
 
@@ -105,12 +107,8 @@ class BookingController extends AbstractController
             $sendForm = true;
 
             foreach ($bookingsForRoom as $bookingForRoom) {
-                if (($startDateForm >= $bookingForRoom->getStartAt() && $startDateForm < $bookingForRoom->getEndAt()) || ($endDateForm > $bookingForRoom->getStartAt() && $endDateForm <= $bookingForRoom->getEndAt())) {
-                    $form->get('start_at')->addError(new FormError('Ce créneau de dates est déjà pris!'));
-                    $sendForm = false;
-                }
                 if ($bookingForRoom->getEndAt() < $bookingForRoom->getStartAt()) {
-                    $form->get('start_at')->addError(new FormError('La date de fin doit être supérieure à la date de début!'));
+                    $form->get('end_at')->addError(new FormError('La date de fin doit être supérieure à la date de début!'));
                     $sendForm = false;
                 }
             }
