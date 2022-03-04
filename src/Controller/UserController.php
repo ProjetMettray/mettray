@@ -57,9 +57,9 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $email = (new TemplatedEmail())
-                ->from('dimitri.guillon331@gmail.com')
+                ->from('mairie@mettray.com')
                 ->to($addUserForm->get('email')->getData())
-                ->subject('Thanks for signing up!')
+                ->subject('Merci de vous être inscrit !')
         
             // path of the Twig template to render
                 ->htmlTemplate('user/email.html.twig')
