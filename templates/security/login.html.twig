@@ -4,83 +4,76 @@
 {% endblock %}
 
 {% block body %}
-{% if app.user == null %}
-	<form class="container" method="post">
-		{% if error %}
-			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-		{% endif %}
+	{% if app.user == null %}
+		<form class="container" method="post">
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
 
-		{% if app.user %}
-			<div class="mb-3">
-				Vous êtes connecté en tant que :
-				{{ app.user.username }},
-				<a href="{{ path('app_logout') }}">Se déconnecter</a>
+			{% if app.user %}
+				<div class="mb-3">
+					Vous êtes connecté en tant que :
+					{{ app.user.username }},
+					<a href="{{ path('app_logout') }}">Se déconnecter</a>
+
+				</div>
+			{% endif %}
+
+			<label for="inputEmail">Email</label>
+			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+			<label for="inputPassword">Mot de passe</label>
+			<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<button class="btn btn-lg btn-primary my-2" type="submit">
+				Se connecter
+			</button>
+			<a href="{{ path('main') }}">Mot de passe oublié</a>
+		</form>
+
+	{% endif %}
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2 class="m-4">Salles publique</h2>
+				<div class="m-3 card" style="width: 18rem;">
+					<ul class="list-group list-group-flush">
+						{% set foo = 0 %}
+						{% for room in rooms %}
+							{% set foo = foo + 1 %}
+							<li class="list-group-item">
+								Salle :
+								<a href="{{path("calendar_login",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
+								<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
+									<i class="fas fa-eye "></i>
+								</a>
+								<div class="collapse" id="collapseExample{{foo}}">
+									<div class="card card-body">
+										<ul class="list-group">
+											<li class="text-secondary">Description:
+												<span class="text-dark">{{room.description}}</span>
+											</li>
+											<li class="text-secondary">Nombres de places:
+												<span class="text-dark">{{room.nbPlace}}</span>
+											</li>
+											<li class="text-secondary">Localisation:
+												<span class="text-dark">{{room.location}}</span>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
 			</div>
-		{% endif %}
-
-		<label for="inputEmail">Email</label>
-		<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-		<label for="inputPassword">Mot de passe</label>
-		<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-		<input
-		type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-		{#
-																											Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-																											See https://symfony.com/doc/current/security/remember_me.html
-																														
-																											<div class="checkbox mb-3">
-																												<label>
-																													<input type="checkbox" name="_remember_me"> Remember me
-																												</label>
-																											</div>
-																										#}
-
-		<button class="btn btn-lg btn-primary my-2" type="submit">
-			Se connecter
-		</button>
-	</form>
-</form>{% endif %}<div class="container">
-<div class="row">
-	<div class="col">
-	<h2 class="m-4">Salles publique</h2>
-		<div class="m-3 card" style="width: 18rem;">
-			<ul class="list-group list-group-flush">
-				{% set foo = 0 %}
-				{% for room in rooms %}
-					{% set foo = foo + 1 %}
-					<li class="list-group-item">
-						Salle :
-						<a href="{{path("calendar_login",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
-						<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
-							<i class="fas fa-eye "></i>
-						</a>
-						<div class="collapse" id="collapseExample{{foo}}">
-							<div class="card card-body">
-								<ul class="list-group">
-									<li class="text-secondary">Description:
-										<span class="text-dark">{{room.description}}</span>
-									</li>
-									<li class="text-secondary">Nombres de places:
-										<span class="text-dark">{{room.nbPlace}}</span>
-									</li>
-									<li class="text-secondary">Localisation:
-										<span class="text-dark">{{room.location}}</span>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</li>
-				{% endfor %}
-			</ul>
-		</div>
-	</div>
-	<div class="row text-center">
+			<div class="row text-center">
 				<div class="col">
 					<div class="container" style="width: 720px; margin: 2rem">
 						<div>Sélectionnez une salle pour afficher le calendrier</div>
 					</div>
 				</div>
 			</div>
-</div></div>{% endblock %}
+		</div>
+	</div>
+{% endblock %}

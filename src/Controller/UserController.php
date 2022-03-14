@@ -11,7 +11,9 @@ use App\Form\AssociationUserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AssociationRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -43,7 +45,7 @@ class UserController extends AbstractController
      * @Route("/user/add", name="user_add")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function addUser(Request $request, EntityManagerInterface $entityManager,UserPasswordEncoderInterface $encodeur)
+    public function addUser(Request $request, EntityManagerInterface $entityManager,UserPasswordEncoderInterface $encodeur, MailerInterface $mailer)
     {
         $user = new User();
         $addUserForm = $this->createForm(UserType::class, $user);
@@ -54,7 +56,21 @@ class UserController extends AbstractController
             $user->setPassword($encodeur->encodePassword($user,$user->getPassword()));
             $entityManager->persist($user);
             $entityManager->flush();
-
+            $email = (new TemplatedEmail())
+                ->from('dimitri.guillon331@gmail.com')
+                ->to($addUserForm->get('email')->getData())
+                ->subject('Thanks for signing up!')
+        
+            // path of the Twig template to render
+                ->htmlTemplate('user/email.html.twig')
+        
+            // pass variables (name => value) to the template
+                ->context([
+                    'firstname' =>$addUserForm->get('firstname')->getData(),
+                    'lastname' =>$addUserForm->get('lastname')->getData(),
+                ]);
+            $mailer->send($email);
+            $this->addFlash('message', 'Création du comptre réussi');
             return $this->redirectToRoute('user_add_association', ['id'=> $user->getId()]);
         }
 
