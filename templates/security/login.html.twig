@@ -1,73 +1,239 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Mettray-connexion
+{% endblock %}	
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('animo') }}
+
+	<script>
+
+$(document).ready(function() {
+
+	// Tooltips declaration
+	$('[data-hover="tooltip"]').tooltip({
+		delay: {
+			show: 250,
+			hide: 100
+		}
+	});
+
+	// Show required icons
+	if (!($('.form-group').hasClass('has-success'))) {
+		$('.form-group i.required').removeClass('hide');
+	}
+});
+
+function checkPasswordPattern(input) {
+
+	// DOM elements
+	var fg = $(input).parent().parent();
+	var ic = fg.find('i.input-icon');
+	var r = fg.find('i.required');
+
+	// Playing with error class
+	if (input.checkValidity() == false) {
+		fg.removeClass('has-success').addClass('has-feedback has-error');
+		ic.removeClass('glyphicon-ok').addClass('glyphicon glyphicon-remove form-control-feedback');
+		if (r.hasClass('hide')) {
+			r.removeClass('hide').animo({
+				animation: 'fadeInRight',
+				duration: 0.4,
+				timing: 'ease-out'
+			});
+		}
+
+		// Playing with success class
+	} else {
+		fg.removeClass('has-error').addClass('has-feedback has-success');
+		ic.removeClass('glyphicon-remove').addClass('glyphicon glyphicon-ok form-control-feedback');
+		if (!(r.hasClass('hide'))) {
+			r.animo({
+				animation: 'fadeOutRight',
+				duration: 0.3,
+				timing: 'ease-in'
+			}, function() {
+				r.addClass('hide');
+			});
+		}
+	}
+
+	// Let's play now with circles !
+	var text = input.value;
+	var perfect = true;
+
+	// Length
+	if (text.length < 8) {
+		$('#security-length').removeClass('green orange').addClass('red');
+		perfect = false;
+	} else if (text.length >= 8 && text.length < 13) {
+		$('#security-length').removeClass('green red').addClass('orange');
+		perfect = false;
+	} else
+		$('#security-length').removeClass('orange red').addClass('green');
+
+	// Lowercase
+	if (!(new RegExp('[a-z]').test(text))) {
+		$('#security-lowercase').removeClass('green orange').addClass('red');
+		perfect = false;
+	} else
+		$('#security-lowercase').removeClass('red orange').addClass('green');
+
+	// Uppercase
+	if (!(new RegExp('[A-Z]').test(text))) {
+		$('#security-uppercase').removeClass('green orange').addClass('red');
+		perfect = false;
+	} else
+		$('#security-uppercase').removeClass('red orange').addClass('green');
+
+	// Digit
+	if (!(new RegExp('[0-9]').test(text))) {
+		$('#security-digit').removeClass('green orange').addClass('red');
+		perfect = false;
+	} else
+		$('#security-digit').removeClass('red orange').addClass('green');
+
+	// Symbol
+	if (!(new RegExp(/[@+$-/:-?{-~!^_`]/).test(text))) {
+		$('#security-symbol').removeClass('green orange').addClass('red');
+		perfect = false;
+	} else
+		$('#security-symbol').removeClass('red orange').addClass('green');
+
+	// Cookies animations
+	var cookies = $('#security-cookies');
+	if (perfect && cookies.hasClass('hide')) {
+		cookies.removeClass('hide').animo({
+			animation: 'fadeInLeft',
+			duration: 0.4,
+			timing: 'ease-out'
+		});
+	} else if (perfect == false && !(cookies.hasClass('hide'))) {
+		cookies.animo({
+			animation: 'fadeOutLeft',
+			duration: 0.3,
+			timing: 'ease-in'
+		}, function() {
+			cookies.addClass('hide');
+		});
+	}
+}
+</script>
 {% endblock %}
 
 {% block body %}
-	{% if app.user == null %}
-		<form class="container" method="post">
+{% if app.user == null %}
+	<div class="container">
+		<form class="jumbotron" role="form" name="form" method="post">
 			{% if error %}
-				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 			{% endif %}
-
 			{% if app.user %}
 				<div class="mb-3">
 					Vous êtes connecté en tant que :
 					{{ app.user.username }},
 					<a href="{{ path('app_logout') }}">Se déconnecter</a>
-
 				</div>
 			{% endif %}
+			<br>
+			<div class="row">
+				<div class="col-xs-6 col-xs-push-3">
+					<!-- Remove 'form-group-lg' to get it to his normal size -->
+					<div class="form-group form-group-lg">
+						<i class="glyphicon glyphicon-exclamation-sign required hide"
+							data-hover="tooltip" data-placement="auto right" title="Required"></i>
+						<div class="security-checker">
+							<div id="security-cookies" class="security-cookie hide" 
+								data-hover="tooltip" data-placement="auto top" title="Cookies !">
+							</div>
+							<div id="security-length" class="security-bar" data-hover="tooltip" 
+								data-placement="auto top" title="Length">
+							</div>
+							<div id="security-lowercase" class="security-bar" data-hover="tooltip" 
+								data-placement="auto top" title="Lowercase">
+							</div>
+							<div id="security-uppercase" class="security-bar" data-hover="tooltip" 
+								data-placement="auto top" title="Uppercase">
+							</div>
+							<div id="security-digit" class="security-bar" data-hover="tooltip" 
+								data-placement="auto top" title="Digit">
+							</div>
+							<div id="security-symbol" class="security-bar" data-hover="tooltip" 
+								data-placement="auto top" title="Symbol">
+							</div>
+						</div>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="glyphicon glyphicon-lock"></i>
+							</div>
+							<label for="inputEmail">Email</label>
+							<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+							<label for="inputPassword">Mot de passe</label>
+							<input class="form-control" type="password" name="password" id="inputPassword" autocomplete="current-password"
+									placeholder="Enter your password" required
+									pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@+$-/:-?{-~!^_`]).{8,}" 
+									onchange="checkPasswordPattern(this)"
+									oninput="checkPasswordPattern(this)"
+									onkeydown="checkPasswordPattern(this)">
+							<input
+							type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-			<label for="inputEmail">Email</label>
-			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-			<label for="inputPassword">Mot de passe</label>
-			<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-			<button class="btn btn-lg btn-primary my-2" type="submit">
-				Se connecter
-			</button>
-			<a href="{{ path('main') }}">Mot de passe oublié</a>
-		</form>
-
-	{% endif %}
-	<div class="container">
-		<div class="row">
-			<div class="col">
-				<h2 class="m-4">Salles publique</h2>
-				<div class="m-3 card" style="width: 18rem;">
-					<ul class="list-group list-group-flush">
-						{% set foo = 0 %}
-						{% for room in rooms %}
-							{% set foo = foo + 1 %}
-							<li class="list-group-item">
-								Salle :
-								<a href="{{path("calendar_login",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
-								<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
-									<i class="fas fa-eye "></i>
-								</a>
-								<div class="collapse" id="collapseExample{{foo}}">
-									<div class="card card-body">
-										<ul class="list-group">
-											<li class="text-secondary">Description:
-												<span class="text-dark">{{room.description}}</span>
-											</li>
-											<li class="text-secondary">Nombres de places:
-												<span class="text-dark">{{room.nbPlace}}</span>
-											</li>
-											<li class="text-secondary">Localisation:
-												<span class="text-dark">{{room.location}}</span>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</li>
-						{% endfor %}
-					</ul>
+							<button class="btn btn-lg btn-primary my-2" type="submit">
+								Se connecter
+							</button>
+						</div>
+						<!-- Use class 'before-group-addon' to make the form-control-feedback good -->
+						<!-- Only if there is a input-group-addon on the input's right -->
+						<i class="input-icon"></i>
+						<span class="help-block">
+							<strong>Protip:</strong> look at the circle to strongify it !
+						</span>
+					</div>
 				</div>
 			</div>
-			<div class="row text-center">
+		</form>
+	</div>
+{% endif %}
+<div class="container">
+<div class="row">
+	<div class="col">
+	<h2 class="m-4">Salles publique</h2>
+		<div class="m-3 card" style="width: 18rem;">
+			<ul class="list-group list-group-flush">
+				{% set foo = 0 %}
+				{% for room in rooms %}
+					{% set foo = foo + 1 %}
+					<li class="list-group-item">
+						Salle :
+						<a href="{{path("calendar_login",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
+						<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
+							<i class="fas fa-eye "></i>
+						</a>
+						<div class="collapse" id="collapseExample{{foo}}">
+							<div class="card card-body">
+								<ul class="list-group">
+									<li class="text-secondary">Description:
+										<span class="text-dark">{{room.description}}</span>
+									</li>
+									<li class="text-secondary">Nombres de places:
+										<span class="text-dark">{{room.nbPlace}}</span>
+									</li>
+									<li class="text-secondary">Localisation:
+										<span class="text-dark">{{room.location}}</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="row text-center">
 				<div class="col">
 					<div class="container" style="width: 720px; margin: 2rem">
 						<div>Sélectionnez une salle pour afficher le calendrier</div>
