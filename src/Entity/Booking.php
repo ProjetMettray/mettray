@@ -56,6 +56,21 @@ class Booking
      */
     private $room;
 
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $starttime;
+
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $endtime;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $days = [];
+
 
     public function getId(): ?int
     {
@@ -150,6 +165,42 @@ class Booking
     public function setRoom(?Room $room): self
     {
         $this->room = $room;
+
+        return $this;
+    }
+
+    public function getStarttime(): ?\DateTimeInterface
+    {
+        return $this->starttime;
+    }
+
+    public function setStarttime(\DateTimeInterface $starttime): self
+    {
+        $this->starttime = $starttime;
+
+        return $this;
+    }
+
+    public function getEndtime(): ?\DateTimeInterface
+    {
+        return $this->endtime;
+    }
+
+    public function setEndtime(\DateTimeInterface $endtime): self
+    {
+        $this->endtime = $endtime;
+
+        return $this;
+    }
+
+    public function getDays(): ?array
+    {
+        return $this->days;
+    }
+
+    public function setDays(array $days): self
+    {
+        $this->days = $days;
 
         return $this;
     }

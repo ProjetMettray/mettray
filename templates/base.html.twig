@@ -51,54 +51,56 @@
 let evenement = '{{ data | raw }}'
 evenement = JSON.parse(evenement)
 
-let jsonEvent = [];
-evenement.forEach(element => {
-let jsonNewEvent = {
-id: element.id,
-title: element.title,
-'start': element.start.date,
-'end': element.end.date,
-'extendedProps': [
-{
-'asso': element.asso,
-'lastname': element.lastname,
-'firstname': element.firstname,
-'phone': element.phone,
-'email': element.email
-}
-]
-};
-jsonEvent.push(jsonNewEvent)
-});
-let calendarEl = document.getElementById('calendar-holder');
+						let jsonEvent = [];
+						evenement.forEach(element => {
+							console.log(element.starttime)
+							let jsonNewEvent = {
+								id: element.id,
+								title: element.title,
+								daysOfWeek: element.days,
+								startTime: element.starttime,
+								endTime: element.endtime,
+								'startRecur': element.start.date,
+								'endRecur': element.end.date,
+								'extendedProps': [{
+									'asso': element.asso,
+									'lastname': element.lastname,
+									'firstname': element.firstname,
+									'phone': element.phone,
+									'email': element.email,
+								}]
+							};
+							jsonEvent.push(jsonNewEvent)
+						});
+						let calendarEl = document.getElementById('calendar-holder');
 
-let calendar = new FullCalendar.Calendar(calendarEl, {
-defaultView: 'dayGridMonth',
-editable: true,
-eventDrop: (datas) => {
-if (!confirm("Êtes vous sûr de vouloir modifier la date de cet évenement ?")) {
-datas.revert()
-} else {
-let url = `/api/${
-datas.event.id
-}/edit`
-console.log(datas.event.end)
-let donnees = {
-"title": datas.event.title,
-"start": datas.event.start,
-"end": datas.event.end,
-"roomId": evenement[0].roomId
-}
-let xhr = new XMLHttpRequest
-xhr.open("PUT", url)
-xhr.send(JSON.stringify(donnees))
-}
-},
-eventClick: (datas) => {
-let myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
-myModal.toggle()
+						let calendar = new FullCalendar.Calendar(calendarEl, {
+							defaultView: 'dayGridMonth',
+							editable: true,
+							eventDrop: (datas) => {
+									datas.revert()
+							},
+							eventClick: (datas) => {
+								let myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
+								myModal.toggle()
 
-let concatDate = "Date : Du " + datas.event.start.toLocaleDateString() + " " + datas.event.start.getHours() + "h" + datas.event.start.getMinutes() + " au " + datas.event.end.toLocaleDateString() + " " + datas.event.end.getHours() + "h" + datas.event.end.getMinutes();
+								let concatDate =
+											"Date : Du " +
+											datas.event.start.toLocaleDateString()
+											+ (datas.event.start.getHours() < 10 ? " 0" +
+												datas.event.start.getHours() : " " +
+												datas.event.start.getHours() )
+											+ (datas.event.start.getMinutes() < 10 ? "h0" +
+												datas.event.start.getMinutes() : "h" +
+												datas.event.start.getMinutes())
+											+ " au "
+											+ datas.event.end.toLocaleDateString()
+											+ (datas.event.end.getHours() < 10 ? " 0" +
+												datas.event.end.getHours() : " " +
+												datas.event.end.getHours() )
+											+ (datas.event.end.getMinutes() < 10 ? "h0" +
+												datas.event.end.getMinutes() : "h" +
+												datas.event.end.getMinutes())
 
 let title = document.querySelector('#exampleModalLabel')
 let date = document.querySelector('#date');
