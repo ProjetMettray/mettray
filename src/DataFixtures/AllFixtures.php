@@ -146,7 +146,7 @@ class AllFixtures extends Fixture
                 ->setEmail($fakeuser[0])
                 ->setRoles($fakeuser[1])
                 ->setPassword(
-                    $this->userPasswordHasher->hashPassword($user, 'a')
+                    $this->userPasswordHasher->hashPassword($user, 'A1azerty*')
                 )
                 ->setFirstname($fakeuser[2])
                 ->setLastname($fakeuser[3])
@@ -164,7 +164,7 @@ class AllFixtures extends Fixture
                 ->setEmail($fakeadmin[0])
                 ->setRoles($fakeadmin[1])
                 ->setPassword(
-                    $this->userPasswordHasher->hashPassword($user, 'a')
+                    $this->userPasswordHasher->hashPassword($user, 'A1azerty*')
                 )
                 ->setFirstname($fakeadmin[2])
                 ->setLastname($fakeadmin[3])
