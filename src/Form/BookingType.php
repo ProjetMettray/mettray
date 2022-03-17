@@ -11,6 +11,8 @@ use App\Repository\AssociationUserRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -48,11 +50,34 @@ class BookingType extends AbstractType
                 'label' => 'Date de début',
                 'input' => 'datetime_immutable',
                 'date_widget' => 'single_text',
+                'hours' => [
+                    0
+                ],
+                'minutes' => array(
+                    0
+                )
             ))
             ->add('end_at', DateTimeType::class, array(
                 'label' => 'Date de fin',
                 'input' => 'datetime_immutable',
                 'date_widget' => 'single_text',
+                'hours' => [
+                    23
+                ],
+                'minutes' => array(
+                    59
+                )
+            ))
+            ->add('starttime', TimeType::class, array(
+                'label' => 'Heure de début',
+                'minutes' => array(
+                    0,30
+                )
+            ))->add('endtime', TimeType::class, array(
+                'label' => 'Heure de fin',
+                'minutes' => array(
+                    0,30
+                )
             ))
             ->add('association', EntityType::class, [
                 'class' => Association::class,
@@ -66,6 +91,21 @@ class BookingType extends AbstractType
                     }
                 },
                 'required' => true
+            ])
+            ->add('days', ChoiceType::class, [
+                'choices' => [
+                    'L' => "1",
+                    'Mar' => "2",
+                    'Mer' => "3",
+                    'J' => "4",
+                    'V' => "5",
+                    'S' => "6",
+                    'D' => "0",
+                ],
+                'expanded' => true,
+                'multiple' => true,
+                'required' =>true,
+                'label' => 'Sélectionnez les jours concerné',
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'mt-2 btn btn-secondary'],
