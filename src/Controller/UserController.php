@@ -19,14 +19,21 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
+use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
+use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 class UserController extends AbstractController
 
 {
+    use ResetPasswordControllerTrait;
+
+    private $resetPasswordHelper;
     private EntityManagerInterface $em;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, EntityManagerInterface $em)
     {
+        $this->resetPasswordHelper = $resetPasswordHelper;
         $this->em = $em;
     }
     /**
@@ -56,6 +63,21 @@ class UserController extends AbstractController
             $user->setPassword($encodeur->encodePassword($user,$user->getPassword()));
             $entityManager->persist($user);
             $entityManager->flush();
+            try {
+                $resetToken = $this->resetPasswordHelper->generateResetToken($user);
+            } catch (ResetPasswordExceptionInterface $e) {
+                // If you want to tell the user why a reset email was not sent, uncomment
+                // the lines below and change the redirect to 'app_forgot_password_request'.
+                // Caution: This may reveal if a user is registered or not.
+                //
+                // $this->addFlash('reset_password_error', sprintf(
+                //     '%s - %s',
+                //     $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
+                //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
+                // ));
+
+                return $this->redirectToRoute('app_check_email');
+            }
             $email = (new TemplatedEmail())
                 ->from('mairie@mettray.com')
                 ->to($addUserForm->get('email')->getData())
@@ -68,9 +90,12 @@ class UserController extends AbstractController
                 ->context([
                     'firstname' =>$addUserForm->get('firstname')->getData(),
                     'lastname' =>$addUserForm->get('lastname')->getData(),
+                    'resetToken' => $resetToken,
                 ]);
             $mailer->send($email);
-            $this->addFlash('message', 'Création du comptre réussi');
+            $this->setTokenObjectInSession($resetToken);
+
+            $this->addFlash('message', 'Création du compte réussi');
             return $this->redirectToRoute('user_add_association', ['id'=> $user->getId()]);
         }
 
