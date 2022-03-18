@@ -250,7 +250,7 @@
 
 
 											<div style="line-height: 26px;">
-												<a href="https://127.0.0.1:8000/reset-password" style="color: #ffffff; text-decoration: none; text-transform: uppercase;">Modifier</a>
+												<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">Modifier le mot de passe</a>
 											</div>
 										</td>
 									</tr>
