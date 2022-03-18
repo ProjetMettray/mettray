@@ -131,7 +131,7 @@
 			}
 		</style>
 		<!-- [if gte mso 9]><style type=”text/css”>																																						        </style>
-																																										    <![endif]-->
+																																												    <![endif]-->
 	</head>
 
 
@@ -224,8 +224,8 @@
 												Bonjour,
 												{{firstname}}
 												{{lastname}},
-																																																																																																																																																
-																																																																																																																																																												Votre compte a bien été créer pour continuer votre navigation veuillez changer votre mot de passe ci-dessous
+																																																																																																																																																												
+																																																																																																																																																																								Votre compte a bien été créer pour continuer votre navigation veuillez changer votre mot de passe ci-dessous
 											</div>
 										</td>
 									</tr>
@@ -250,7 +250,7 @@
 
 
 											<div style="line-height: 26px;">
-												<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">Modifier le mot de passe</a>
+												<a href="{{ url('app_reset_password', {token: resetToken.token} ) }}" style=" color: #ffffff; text-decoration: none; text-transform: uppercase;">Modifier</a>
 											</div>
 										</td>
 									</tr>
