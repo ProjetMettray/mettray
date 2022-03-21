@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Envoi du mail de réinitialisation du mot de passe
+{% block title %}La mairie de Mettray | Envoi du mail de réinitialisation du mot de passe
 {% endblock %}
 
 {% block body %}
 	<p>
 		Si un compte correspondant à votre adresse e-mail existe, alors un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe.
-				        Ce lien expirera dans
+						        Ce lien expirera dans
 		{{ resetToken.expirationMessageKey }}.
 	</p>
 	<p>Si vous ne recevez pas d'e-mail, vérifiez votre dossier de courrier indésirable (spam)

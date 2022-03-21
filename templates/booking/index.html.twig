@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Réservation accueil
+{% block title %}La mairie de Mettray | Liste des réservations
 {% endblock %}
 {% block body %}
 	<div class="container text-center mt-5 pb-2 bg-dark rounded">
 		<h1 class="p-5 text-white">Liste des Réservations</h1>
-		<div class="d-flex start-flex p-4 ">
-		</div>
+		<div class="d-flex start-flex p-4 "></div>
 		{% for room in rooms %}
 			{% if room.bookings|length > 0 %}
 				<h2 class="text-white">{{room.name}}</h2>
@@ -25,7 +24,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					{# {% if room|length > 0 %} #}	
+						{# {% if room|length > 0 %} #}
 						{% for booking in bookings %}
 							{% if booking.room.name == room.name %}
 								<tr class="table-active ts">
@@ -44,7 +43,7 @@
 										<a href="{{ path("booking_edit", {"id": booking.id}) }}" type="button" class="btn btn-outline-success">Modifier</a>
 									</td>
 									<td>
-									<a href="{{ path("booking_delete", {"id": booking.id}) }}" type="button" class="btn btn-outline-success">Supprimer</a>
+										<a href="{{ path("booking_delete", {"id": booking.id}) }}" type="button" class="btn btn-outline-success">Supprimer</a>
 									</td>
 								</tr>
 							{% endif %}

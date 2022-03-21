@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!
+{% block title %}La mairie de Mettray | Le site des associations
 {% endblock %}
 
 {% block body %}
@@ -15,7 +15,7 @@
 					<a class="btn btn-light ml-3" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
 				</nav>
 			</div>
-			{% endif %}
+		{% endif %}
 		<div class="row d-flex justify-content-center mt-2">
 			<div class="col-3">
 				{% if app.user %}

@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-{% endblock %}
+La mairie de Mettray | Liste des localisations
 
 {% block body %}
-<div class="container text-center mt-5 bg-dark">
+	<div class="container text-center mt-5 bg-dark">
 		<h1 class="p-5 text-white">Liste des adresses</h1>
 		<div class="d-flex start-flex p-4 ">
 			<label class="text-white " for="search">Recherche</label>
@@ -25,14 +25,14 @@
 			<tbody>
 				{% for location in locations %}
 					<tr class="table-active ts">
-							<td scope="row">{{ location.id }}</td>
-							<td>{{ location.name }}</td>
-							<td>{{ location.cp }}</td>
-							<td>{{ location.road }}</td>
-							<td>{{ location.city }}</td>
-							<td>
+						<td scope="row">{{ location.id }}</td>
+						<td>{{ location.name }}</td>
+						<td>{{ location.cp }}</td>
+						<td>{{ location.road }}</td>
+						<td>{{ location.city }}</td>
+						<td>
 							<a href="{{ path("location_update", {"id": location.id}) }}" type="button" class="btn btn-outline-success">Modifier</a>
-							</td>
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>

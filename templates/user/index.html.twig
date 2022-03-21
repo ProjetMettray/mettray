@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Utilisateur Mettray
+{% block title %}
+	La mairie de Mettray | Le site pour les associations
 {% endblock %}
 
 {% block body %}
 
 	<div class="container text-center mt-5 pb-2 bg-dark rounded">
 		<h1 class="p-5 text-white">Liste des utilisateurs par association</h1>
-			<div class="d-flex start-flex p-4 ">
+		<div class="d-flex start-flex p-4 ">
 			{% if app.user %}
 				{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
 					<a class="btn btn-light ml-3" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
@@ -23,10 +24,10 @@
 				Téléphone:
 				{{asso.telephone}}</p>
 			<div>
-			{% if is_granted('ROLE_ADMIN') %}
-				<a type="button" class="btn btn-primary" href="{{path("association_update",{'association': asso.id})}}">Modifier</a>
-				<a type="button" class="btn btn-danger" href="{{path("association_delete",{'association': asso.id})}}">Supprimer</a>
-			{% endif %}
+				{% if is_granted('ROLE_ADMIN') %}
+					<a type="button" class="btn btn-primary" href="{{path("association_update",{'association': asso.id})}}">Modifier</a>
+					<a type="button" class="btn btn-danger" href="{{path("association_delete",{'association': asso.id})}}">Supprimer</a>
+				{% endif %}
 			</div>
 			<hr class="bg-white" style="width:70%;">
 			<ul class="p-2">
@@ -36,12 +37,12 @@
 							<th scope="col">Nom</th>
 							<th scope="col">Email</th>
 							<th scope="col">Téléphone</th>
-						{% if is_granted('ROLE_ADMIN') %}
-							<th scope="col">Ajouter association</th>
-							<th scope="col">Mot de passe</th>
-							<th scope="col">Modifier</th>
-							<th scope="col">Supprimer</th>
-						{% endif %}
+							{% if is_granted('ROLE_ADMIN') %}
+								<th scope="col">Ajouter association</th>
+								<th scope="col">Mot de passe</th>
+								<th scope="col">Modifier</th>
+								<th scope="col">Supprimer</th>
+							{% endif %}
 						</tr>
 					</thead>
 					{% for user in users %}
@@ -53,20 +54,20 @@
 											{{ user.lastname }}</td>
 										<td>{{ user.email }}</td>
 										<td>{{ user.phone }}</td>
-									{% if is_granted('ROLE_ADMIN') %}
-										<td>
-											<a href="{{path("user_add_association",{'id': user.id})}}" type="button" class="btn btn-outline-success">+ association</a>
-										</td>
-										<td>
-											<a href="{{path("user_password",{'id': user.id})}}" type="button" class="btn btn-outline-success">mot de passe</a>
-										</td>
-										<td>
-											<a href="{{path("user_edit",{'id': user.id})}}" type="button" class="btn btn-outline-success">Modifier</a>
-										</td>
-										<td>
-											<a href="{{path("user_delete",{'id': user.id})}}" type="button" class="btn btn-outline-success">Supprimer</a>
-										</td>
-									{% endif %}
+										{% if is_granted('ROLE_ADMIN') %}
+											<td>
+												<a href="{{path("user_add_association",{'id': user.id})}}" type="button" class="btn btn-outline-success">+ association</a>
+											</td>
+											<td>
+												<a href="{{path("user_password",{'id': user.id})}}" type="button" class="btn btn-outline-success">mot de passe</a>
+											</td>
+											<td>
+												<a href="{{path("user_edit",{'id': user.id})}}" type="button" class="btn btn-outline-success">Modifier</a>
+											</td>
+											<td>
+												<a href="{{path("user_delete",{'id': user.id})}}" type="button" class="btn btn-outline-success">Supprimer</a>
+											</td>
+										{% endif %}
 									</tr>
 								</tbody>
 							{% endif %}
