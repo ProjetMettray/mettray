@@ -1,4 +1,5 @@
 @import "~bootstrap";
+@import "custom.css";
 
 .control-label, .help-block {
     padding-left: 2px;

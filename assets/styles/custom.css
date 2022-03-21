@@ -1,0 +1,31 @@
+.bg-prim {
+    background-color: #13b1b9 !important;
+}
+.bg-sec {
+    background-color: #fbba0e !important;
+}
+.bg-ter {
+    background-color: #006767 !important;
+}
+.text-prim{
+    color: #13b1b9 !important;
+}
+.text-sec{
+    color: #fbba0e !important;
+}
+.text-ter{
+    color: #006767 !important;
+}
+.border-prim{
+    border-color: #13b1b9 !important;
+}
+.border-sec{
+    border-color: #fbba0e !important;
+}
+.border-ter{
+    border-color: #006767 !important;
+}
+.text-bold{
+    font-size: large;
+    font-weight: bold;
+}
