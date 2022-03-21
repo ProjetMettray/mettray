@@ -21,16 +21,6 @@ class AssociationController extends AbstractController
     {
         $this->em = $em;
     }
-     /**
-     * @Route("/association", name="association")
-     * @IsGranted("ROLE_USER")
-     */
-    public function index(AssociationRepository $associationRepository): Response
-    {
-        return $this->render('association/index.html.twig', [
-            'associations' => $associationRepository->findAll()
-        ]);
-    }
 
     /**
      * @Route("/association/add", name="association_add")
@@ -50,7 +40,7 @@ class AssociationController extends AbstractController
             $entityManager->persist($association);
             $entityManager->flush();
 
-            return $this->redirectToRoute('association', [
+            return $this->redirectToRoute('user_index', [
                 'association' => $association->getId()
             ]);
         }
@@ -97,29 +87,5 @@ class AssociationController extends AbstractController
         $this->addFlash('success', $deleteMessage);
 
         return $this->redirectToRoute('user_index');
-    }
-
-    /**
-     * @Route("/associations/{association}", name="association_show")
-     * @IsGranted("ROLE_USER")
-     */
-    public function showAssociation(Association $association)
-    {
-        return $this->render('association/showOne.html.twig', [
-            'association' => $association
-        ]);
-    }
-    /**
-     * @Route("/associations/show", name="association_show")
-     * @IsGranted("ROLE_USER")
-     */
-    public function showAsso()
-    {
-        $asso = $this->em->getRepository(Association::class)->findAll();
-        return $this->render('association/show.html.twig', [
-            'association' => $asso
-        ]);
-        $this->denyAccessUnlessGranted('', $post);
-        // $this->denyAccessUnlessGranted('view', $association);
     }
 }

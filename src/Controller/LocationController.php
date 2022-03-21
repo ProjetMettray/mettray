@@ -17,17 +17,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class LocationController extends AbstractController
 {
-     /**
-      * @Route("/location", name="location")
-      * @IsGranted("ROLE_ADMIN")
-     */
-    public function index(LocationRepository $locationRepository): Response
-    {
-        return $this->render('location/index.html.twig', [
-            'locations' => $locationRepository->findAll()
-        ]);
-    }
-
     /**
      * @Route("/location/add", name="location_add")
      * @IsGranted("ROLE_ADMIN")
@@ -87,16 +76,5 @@ class LocationController extends AbstractController
         $this->addFlash('success', $deleteMessage);
 
         return $this->redirectToRoute('location');
-    }
-
-    /**
-     * @Route("/locations/{id}", name="location_show")
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function showLocation(Location $location)
-    {
-        return $this->render('location/show.html.twig', [
-            'location' => $location
-        ]);
     }
 }

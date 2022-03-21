@@ -23,8 +23,20 @@ class RoomType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('location', EntityType::class, [
+                'class' => Location::class,
+                'label' => 'Adresse',
+                'required' => true,
+                'choice_label' => 'name'
+            ])
+            ->add('room', EntityType::class, [
+                'class' => Room::class,
+                'label' => 'Salle de référence parente si nécessaire',
+                'required' => false,
+                'choice_label' => 'name'
+            ])
             ->add('name', TextType::class, [
-                'label' => 'Name',
+                'label' => 'Nom de la salle',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control input-form'
@@ -44,18 +56,6 @@ class RoomType extends AbstractType
                 'attr' => [
                     'class' => 'form-control input-form'
                 ],
-            ])
-            ->add('location', EntityType::class, [
-                'class' => Location::class,
-                'label' => 'Location',
-                'choice_label' => 'name'
-            ])
-            //->add('room_has_user')
-            ->add('room', EntityType::class, [
-                'class' => Room::class,
-                'label' => 'Room',
-                'required' => false,
-                'choice_label' => 'name'
             ])
             ->add('visibility', ChoiceType::class, [
                 'choices' => [

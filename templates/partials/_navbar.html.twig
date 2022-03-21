@@ -1,30 +1,34 @@
+{% set current_path = app.request.attributes.get('_route') %}
 <nav class="navbar navbar-expand-md fixed-top bg-prim">
 	<div class="container-fluid">
-		<a class="navbar-brand text-white" href="{{path('app_login')}}">Mettray</a>
+		{% if current_path == 'login' or current_path == 'app_login' %}
+			<a class="navbar-brand text-ter" href="{{path('app_login')}}">Mettray-Accueil</a>
+		{% else %}
+			<a class="navbar-brand text-white" href="{{path('app_login')}}">Mettray-Accueil</a>
+		{% endif %}
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-			{% set current_path = app.request.attributes.get('_route') %}
 				{% if app.user %}
 					<li class="nav-item">
 						{% if current_path == 'main' or current_path == 'main_room' %}
-							<a class="nav-link text-white active" href="{{ path('main') }}">Mes salles</a>
+							<a class="nav-link text-ter" href="{{ path('main') }}">Mes salles</a>
 						{% else %}
 							<a class="nav-link text-white" href="{{ path('main') }}">Mes salles</a>
 						{% endif %}
 					</li>
 					<li class="nav-item">
 					{% if current_path == 'booking_show_all_by_user' %}
-						<a class="nav-link text-white active" href="{{ path('booking_show_all_by_user') }}">Mes réservation</a>
+						<a class="nav-link text-ter" href="{{ path('booking_show_all_by_user') }}">Mes réservation</a>
 						{% else %}
 						<a class="nav-link text-white" href="{{ path('booking_show_all_by_user') }}">Mes réservation</a>
 					{% endif %}
 					</li>
 					<li class="nav-item">
 						{% if current_path == 'room' %}
-						<a class="nav-link text-white active" aria-current="page" href="{{ path('room') }}">Liste des salles</a>
+						<a class="nav-link text-ter" aria-current="page" href="{{ path('room') }}">Liste des salles</a>
 						{% else %}
 						<a class="nav-link text-white" aria-current="page" href="{{ path('room') }}">Liste des salles</a>
 						{% endif %}
@@ -34,14 +38,14 @@
 					{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
 						<li class="nav-item">
 						{% if current_path == 'user_index' %}
-							<a class="nav-link text-white active" href="{{ path('user_index') }}">Liste des utilisateurs</a>
+							<a class="nav-link text-ter" href="{{ path('user_index') }}">Liste des utilisateurs</a>
 							{% else %}
 							<a class="nav-link text-white" href="{{ path('user_index') }}">Liste des utilisateurs</a>
 							{% endif %}
 						</li>
 						<li class="nav-item">
 						{% if current_path == 'booking' %}
-							<a class="nav-link text-white active" href="{{ path('booking') }}">Liste des réservations</a>
+							<a class="nav-link text-ter" href="{{ path('booking') }}">Liste des réservations</a>
 							{% else %}
 							<a class="nav-link text-white" href="{{ path('booking') }}">Liste des réservations</a>
 							{% endif %}
@@ -55,7 +59,7 @@
 				{% if app.user %}
 					<li class="nav-item">
 						{% if current_path == 'user_show' %}
-							<a class="nav-link text-white active" href="{{ path('user_show',{'id': app.user.id}) }}">Profil</a>
+							<a class="nav-link text-ter" href="{{ path('user_show',{'id': app.user.id}) }}">Profil</a>
 						{% else %}
 							<a class="nav-link text-white" href="{{ path('user_show',{'id': app.user.id}) }}">Profil</a>
 						{% endif %}

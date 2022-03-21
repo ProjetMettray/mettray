@@ -22,14 +22,14 @@ class AssociationType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Name',
+                'label' => "Nom de l'association",
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control input-form'
                 ],
             ])
             ->add('email', TextType::class, [
-                'label' => 'Email',
+                'label' => 'E-mail',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control input-form'
@@ -44,6 +44,7 @@ class AssociationType extends AbstractType
             ])
             //->add('user_has_association')
             ->add('roomAssociations', EntityType::class, [
+                'label' => "Salles liées à l'association",
                 'class' => Room::class,
                 'mapped' => false,
                 'expanded' => true,

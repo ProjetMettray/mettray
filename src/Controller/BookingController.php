@@ -135,17 +135,6 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/booking/{id}", name="booking_show", methods={"GET"})
-     * @IsGranted("ROLE_USER")
-     */
-    public function show(Booking $booking): Response
-    {
-        return $this->render('booking/show.html.twig', [
-            'booking' => $booking,
-        ]);
-    }
-
-    /**
      * @Route("/booking/edit/{id}", name="booking_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
