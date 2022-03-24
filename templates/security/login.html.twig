@@ -44,29 +44,29 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-6">
-				<h2 class="m-4">Salles publique</h2>
-				<div class="m-3 card" style="width: 18rem;">
+				<h2 class="m-4 text-ter">Salles publique</h2>
+				<div class="m-3 card bg-prim text-white" style="width: 18rem;">
 					<ul class="list-group list-group-flush">
 						{% set foo = 0 %}
 						{% for room in rooms %}
 							{% set foo = foo + 1 %}
-							<li class="list-group-item">
+							<li class="list-group-item text-ter">
 								Salle :
-								<a href="{{path("calendar_login",{'id': room.id})}}" class="text-white btn btn-secondary">{{room.name}}</a>
+								<a href="{{path("calendar_login",{'id': room.id})}}" class="btn fc-button-primary">{{room.name}}</a>
 								<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
-									<i class="fas fa-eye "></i>
+									<i class="fas fa-eye text-sec"></i>
 								</a>
 								<div class="collapse" id="collapseExample{{foo}}">
 									<div class="card card-body">
 										<ul class="list-group">
-											<li class="text-secondary">Description:
-												<span class="text-dark">{{room.description}}</span>
+											<li class="text-ter">Description:
+												<span class="text-prim">{{room.description}}</span>
 											</li>
-											<li class="text-secondary">Nombres de places:
-												<span class="text-dark">{{room.nbPlace}}</span>
+											<li class="text-ter">Nombres de places:
+												<span class="text-prim">{{room.nbPlace}}</span>
 											</li>
-											<li class="text-secondary">Localisation:
-												<span class="text-dark">{{room.location}}</span>
+											<li class="text-ter">Localisation:
+												<span class="text-prim">{{room.location}}</span>
 											</li>
 										</ul>
 									</div>
@@ -77,7 +77,7 @@
 				</div>
 			</div>
 			<div class="col-6">
-				<div class="container" style="width: 720px; margin: 2rem">
+				<div class="container text-ter" style="width: 720px; margin: 2rem">
 					<div>Sélectionnez une salle pour afficher le calendrier</div>
 				</div>
 			</div>
