@@ -4,16 +4,12 @@
 		<meta charset="UTF-8">
 		<meta locale="fr">
 		<title>La mairie de Mettray | Le site des associations</title>
-		<title>
-			{% block title %}Binvenue
-			{% endblock %}
-		</title>
 		{% block stylesheets %}
 			{# 'app' must match the first argument to addEntry() in webpack.config.js #}
 			{{ encore_entry_link_tags('app') }}
 
 			<!-- Renders a link tag (if your module requires any CSS)
-									                 <link rel="stylesheet" href="/build/app.css"> -->
+												                 <link rel="stylesheet" href="/build/app.css"> -->
 
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
