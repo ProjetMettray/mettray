@@ -36,7 +36,7 @@ class UserType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => true,
-                'label' => 'Rôles' 
+                'label' => 'Rôles',
             ])
             ->add('email', EmailType::class, [
                 'attr' => [
@@ -56,18 +56,6 @@ class UserType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'label' => 'Prénom'
-            ])
-            ->add('password',RepeatedType::class,[
-
-                'type' => PasswordType::class,
-                'invalid_message'=> "Les mdp sont pas identique",
-                'first_options'=> [
-                    'label'=>'Votre mot de passe',
-
-                ],
-                'second_options' => [
-                    'label'=>'Votre mot de passe a nouveau ' ,
-                ],
             ])
             ->add('phone', TelType::class, [
                 'attr' => [
