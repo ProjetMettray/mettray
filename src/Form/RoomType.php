@@ -51,8 +51,8 @@ class RoomType extends AbstractType
                 ],
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description',
-                'required' => true,
+                'label' => 'Description de la salle',
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control input-form'
                 ],
