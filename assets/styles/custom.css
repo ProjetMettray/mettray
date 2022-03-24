@@ -83,9 +83,9 @@ label.required:before {
     --bs-table-bg:#13b1b9 !important;
     --bs-table-striped-bg: white !important;
     --bs-table-striped-color:#006767 !important;
-    --bs-table-active-bg:#006767 !important;
-    --bs-table-active-color:white !important;
-    --bs-table-hover-bg:#fbba0e !important;
+    --bs-table-active-bg:white !important;
+    --bs-table-active-color:#006767 !important;
+    --bs-table-hover-bg:#006767 !important;
     --bs-table-hover-color:white !important;
     border-color:#006767 !important;
     color:#006767 !important;
