@@ -1,7 +1,7 @@
 .bg-prim {
     background-color: #13b1b9 !important;
 }
-.bg-sec {
+.bg-sec{
     background-color: #fbba0e !important;
 }
 .bg-ter {
@@ -32,4 +32,50 @@
 label.required:before {
     color: red;
     content: "* ";
+}
+.fc-button-primary:hover, .nav-link:hover {
+    background-color: #FFFFFF !important;
+    border-color: #13b1b9 !important;
+    color: #13b1b9 !important;
+}
+.fc-button-primary {
+    background-color: #13b1b9 !important;
+    border-color: #13b1b9 !important;
+    color: white !important;
+}
+.fc-button-primary.fc-button-active, .nav-link:hover.active {
+    background-color: #006767 !important;
+    border-color: #006767 !important;
+}
+.nav-link.text-sec:hover{
+    background-color: #fbba0e !important;
+    color: white !important;
+}
+.fc-button-primary.fc-button-active:hover {
+    background-color: #006767 !important;
+    border-color: #006767 !important;
+    color: white !important;
+}
+.fc-today{
+    background-color: #fbba0e !important;
+    color: white !important;
+}
+.fc-center{
+    color: #006767 !important;
+}
+.fc-view{
+    border-color: #006767 !important;
+}
+.fc-widget-header span, .fc-view-container {
+    color: #006767 !important;
+}
+.btn-ter{
+    background-color: #006767 !important;
+    border-color: #006767 !important;
+    color: white !important;
+}
+.btn-ter:hover{
+    background-color: white !important;
+    border-color: #006767 !important;
+    color: #006767 !important;
 }

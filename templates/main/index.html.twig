@@ -7,11 +7,11 @@
 	<div class="container">
 		{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
 			<div>
-				<nav class="navbar navbar-expand-lg navbar-light bg-secondary rounded text-center d-flex justify-content-around">
-					<a class="btn btn-light ml-3" href="{{ path('location_add') }}">Ajouter une adresse</a>
-					<a class="btn btn-light ml-3" href="{{ path('room_add') }}">Ajouter une salle</a>
-					<a class="btn btn-light ml-3" href="{{ path('association_add') }}">Ajouter une association</a>
-					<a class="btn btn-light ml-3" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
+				<nav class="navbar navbar-expand-lg bg-prim rounded text-center d-flex justify-content-around">
+					<a class="btn btn-ter ml-3" href="{{ path('location_add') }}">Ajouter une adresse</a>
+					<a class="btn btn-ter ml-3" href="{{ path('room_add') }}">Ajouter une salle</a>
+					<a class="btn btn-ter ml-3" href="{{ path('association_add') }}">Ajouter une association</a>
+					<a class="btn btn-ter ml-3" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
 				</nav>
 			</div>
 		{% endif %}
@@ -19,35 +19,35 @@
 			<div class="col-3">
 				{% if app.user %}
 					{% if is_granted('ROLE_USER') %}
-						<h2 class="m-4">Mes salles</h2>
+						<h2 class="m-4 text-ter">Mes salles</h2>
 						{% for associations in asso %}
 							{% for assoUser in associations.associationUsers %}
 								{%  if app.user.id == assoUser.user.id%}
-									<div class="m-3 card" style="width: 18rem;">
-										<div class="card-header">
+									<div class="m-3 card bg-prim text-white" style="width: 18rem;">
+										<div class="card-header bg-prim text-white">
 											{{associations.name}}
 										</div>
 										<ul class="list-group list-group-flush">
 											{% set foo = 0 %}
 											{% for rooms in associations.roomAssociations %}
 												{% set foo = foo + 1 %}
-												<li class="list-group-item">
+												<li class="list-group-item text-ter">
 													Salle :
-													<a href="{{path("main_room",{'id': rooms.room.id})}}" class="text-white btn btn-secondary">{{rooms.room.name}}</a>
+													<a href="{{path("main_room",{'id': rooms.room.id})}}" class="btn fc-button-primary">{{rooms.room.name}}</a>
 													<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
-														<i class="fas fa-eye "></i>
+														<i class="fas fa-eye text-sec"></i>
 													</a>
 													<div class="collapse" id="collapseExample{{foo}}">
 														<div class="card card-body">
 															<ul class="list-group">
-																<li class="text-secondary">Description:
-																	<span class="text-dark">{{rooms.room.description}}</span>
+																<li class="text-ter">Description:
+																	<span class="text-prim">{{rooms.room.description}}</span>
 																</li>
-																<li class="text-secondary">Nombres de places:
-																	<span class="text-dark">{{rooms.room.nbPlace}}</span>
+																<li class="text-ter">Nombres de places:
+																	<span class="text-prim">{{rooms.room.nbPlace}}</span>
 																</li>
-																<li class="text-secondary">Localisation:
-																	<span class="text-dark">{{rooms.room.location}}</span>
+																<li class="text-ter">Localisation:
+																	<span class="text-prim">{{rooms.room.location}}</span>
 																</li>
 															</ul>
 														</div>
@@ -61,15 +61,15 @@
 						{% endfor %}
 					{% endif %}
 					{% if is_granted('ROLE_ADMIN') %}
-						<div class="m-3 card" style="width: 18rem;">
-							<div class="card-header">
+						<div class="m-3 card border-prim" style="width: 18rem;">
+							<div class="card-header bg-prim text-white">
 								Liste des salles
 							</div>
 							<ul class="list-group list-group-flush">
 								{% for rooms in room %}
-									<li class="list-group-item">
+									<li class="list-group-item text-ter">
 										Salle :
-										<a href="{{path("main_room",{'id': rooms.id})}}" class="text-white btn btn-secondary">{{rooms.name}}</a>
+										<a href="{{path("main_room",{'id': rooms.id})}}" class="btn fc-button-primary">{{rooms.name}}</a>
 									</li>
 								{% endfor %}
 							</ul>
@@ -79,7 +79,7 @@
 			</div>
 			<div class="col-9 text-center">
 				<div class="row">
-					<div class="container col" style="width: 720px; margin: 2rem">
+					<div class="container col text-ter" style="width: 720px; margin: 2rem">
 						<div>Sélectionnez une salle pour afficher le calendrier</div>
 					</div>
 				</div>

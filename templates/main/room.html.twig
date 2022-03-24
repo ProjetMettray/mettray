@@ -8,11 +8,11 @@
 	<div class="container">
 		{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
 			<div>
-				<nav class="navbar navbar-expand-lg navbar-light bg-secondary rounded text-center d-flex justify-content-around">
-					<a class="btn btn-light ml-3" href="{{ path('location_add') }}">Ajouter une adresse</a>
-					<a class="btn btn-light ml-3" href="{{ path('room_add') }}">Ajouter une salle</a>
-					<a class="btn btn-light ml-3" href="{{ path('association_add') }}">Ajouter une association</a>
-					<a class="btn btn-light ml-3" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
+				<nav class="navbar navbar-expand-lg bg-prim rounded text-center d-flex justify-content-around">
+					<a class="btn btn-ter ml-3" href="{{ path('location_add') }}">Ajouter une adresse</a>
+					<a class="btn btn-ter ml-3" href="{{ path('room_add') }}">Ajouter une salle</a>
+					<a class="btn btn-ter ml-3" href="{{ path('association_add') }}">Ajouter une association</a>
+					<a class="btn btn-ter ml-3" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
 				</nav>
 			</div>
 		{% endif %}
@@ -20,35 +20,35 @@
 			<div class="col-3">
 				{% if app.user %}
 					{% if is_granted('ROLE_USER') %}
-						<h2 class="m-4">Mes salles</h2>
+						<h2 class="m-4 text-ter">Mes salles</h2>
 						{% for associations in asso %}
 							{% for assoUser in associations.associationUsers %}
 								{%  if app.user.id == assoUser.user.id%}
-									<div class="m-3 card" style="width: 18rem;">
-										<div class="card-header">
+									<div class="m-3 bg-prim text-white" style="width: 18rem;">
+										<div class="card-header border-ter bg-prim text-white">
 											{{associations.name}}
 										</div>
 										<ul class="list-group list-group-flush">
 											{% set foo = 0 %}
 											{% for rooms in associations.roomAssociations %}
 												{% set foo = foo + 1 %}
-												<li class="list-group-item">
+												<li class="list-group-item text-ter">
 													Salle :
-													<a href="{{path("main_room",{'id': rooms.room.id})}}" class="text-white btn btn-secondary">{{rooms.room.name}}</a>
+													<a href="{{path("main_room",{'id': rooms.room.id})}}" class="btn fc-button-primary">{{rooms.room.name}}</a>
 													<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
-														<i class="fas fa-eye "></i>
+														<i class="fas fa-eye text-sec"></i>
 													</a>
 													<div class="collapse" id="collapseExample{{foo}}">
 														<div class="card card-body">
 															<ul class="list-group">
-																<li class="text-secondary">Description:
-																	<span class="text-dark">{{rooms.room.description}}</span>
+																<li class="text-ter">Description:
+																	<span class="text-prim">{{rooms.room.description}}</span>
 																</li>
-																<li class="text-secondary">Nombres de places:
-																	<span class="text-dark">{{rooms.room.nbPlace}}</span>
+																<li class="text-ter">Nombres de places:
+																	<span class="text-prim">{{rooms.room.nbPlace}}</span>
 																</li>
-																<li class="text-secondary">Localisation:
-																	<span class="text-dark">{{rooms.room.location}}</span>
+																<li class="text-ter">Localisation:
+																	<span class="text-prim">{{rooms.room.location}}</span>
 																</li>
 															</ul>
 														</div>
@@ -62,15 +62,15 @@
 						{% endfor %}
 					{% endif %}
 					{% if is_granted('ROLE_ADMIN') %}
-						<div class="m-3 card" style="width: 18rem;">
-							<div class="card-header">
+						<div class="m-3 card border-prim" style="width: 18rem;">
+							<div class="card-header bg-prim text-white border-prim">
 								Liste des salles
 							</div>
 							<ul class="list-group list-group-flush">
 								{% for rooms in room %}
-									<li class="list-group-item">
+									<li class="list-group-item text-ter">
 										Salle :
-										<a href="{{path("main_room",{'id': rooms.id})}}" class="text-white btn btn-secondary">{{rooms.name}}</a>
+										<a href="{{path("main_room",{'id': rooms.id})}}" class="btn fc-button-primary">{{rooms.name}}</a>
 									</li>
 								{% endfor %}
 							</ul>
@@ -80,10 +80,10 @@
 			</div>
 			<div class="col-9 text-center">
 				<div class="col">
-					<h2 class="mt-3 text-center">Salle:
+					<h2 class="mt-3 text-center text-ter">Salle:
 						{{roomid.name}}
 					</h2>
-					<a href="{{ path("booking_new", {'room': roomid.id}) }}" class="text-white btn btn-primary">Réserver</a>
+					<a href="{{ path("booking_new", {'room': roomid.id}) }}" class="btn fc-button-primary">Réserver</a>
 					<div class="p-0 container" style="width: 720px; margin: 2rem">
 						<div id="calendar-holder"></div>
 					</div>
@@ -94,19 +94,19 @@
 					<div id="calendar-holder"></div>
 					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
+							<div class="modal-content text-ter">
+								<div class="modal-header bg-prim text-white">
 									<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 								</div>
-								<div class="modal-body">
+								<div class="modal-body text-ter">
 									<p id="date"></p>
 									<p id="phone"></p>
 									<p id="email"></p>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-									<a id='edit-booking' type="button" class="btn btn-primary">Editer</a>
+									<button type="button" class="btn bg-sec text-ter" data-bs-dismiss="modal">Fermer</button>
+									<a id='edit-booking' type="button" class="btn bg-prim text-white">Editer</a>
 								</div>
 							</div>
 						</div>
