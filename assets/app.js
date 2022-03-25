@@ -13,6 +13,9 @@ import './bootstrap';
 
 import 'bootstrap';
 
+import logoPath from './images/logo.jpg';
+
+let html = `<img src="${logoPath}" alt="ACME logo">`;
 // loads the jquery package from node_modules
 import $ from 'jquery';
 // import checkPasswordPattern from './rgpd';
