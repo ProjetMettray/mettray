@@ -44,7 +44,6 @@
 							<th scope="col">Téléphone</th>
 							{% if is_granted('ROLE_ADMIN') %}
 								<th scope="col">Ajouter association</th>
-								<th scope="col">Mot de passe</th>
 								<th scope="col">Modifier</th>
 								<th scope="col">Supprimer</th>
 							{% endif %}
@@ -62,9 +61,6 @@
 										{% if is_granted('ROLE_ADMIN') %}
 											<td>
 												<a href="{{path("user_add_association",{'id': user.id})}}" type="button" class="btn fc-button-primary">+ association</a>
-											</td>
-											<td>
-												<a href="{{path("user_password",{'id': user.id})}}" type="button" class="btn fc-button-primary">mot de passe</a>
 											</td>
 											<td>
 												<a href="{{path("user_edit",{'id': user.id})}}" type="button" class="btn fc-button-primary">Modifier</a>
