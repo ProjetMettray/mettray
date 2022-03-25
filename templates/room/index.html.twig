@@ -27,6 +27,8 @@
 						<th scope="col">Nom de la salle</th>
 						<th scope="col">Nombre de places</th>
 						<th scope="col">Description</th>
+						<th scope="col">Modifier</th>
+						<th scope="col">Supprimer</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,8 +55,10 @@
 								{% if app.user %}
 									{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
 										<td>
+											<a href="{{ path("room_update", {'room': room.id}) }}" type="button" class="btn fc-button-primary">Modifier</a>
+										</td>
+										<td>
 											<a href="{{ path("room_delete", {'room': room.id}) }}" type="button" class="btn btn-danger">Supprimer</a>
-											<a href="{{ path("room_update", {'room': room.id}) }}" type="button" class="btn fc-button-primary">Editer</a>
 										</td>
 									{% endif %}
 								{% endif %}
