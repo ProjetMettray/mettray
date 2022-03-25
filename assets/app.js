@@ -13,7 +13,7 @@ import './bootstrap';
 
 import 'bootstrap';
 
-import logoPath from './images/logo.jpg';
+import logoPath from './images/logo.png';
 
 let html = `<img src="${logoPath}" alt="ACME logo">`;
 // loads the jquery package from node_modules

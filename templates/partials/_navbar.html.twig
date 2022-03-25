@@ -1,79 +1,7 @@
 {% set current_path = app.request.attributes.get('_route') %}
 <nav class="navbar navbar-expand-md fixed-top bg-prim">
 	<div class="container-fluid">
-			<a class="navbar-brand" href="{{path('app_login')}}"><img src="{{ asset('build/images/logo.jpg') }}" style="width: 8rem;" alt="Mettray logo"></a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				{% if app.user %}
-					<li class="nav-item">
-						{% if current_path == 'main' or current_path == 'main_room' %}
-							<a class="nav-link active text-ter" href="{{ path('main') }}">Mes salles</a>
-						{% else %}
-							<a class="nav-link text-white" href="{{ path('main') }}">Mes salles</a>
-						{% endif %}
-					</li>
-					<li class="nav-item">
-					{% if current_path == 'booking_show_all_by_user' %}
-						<a class="nav-link active text-ter" href="{{ path('booking_show_all_by_user') }}">Mes réservation</a>
-						{% else %}
-						<a class="nav-link text-white" href="{{ path('booking_show_all_by_user') }}">Mes réservation</a>
-					{% endif %}
-					</li>
-					<li class="nav-item">
-						{% if current_path == 'room' %}
-						<a class="nav-link active text-ter" aria-current="page" href="{{ path('room') }}">Liste des salles</a>
-						{% else %}
-						<a class="nav-link text-white" aria-current="page" href="{{ path('room') }}">Liste des salles</a>
-						{% endif %}
-					</li>
-				{% endif %}
-				{% if app.user %}
-					{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
-						<li class="nav-item">
-						{% if current_path == 'user_index' %}
-							<a class="nav-link active text-ter" href="{{ path('user_index') }}">Liste des utilisateurs</a>
-							{% else %}
-							<a class="nav-link text-white" href="{{ path('user_index') }}">Liste des utilisateurs</a>
-							{% endif %}
-						</li>
-						<li class="nav-item">
-						{% if current_path == 'booking' %}
-							<a class="nav-link active text-ter" href="{{ path('booking') }}">Liste des réservations</a>
-							{% else %}
-							<a class="nav-link text-white" href="{{ path('booking') }}">Liste des réservations</a>
-							{% endif %}
-						</li>
-					{% endif %}
-				{% endif %}
-			</ul>
-		</div>
-		<div>
-			<ul class="navbar-nav">
-				{% if app.user %}
-					<li class="nav-item">
-						{% if current_path == 'user_show' %}
-							<a class="nav-link active text-ter" href="{{ path('user_show',{'id': app.user.id}) }}">Profil</a>
-						{% else %}
-							<a class="nav-link text-white" href="{{ path('user_show',{'id': app.user.id}) }}">Profil</a>
-						{% endif %}
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-bold text-sec" href="{{ path('app_logout') }}">Se déconnecter</a>
-					</li>
-				{% else %}
-					<a class="nav-link text-white text-bold" href="{{ path('app_login') }}">Se connecter</a>
-				{% endif %}
-			</ul>
-		</div>
-	</div>
-</div>
-</nav>
-<nav class="navbar navbar-expand-md bg-prim">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="{{path('app_login')}}"><img class="img-thumbnail" style="width: 8rem;" src="{{ asset('build/images/logo.jpg') }}" alt="Mettray logo"></a>
+		<a class="navbar-brand" href="{{path('app_login')}}"><img src="{{ asset('build/images/logo.png') }}" style="width: 8rem;" alt="Mettray logo"></a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -141,5 +69,73 @@
 			</ul>
 		</div>
 	</div>
+</div></nav><nav class="navbar navbar-expand-md bg-prim">
+<div class="container-fluid">
+	<a class="navbar-brand" href="{{path('app_login')}}"><img class="img-thumbnail" style="width: 8rem;" src="{{ asset('build/images/logo.png') }}" alt="Mettray logo"></a>
+	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav">
+			{% if app.user %}
+				<li class="nav-item">
+					{% if current_path == 'main' or current_path == 'main_room' %}
+						<a class="nav-link active text-ter" href="{{ path('main') }}">Mes salles</a>
+					{% else %}
+						<a class="nav-link text-white" href="{{ path('main') }}">Mes salles</a>
+					{% endif %}
+				</li>
+				<li class="nav-item">
+					{% if current_path == 'booking_show_all_by_user' %}
+						<a class="nav-link active text-ter" href="{{ path('booking_show_all_by_user') }}">Mes réservation</a>
+					{% else %}
+						<a class="nav-link text-white" href="{{ path('booking_show_all_by_user') }}">Mes réservation</a>
+					{% endif %}
+				</li>
+				<li class="nav-item">
+					{% if current_path == 'room' %}
+						<a class="nav-link active text-ter" aria-current="page" href="{{ path('room') }}">Liste des salles</a>
+					{% else %}
+						<a class="nav-link text-white" aria-current="page" href="{{ path('room') }}">Liste des salles</a>
+					{% endif %}
+				</li>
+			{% endif %}
+			{% if app.user %}
+				{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+					<li class="nav-item">
+						{% if current_path == 'user_index' %}
+							<a class="nav-link active text-ter" href="{{ path('user_index') }}">Liste des utilisateurs</a>
+						{% else %}
+							<a class="nav-link text-white" href="{{ path('user_index') }}">Liste des utilisateurs</a>
+						{% endif %}
+					</li>
+					<li class="nav-item">
+						{% if current_path == 'booking' %}
+							<a class="nav-link active text-ter" href="{{ path('booking') }}">Liste des réservations</a>
+						{% else %}
+							<a class="nav-link text-white" href="{{ path('booking') }}">Liste des réservations</a>
+						{% endif %}
+					</li>
+				{% endif %}
+			{% endif %}
+		</ul>
 	</div>
-</nav>
+	<div>
+		<ul class="navbar-nav">
+			{% if app.user %}
+				<li class="nav-item">
+					{% if current_path == 'user_show' %}
+						<a class="nav-link active text-ter" href="{{ path('user_show',{'id': app.user.id}) }}">Profil</a>
+					{% else %}
+						<a class="nav-link text-white" href="{{ path('user_show',{'id': app.user.id}) }}">Profil</a>
+					{% endif %}
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-bold text-sec" href="{{ path('app_logout') }}">Se déconnecter</a>
+				</li>
+			{% else %}
+				<a class="nav-link text-white text-bold" href="{{ path('app_login') }}">Se connecter</a>
+			{% endif %}
+		</ul>
+	</div>
+</div></div></nav>
