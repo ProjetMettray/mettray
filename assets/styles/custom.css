@@ -118,3 +118,9 @@ label.required:before {
     border-color:#006767 !important;
     color:#006767 !important;
 }
+#booking_start_at .input-group , #booking_end_at .input-group {
+    display: none;
+}
+.custom-toggler.navbar-toggler {
+    border-color: white;
+}
