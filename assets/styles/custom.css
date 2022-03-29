@@ -124,3 +124,7 @@ label.required:before {
 .custom-toggler.navbar-toggler {
     border-color: white;
 }
+#association_roomAssociations {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}

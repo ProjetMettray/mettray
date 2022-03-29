@@ -1,0 +1,27 @@
+{{ form_start(associationForm) }}
+
+{% block form_row %}
+	<div class="row my-5 text-ter">
+		<div class="col-12 my-3">
+			{{ form_label(associationForm.name) }}
+			{{ form_widget(associationForm.name) }}
+		</div>
+		<div class="col-6 my-3">
+			{{ form_label(associationForm.email) }}
+			{{ form_widget(associationForm.email) }}
+		</div>
+		<div class="col-6 my-3">
+			{{ form_label(associationForm.telephone) }}
+			{{ form_widget(associationForm.telephone) }}
+		</div>
+		<div class="col-12 my-3">
+			{{ form_label(associationForm.roomAssociations) }}
+			{{ form_widget(associationForm.roomAssociations) }}
+		</div>
+		<div class="col-12 my-3 text-center">
+			{{ form_label(associationForm.submit) }}
+			{{ form_widget(associationForm.submit) }}
+		</div>
+	</div>
+{% endblock form_row %}
+{{ form_end(associationForm) }}

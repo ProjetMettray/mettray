@@ -46,7 +46,7 @@ class AssociationController extends AbstractController
         }
 
         return $this->render('association/add.html.twig', [
-            'addAssociationForm' => $addAssociationForm->createView()
+            'associationForm' => $addAssociationForm->createView()
         ]);
     }
 
@@ -68,7 +68,7 @@ class AssociationController extends AbstractController
         }
 
         return $this->render('association/update.html.twig', [
-            'updateAssociationForm' => $updateAssociationForm->createView(),
+            'associationForm' => $updateAssociationForm->createView(),
             'associationName' => $association->getName(),
             "associationId" => $association->getId(),
         ]);

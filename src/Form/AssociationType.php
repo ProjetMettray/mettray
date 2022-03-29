@@ -45,6 +45,9 @@ class AssociationType extends AbstractType
             //->add('user_has_association')
             ->add('roomAssociations', EntityType::class, [
                 'label' => "Salles liées à l'association",
+                'attr' => [
+                    'class' => ''
+                ],
                 'class' => Room::class,
                 'mapped' => false,
                 'expanded' => true,
@@ -56,7 +59,7 @@ class AssociationType extends AbstractType
                 }
             ])
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'attr' => ['class' => 'mt-2 btn fc-button-primary'],
                 'label'=> 'Envoyer'
             ]);
     }
