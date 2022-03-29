@@ -4,7 +4,10 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Modifier
-		{{ roomName }}</h1>
-	<hr>
-	{{ form(updateRoomForm) }}{% endblock %}
+	<div class="container my-5">
+		<h1 class="text-ter">Modifier la salle "{{ roomName }}"</h1>
+
+		{{ include('room/_form.html.twig') }}
+
+	</div>
+{% endblock %}

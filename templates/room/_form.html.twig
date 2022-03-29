@@ -1,0 +1,35 @@
+{{ form_start(roomForm) }}
+
+{% block form_row %}
+	<div class="row my-5 text-ter">
+		<div class="col-12 my-3">
+			{{ form_label(roomForm.location) }}
+			{{ form_widget(roomForm.location) }}
+		</div>
+		<div class="col-12 my-3">
+			{{ form_label(roomForm.room) }}
+			{{ form_widget(roomForm.room) }}
+		</div>
+		<div class="col-12 my-3">
+			{{ form_label(roomForm.name) }}
+			{{ form_widget(roomForm.name) }}
+		</div>
+		<div class="col-6 my-3">
+			{{ form_label(roomForm.nbPlace) }}
+			{{ form_widget(roomForm.nbPlace) }}
+		</div>
+		<div class="col-6 my-3">
+			{{ form_label(roomForm.visibility) }}
+			{{ form_widget(roomForm.visibility) }}
+		</div>
+		<div class="col-12 my-3">
+			{{ form_label(roomForm.description) }}
+			{{ form_widget(roomForm.description) }}
+		</div>
+		<div class="col-12 my-3 text-center">
+			{{ form_label(roomForm.submit) }}
+			{{ form_widget(roomForm.submit) }}
+		</div>
+	</div>
+{% endblock form_row %}
+{{ form_end(roomForm) }}

@@ -69,7 +69,7 @@ class RoomController extends AbstractController
         }
 
         return $this->render('room/add.html.twig', [
-            'addRoomForm' => $addRoomForm->createView()
+            'roomForm' => $addRoomForm->createView()
         ]);
     }
 
@@ -92,7 +92,7 @@ class RoomController extends AbstractController
         }
 
         return $this->render('room/update.html.twig', [
-            'updateRoomForm' => $updateRoomForm->createView(),
+            'roomForm' => $updateRoomForm->createView(),
             'roomName' => $room->getName()
         ]);
     }

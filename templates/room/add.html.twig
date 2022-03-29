@@ -3,12 +3,9 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container ">
-		<h1 class="text-center">Ajouter une salle</h1>
+	<div class="container my-5">
+		<h1 class="text-ter">Ajouter une Salle</h1>
 
-		<hr>
-		{{ form_start(addRoomForm) }}
-
-		{{ form_end(addRoomForm) }}
+		{{ include('room/_form.html.twig') }}
 	</div>
 {% endblock %}

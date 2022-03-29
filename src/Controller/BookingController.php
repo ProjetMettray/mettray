@@ -152,7 +152,8 @@ class BookingController extends AbstractController
 
         return $this->renderForm('booking/edit.html.twig', [
             'booking' => $booking,
-            'bookingForm' => $form
+            'bookingForm' => $form,
+            'bookingName' => $booking->getTitle(),
         ]);
     }
 
