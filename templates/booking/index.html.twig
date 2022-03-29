@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}La mairie de Mettray | Liste des réservations
+{% block title %}Liste des réservations | Mettray
 {% endblock %}
 {% block body %}
 	<div class="bg-prim">
@@ -38,7 +38,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{# {% if room|length > 0 %} #}
+
 						{% for booking in bookings %}
 							{% if booking.room.name == room.name %}
 								<tr class="table-active ts">
@@ -60,11 +60,17 @@
 										<a href="{{ path("booking_delete", {"id": booking.id}) }}" type="button" class="btn btn-danger">Supprimer</a>
 									</td>
 								</tr>
+
 							{% endif %}
 						{% endfor %}
 					</tbody>
-				</table>
-			{% endif %}
-		{% endfor %}
-	</div>
-{% endblock %}
+				</tbody>
+			</table>
+
+		{% endif %}
+
+	{% endfor %}
+	{% if bookings == null %}
+		<p>Aucune réservation</p>
+	{% endif %}
+</div>{% endblock %}
