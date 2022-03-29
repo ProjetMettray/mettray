@@ -44,7 +44,7 @@ class User1Type extends AbstractType
                 ],
             ])
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'attr' => ['class' => 'mt-2 btn fc-button-primary'],
                 'label'=> 'Envoyer'
             ])
             ;

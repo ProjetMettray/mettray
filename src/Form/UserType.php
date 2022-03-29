@@ -32,7 +32,7 @@ class UserType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     'Utilisateur' => "ROLE_USER",
-                    'Mairie' => "ROLE_ADMIN",
+                    'Agent de la mairie' => "ROLE_ADMIN",
                 ],
                 'expanded' => true,
                 'multiple' => true,
@@ -65,7 +65,7 @@ class UserType extends AbstractType
             ])
 
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'attr' => ['class' => 'mt-2 btn fc-button-primary'],
                 'label'=> 'Envoyer'
             ])
         ;

@@ -121,7 +121,7 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/new.html.twig', [
-            'addUserForm' => $addUserForm->createView()
+            'userForm' => $addUserForm->createView()
         ]);
     }
     /**
@@ -202,7 +202,7 @@ class UserController extends AbstractController
 
         return $this->renderForm('user/edit.html.twig', [
             'user' => $id,
-            'UserUpdateForm' => $form,
+            'userForm' => $form,
         ]);
     }
 

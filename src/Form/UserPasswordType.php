@@ -19,6 +19,7 @@ class UserPasswordType extends AbstractType
         $builder
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'label' => '' ,
                 'first_options' => [
                     'attr' => ['autocomplete' => 'new-password'],
                     'constraints' => [
@@ -42,6 +43,10 @@ class UserPasswordType extends AbstractType
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+            ])
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'mt-2 btn fc-button-primary'],
+                'label'=> 'Réinitialiser le mot de passe'
             ])
         ;
     }

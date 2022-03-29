@@ -1,3 +1,34 @@
-{{ form_start(addUserForm) }}
-{{ form_widget(addUserForm) }}
-{{ form_end(addUserForm) }}
+{{ form_start(userForm) }}
+
+{% block form_row %}
+    {% set current_path = app.request.attributes.get('_route') %}
+    <div class="row my-5 text-ter">
+        {% if current_path == 'user_add' %}
+        <div class="col-12 my-3">
+            {{ form_label(userForm.roles) }}
+            {{ form_widget(userForm.roles) }}
+        </div>
+        {% endif %}
+        <div class="col-6 my-3">
+            {{ form_label(userForm.lastname) }}
+            {{ form_widget(userForm.lastname) }}
+        </div>
+        <div class="col-6 my-3">
+            {{ form_label(userForm.firstname) }}
+            {{ form_widget(userForm.firstname) }}
+        </div>
+        <div class="col-6 my-3">
+            {{ form_label(userForm.email) }}
+            {{ form_widget(userForm.email) }}
+        </div>
+        <div class="col-6 my-3">
+            {{ form_label(userForm.phone) }}
+            {{ form_widget(userForm.phone) }}
+        </div>
+        <div class="col-12 my-3 text-center">
+            {{ form_label(userForm.submit) }}
+            {{ form_widget(userForm.submit) }}
+        </div>
+    </div>
+{% endblock form_row %}
+{{ form_end(userForm) }}
