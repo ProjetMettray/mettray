@@ -3,11 +3,10 @@
 {% block title %}La mairie de Mettray | Ajouter une localisation{% endblock %}
 
 {% block body %}
-	<div class="container">
-		<h1 class="text-center">Ajouter une adresse</h1>
+	<div class="container my-5">
+		<h1 class="text-ter">Ajouter une adresse</h1>
 
-		<hr>
+		{{ include('location/_form.html.twig') }}
 
-		{{ form(addLocationForm) }}
-		</div>
+	</div>
 {% endblock %}

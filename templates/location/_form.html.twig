@@ -1,28 +1,27 @@
-{{ form_start(updateLocationForm) }}
+{{ form_start(locationForm) }}
 
 {% block form_row %}
-	<div class="row">
-		<div class="col-3">
-			{{ form_label(updateLocationForm.name) }}
-			{{ form_widget(updateLocationForm.name) }}
+	<div class="row my-5 text-ter">
+		<div class="col-12 my-3">
+			{{ form_label(locationForm.name) }}
+			{{ form_widget(locationForm.name) }}
 		</div>
-		<div class="col-3">
-			{{ form_label(updateLocationForm.cp) }}
-			{{ form_widget(updateLocationForm.cp) }}
+		<div class="col-12 my-3">
+			{{ form_label(locationForm.road) }}
+			{{ form_widget(locationForm.road) }}
 		</div>
-		<div class="col-3">
-			{{ form_label(updateLocationForm.road) }}
-			{{ form_widget(updateLocationForm.road) }}
+		<div class="col-6 my-3">
+			{{ form_label(locationForm.cp) }}
+			{{ form_widget(locationForm.cp) }}
 		</div>
-		<div class="col-3">
-			{{ form_label(updateLocationForm.city) }}
-			{{ form_widget(updateLocationForm.city) }}
+		<div class="col-6 my-3">
+			{{ form_label(locationForm.city) }}
+			{{ form_widget(locationForm.city) }}
+		</div>
+		<div class="col-12 my-3 text-center">
+			{{ form_label(locationForm.submit) }}
+			{{ form_widget(locationForm.submit) }}
 		</div>
 	</div>
 {% endblock form_row %}
-<div class="row">
-	<div class="col text-center">
-		{{ form_widget(updateLocationForm.submit) }}
-	</div>
-</div>
-{{ form_end(updateLocationForm) }}
+{{ form_end(locationForm) }}

@@ -38,7 +38,7 @@ class LocationController extends AbstractController
         }
 
         return $this->render('location/add.html.twig', [
-            'addLocationForm' => $addLocationForm->createView()
+            'locationForm' => $addLocationForm->createView()
         ]);
     }
 
@@ -57,7 +57,7 @@ class LocationController extends AbstractController
         }
 
         return $this->render('location/update.html.twig', [
-            'updateLocationForm' => $updateLocationForm->createView(),
+            'locationForm' => $updateLocationForm->createView(),
             'locationName' => $location->getName(),
             'locationId' => $location->getId()
         ]);
