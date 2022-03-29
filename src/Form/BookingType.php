@@ -48,6 +48,7 @@ class BookingType extends AbstractType
             ])
             ->add('start_at', DateTimeType::class, array(
                 'label' => 'Date de début',
+                'required' => true,
                 'input' => 'datetime_immutable',
                 'date_widget' => 'single_text',
                 'hours' => [
@@ -59,6 +60,7 @@ class BookingType extends AbstractType
             ))
             ->add('end_at', DateTimeType::class, array(
                 'label' => 'Date de fin',
+                'required' => true,
                 'input' => 'datetime_immutable',
                 'date_widget' => 'single_text',
                 'hours' => [
@@ -70,11 +72,13 @@ class BookingType extends AbstractType
             ))
             ->add('starttime', TimeType::class, array(
                 'label' => 'Heure de début',
+                'required' => true,
                 'minutes' => array(
                     0,30
                 )
             ))->add('endtime', TimeType::class, array(
                 'label' => 'Heure de fin',
+                'required' => true,
                 'minutes' => array(
                     0,30
                 )
@@ -94,21 +98,21 @@ class BookingType extends AbstractType
             ])
             ->add('days', ChoiceType::class, [
                 'choices' => [
-                    'L' => "1",
-                    'Mar' => "2",
-                    'Mer' => "3",
-                    'J' => "4",
-                    'V' => "5",
-                    'S' => "6",
-                    'D' => "0",
+                    'Lundi' => "1",
+                    'Mardi' => "2",
+                    'Mercredi' => "3",
+                    'Jeudi' => "4",
+                    'Vendredi' => "5",
+                    'Samedi' => "6",
+                    'Dimanche' => "0",
                 ],
+                'attr' => ['class' => 'd-flex flex-row justify-content-around text-white'],
                 'expanded' => true,
                 'multiple' => true,
-                'required' =>true,
-                'label' => 'Sélectionnez les jours concerné',
+                'label' => 'Sélectionnez les jours concernés si nécessaire',
             ])
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'mt-2 btn btn-secondary'],
+                'attr' => ['class' => 'mt-2 btn fc-button-primary'],
                 'label'=> 'Envoyer'
             ]);
     }
