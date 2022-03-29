@@ -23,7 +23,7 @@
 						{% for associations in asso %}
 							{% for assoUser in associations.associationUsers %}
 								{%  if app.user.id == assoUser.user.id%}
-									<div class="m-3 bg-prim text-white" style="width: 18rem;">
+									<div class="m-3 card border-prim" style="width: 18rem;">
 										<div class="card-header border-ter bg-prim text-white">
 											{{associations.name}}
 										</div>
@@ -64,10 +64,10 @@
 					{% endif %}
 					{% if is_granted('ROLE_ADMIN') %}
 						<div class="m-3 card border-prim" style="width: 18rem;">
-							<div class="card-header bg-prim text-ter border-prim">
+							<div class="card-header bg-prim text-white border-ter">
 								Liste des salles
 							</div>
-							<ul class="list-group list-group-flush">
+							<ul class="list-group list-group-flush border-ter">
 								{% for rooms in room %}
 									<li class="list-group-item text-ter">
 										Salle :
