@@ -4,9 +4,23 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container ">
-		<h1>Ajouter une association à un utilisateur</h1>
-		{{ form(addAssociationUserForm) }}
-			<a class="btn btn-dark m-1" href="{{ path('user_index') }}">Retour à la liste</a>
-		</div>
-	{% endblock %}
+	<div class="container my-5">
+		<h1 class="text-ter">Ajouter une association à un utilisateur</h1>
+
+		{{ form_start(addAssociationUserForm) }}
+
+		{% block form_row %}
+			<div class="row my-5 text-ter">
+				<div class="col-12 my-3">
+					{{ form_label(addAssociationUserForm.association) }}
+					{{ form_widget(addAssociationUserForm.association) }}
+				</div>
+				<div class="col-12 my-3">
+					{{ form_label(addAssociationUserForm.submit) }}
+					{{ form_widget(addAssociationUserForm.submit) }}
+				</div>
+			</div>
+		{% endblock form_row %}
+		{{ form_end(addAssociationUserForm) }}
+	</div>
+{% endblock %}

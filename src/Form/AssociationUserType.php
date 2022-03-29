@@ -26,8 +26,10 @@ class AssociationUserType extends AbstractType
             },
             'label' => 'Association'
         ])
-        ->add('Ajouter', SubmitType::class)
-        ;
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'mt-2 btn fc-button-primary'],
+                'label'=> 'Ajouter'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
