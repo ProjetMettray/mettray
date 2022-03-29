@@ -4,15 +4,12 @@
 {% endblock %}
 
 {% block body %}
-	<h2 class="text-center m-2">Bienvenue
-		{{user.Firstname}}</h2>
-	<div class="container m-3">
+	<h1 class="text-center m-5 text-ter">Bienvenue
+		{{user.Firstname}}</h1>
+	<div class="mx-3 mb-5 w-100">
 		<div class="row">
-			<div class="col-4">
+			<div class="col-2">
 				<div class="card" style="width: 18rem;">
-					<div class="card-header">
-						<img src="https://picsum.photos/200" class="rounded-circle mx-auto d-block">
-					</div>
 					<ul class="list-group list-group-flush">
 						<li class="list-group-item">Nom:
 							{{user.lastname}}
@@ -23,20 +20,20 @@
 						<li class="list-group-item">Téléphone:
 							{{user.phone}}</li>
 					</ul>
-					<a class="btn btn-secondary" href="{{path('user_edit',{'id': user.id})}}">Modifier mon profil</a>
-					<a class="btn btn-secondary my-1" href="{{path("user_password",{'id': user.id})}}">Modifier mon mot de passe</a>
+					<a class="btn btn-secondary btn-ter" href="{{path('user_edit',{'id': user.id})}}">Modifier mon profil</a>
+					<a class="btn btn-secondary my-1 btn-ter" href="{{path("user_password",{'id': user.id})}}">Modifier mon mot de passe</a>
 				</div>
 			</div>
-			<div class="col">
-				<h2>Mes Associations
-					<a class="m-5 btn btn-secondary" href="{{path('booking_show_all_by_user')}}">Voir mes réservation</a>
+			<div class="col-10" align="center">
+				<h2 class="text-ter">Mes Associations
+					<a class="m-5 btn btn-secondary btn-ter text-ter bold" href="{{path('booking_show_all_by_user')}}">Voir mes réservation</a>
 				</h2>
 				<div class="row">
 					{% for asso in user.associationUsers %}
 						<div class="col">
 							{%  if app.user.id == asso.user.id%}
 								<div class="card" style="width: 18rem;">
-									<div class="card-header">
+									<div class="card-header bg-prim">
 										{{asso.association.Name}}
 									</div>
 									<ul class="list-group list-group-flush">
