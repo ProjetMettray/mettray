@@ -31,6 +31,7 @@
 											{% set foo = 0 %}
 											{% for rooms in associations.roomAssociations %}
 												{% set foo = foo + 1 %}
+												{% if rooms.room %}
 												<li class="list-group-item text-ter">
 													Salle :
 													<a href="{{path("main_room",{'id': rooms.room.id})}}" class="btn fc-button-primary">{{rooms.room.name}}</a>
@@ -53,6 +54,7 @@
 														</div>
 													</div>
 												</li>
+												{% endif %}
 											{% endfor %}
 										</ul>
 									</div>
