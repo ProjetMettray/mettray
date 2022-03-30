@@ -1,9 +1,11 @@
 {% set current_path = app.request.attributes.get('_route') %}
-<nav class="navbar navbar-expand-md fixed-top bg-prim">
+<nav class="navbar navbar-expand-md bg-prim fixed-top">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="{{path('app_login')}}"><img src="{{ asset('build/images/logo.png') }}" style="width: 8rem;" alt="Mettray logo"></a>
 		<button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"><svg><path stroke='#FFFFFF' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/></svg></span>
+			<span class="navbar-toggler-icon">
+				<svg><path stroke='#FFFFFF' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/></svg>
+			</span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
@@ -69,11 +71,13 @@
 			</ul>
 		</div>
 	</div>
-</div></nav><nav class="navbar navbar-expand-md bg-prim">
+</div></nav><nav class="navbar navbar-expand-md bg-prim ">
 <div class="container-fluid">
-	<a class="navbar-brand" href="{{path('app_login')}}"><img class="img-thumbnail" style="width: 8rem;" src="{{ asset('build/images/logo.png') }}" alt="Mettray logo"></a>
-	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
+	<a class="navbar-brand" href="{{path('app_login')}}"><img src="{{ asset('build/images/logo.png') }}" style="width: 8rem;" alt="Mettray logo"></a>
+	<button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon">
+			<svg><path stroke='#FFFFFF' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/></svg>
+		</span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav">

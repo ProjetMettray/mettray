@@ -4,20 +4,6 @@
 {% endblock %}
 
 {% block body %}
-	<div class="bg-prim">
-		<div class="container">
-			{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
-				<div>
-					<nav class="navbar navbar-expand-lg bg-prim rounded text-center d-flex justify-content-around">
-						<a class="btn btn-ter ml-3" href="{{ path('location_add') }}">Ajouter une adresse</a>
-						<a class="btn btn-ter ml-3" href="{{ path('room_add') }}">Ajouter une salle</a>
-						<a class="btn btn-ter ml-3" href="{{ path('association_add') }}">Ajouter une association</a>
-						<a class="btn btn-ter ml-3" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
-					</nav>
-				</div>
-			{% endif %}
-		</div>
-	</div>
 	<div class="container text-center mt-5 pb-2 bg-white border border-ter rounded">
 		<h1 class="p-5 text-ter">Liste des salles par adresse</h1>
 		{% for loc in location %}
@@ -27,8 +13,10 @@
 						<th scope="col">Nom de la salle</th>
 						<th scope="col">Nombre de places</th>
 						<th scope="col">Description</th>
-						<th scope="col">Modifier</th>
-						<th scope="col">Supprimer</th>
+						{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
+							<th scope="col">Modifier</th>
+							<th scope="col">Supprimer</th>
+						{% endif %}
 					</tr>
 				</thead>
 				<tbody>
