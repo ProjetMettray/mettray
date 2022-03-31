@@ -129,6 +129,7 @@ class BookingController extends AbstractController
         }
 
         return $this->renderForm('booking/new.html.twig', [
+            'room' => $room,
             'booking' => $booking,
             'bookingForm' => $form
         ]);
@@ -151,6 +152,7 @@ class BookingController extends AbstractController
         }
 
         return $this->renderForm('booking/edit.html.twig', [
+            'room' => $booking->getRoom(),
             'booking' => $booking,
             'bookingForm' => $form,
             'bookingName' => $booking->getTitle(),

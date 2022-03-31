@@ -14,6 +14,7 @@
 						<th scope="col">Nombre de places</th>
 						<th scope="col">Description</th>
 						<th scope="col">Privé / Publique</th>
+						<th scope="col">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -42,6 +43,9 @@
 									{% else %}
 										<td>Salle privée</td>
 									{% endif %}
+									<td>
+										<a href="{{ path("booking_new", {'room': room.id}) }}" class="btn fc-button-primary">Réserver</a>
+									</td>
 								</tr>
 							{% endif %}
 						{% endfor %}
