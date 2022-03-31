@@ -13,10 +13,7 @@
 						<th scope="col">Nom de la salle</th>
 						<th scope="col">Nombre de places</th>
 						<th scope="col">Description</th>
-						{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
-							<th scope="col">Modifier</th>
-							<th scope="col">Supprimer</th>
-						{% endif %}
+						<th scope="col">Privé / Publique</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,25 +31,20 @@
 							<a type="button" class="btn btn-danger" href="{{path("location_delete",{'id': loc.id})}}">Supprimer</a>
 						</div>
 					{% endif %}
-					{% for room in rooms %}
-						{% if room.location.id == loc.id %}
-							<tr class="table-active ts ">
-								<td>{{ room.name }}</td>
-								<td>{{ room.getNbPlace }}</td>
-								<td>{{ room.description }}</td>
-								{% if app.user %}
-									{% if (app.user.roles[0] is same as ("ROLE_ADMIN")) %}
-										<td>
-											<a href="{{ path("room_update", {'room': room.id}) }}" type="button" class="btn fc-button-primary">Modifier</a>
-										</td>
-										<td>
-											<a href="{{ path("room_delete", {'room': room.id}) }}" type="button" class="btn btn-danger">Supprimer</a>
-										</td>
+						{% for room in rooms %}
+							{% if room.location.id == loc.id %}
+								<tr class="table-active ts">
+									<td>{{ room.name }}</td>
+									<td>{{ room.getNbPlace }}</td>
+									<td>{{ room.description }}</td>
+									{% if room.visibility %}
+										<td>Salle publique</td>
+									{% else %}
+										<td>Salle privée</td>
 									{% endif %}
-								{% endif %}
-							</tr>
-						{% endif %}
-					{% endfor %}
+								</tr>
+							{% endif %}
+						{% endfor %}
 				</tbody>
 			</table>
 		{% endfor %}

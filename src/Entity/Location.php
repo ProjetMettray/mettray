@@ -40,8 +40,9 @@ class Location
     private $city;
 
     /**
-     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="location",orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="location",orphanRemoval=true, cascade={"persist"})
      */
+    #[Assert\Count(min: 1)]
     private $rooms;
 
     public function __construct()

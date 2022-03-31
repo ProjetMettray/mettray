@@ -36,6 +36,35 @@
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 
+			<script>
+				const newItem = (e) => {
+					const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);
+
+					const item = document.createElement("div");
+					item.classList.add("col-item");
+					item.innerHTML = collectionHolder
+							.dataset
+							.prototype
+							.replace(
+									/__name__/g,
+									collectionHolder.dataset.index
+							);
+
+					item.querySelector(".btn-remove").addEventListener("click", () => item.remove());
+
+					collectionHolder.appendChild(item);
+
+					collectionHolder.dataset.index++;
+				};
+
+				document
+						.querySelectorAll('.btn-remove')
+						.forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".col-item").remove()));
+
+				document
+						.querySelectorAll('.btn-new')
+						.forEach(btn => btn.addEventListener("click", newItem));
+			</script>
 			<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>

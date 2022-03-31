@@ -69,7 +69,7 @@ class RoomController extends AbstractController
         }
 
         return $this->render('room/add.html.twig', [
-            'roomForm' => $addRoomForm->createView()
+            'form' => $addRoomForm->createView()
         ]);
     }
 
@@ -86,13 +86,13 @@ class RoomController extends AbstractController
         if ($updateRoomForm->isSubmitted() && $updateRoomForm->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('room_show', [
+            return $this->redirectToRoute('room', [
                 'id' => $room->getId()
             ]);
         }
 
         return $this->render('room/update.html.twig', [
-            'roomForm' => $updateRoomForm->createView(),
+            'form' => $updateRoomForm->createView(),
             'roomName' => $room->getName()
         ]);
     }

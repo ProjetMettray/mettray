@@ -23,18 +23,6 @@ class RoomType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('location', EntityType::class, [
-                'class' => Location::class,
-                'label' => 'Adresse',
-                'required' => true,
-                'choice_label' => 'name'
-            ])
-            ->add('room', EntityType::class, [
-                'class' => Room::class,
-                'label' => 'Salle de référence parente si nécessaire',
-                'required' => false,
-                'choice_label' => 'name'
-            ])
             ->add('name', TextType::class, [
                 'label' => 'Nom de la salle',
                 'required' => true,
@@ -63,10 +51,6 @@ class RoomType extends AbstractType
                     'Privé' => 0
                 ],
                 'label' => 'Visibilité'
-            ])
-            ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'mt-2 btn fc-button-primary'],
-                'label'=> 'Envoyer'
             ]);
     }
 

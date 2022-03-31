@@ -43,6 +43,16 @@ label.required:before {
     border-color: #13b1b9 !important;
     color: white !important;
 }
+.fc-button-secondary:hover {
+    background-color: #FFFFFF !important;
+    border-color: #fbba0e !important;
+    color: #fbba0e !important;
+}
+.fc-button-secondary {
+    background-color: #fbba0e !important;
+    border-color: #fbba0e !important;
+    color: white !important;
+}
 .fc-button-primary.fc-button-active {
     background-color: #006767 !important;
     border-color: #006767 !important;

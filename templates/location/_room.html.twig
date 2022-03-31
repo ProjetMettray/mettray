@@ -1,0 +1,22 @@
+<div class="row mt-5 text-ter col-item">
+    <hr>
+    <div class="col-12 my-3">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+    </div>
+    <div class="col-6 my-3">
+        {{ form_label(form.nbPlace) }}
+        {{ form_widget(form.nbPlace) }}
+    </div>
+    <div class="col-6 my-3">
+        {{ form_label(form.visibility) }}
+        {{ form_widget(form.visibility) }}
+    </div>
+    <div class="col-12 my-3">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-danger btn-remove">Supprimer la salle</button>
+    </div>
+</div>

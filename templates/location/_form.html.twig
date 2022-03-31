@@ -1,27 +1,42 @@
-{{ form_start(locationForm) }}
+{{ form_start(form) }}
 
 {% block form_row %}
 	<div class="row my-5 text-ter">
-		<div class="col-12 my-3">
-			{{ form_label(locationForm.name) }}
-			{{ form_widget(locationForm.name) }}
+		<div class="border-prim bg-prim text-white rounded-3 p-3">
+			<h2>Informations du bâtiment</h2>
+			<div class="col-12 my-3">
+				{{ form_label(form.name) }}
+				{{ form_widget(form.name) }}
+			</div>
+			<div class="col-12 my-3">
+				{{ form_label(form.road) }}
+				{{ form_widget(form.road) }}
+			</div>
+			<div class="row">
+				<div class="col-6 my-3">
+					{{ form_label(form.cp) }}
+					{{ form_widget(form.cp) }}
+				</div>
+				<div class="col-6 my-3">
+					{{ form_label(form.city) }}
+					{{ form_widget(form.city) }}
+				</div>
+			</div>
 		</div>
-		<div class="col-12 my-3">
-			{{ form_label(locationForm.road) }}
-			{{ form_widget(locationForm.road) }}
+		<div
+				id="bars"
+				class="row"
+				data-prototype="{{ include("location/_room.html.twig", {form: form.rooms.vars.prototype})|e("html_attr") }}"
+				data-index="{{ form.rooms|length > 0 ? form.rooms|last.vars.name + 1 : 0 }}">
+			{% for room in form.rooms %}
+					{{ include("location/_room.html.twig", {form: room}) }}
+			{% endfor %}
 		</div>
-		<div class="col-6 my-3">
-			{{ form_label(locationForm.cp) }}
-			{{ form_widget(locationForm.cp) }}
-		</div>
-		<div class="col-6 my-3">
-			{{ form_label(locationForm.city) }}
-			{{ form_widget(locationForm.city) }}
-		</div>
+		<button type="button" class="btn fc-button-secondary mt-5 btn-new" data-collection="#bars">Ajouter une salle</button>
 		<div class="col-12 my-3 text-center">
-			{{ form_label(locationForm.submit) }}
-			{{ form_widget(locationForm.submit) }}
+			{{ form_label(form.submit) }}
+			{{ form_widget(form.submit) }}
 		</div>
 	</div>
 {% endblock form_row %}
-{{ form_end(locationForm) }}
+{{ form_end(form) }}

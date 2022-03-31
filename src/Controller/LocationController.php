@@ -38,7 +38,7 @@ class LocationController extends AbstractController
         }
 
         return $this->render('location/add.html.twig', [
-            'locationForm' => $addLocationForm->createView()
+            'form' => $addLocationForm->createView()
         ]);
     }
 
@@ -54,10 +54,12 @@ class LocationController extends AbstractController
 
         if ($updateLocationForm->isSubmitted() && $updateLocationForm->isValid()) {
             $entityManager->flush();
+            
+            return $this->redirectToRoute('room');
         }
 
         return $this->render('location/update.html.twig', [
-            'locationForm' => $updateLocationForm->createView(),
+            'form' => $updateLocationForm->createView(),
             'locationName' => $location->getName(),
             'locationId' => $location->getId()
         ]);
