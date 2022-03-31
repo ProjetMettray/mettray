@@ -54,7 +54,7 @@ class LocationController extends AbstractController
 
         if ($updateLocationForm->isSubmitted() && $updateLocationForm->isValid()) {
             $entityManager->flush();
-            
+
             return $this->redirectToRoute('room');
         }
 
