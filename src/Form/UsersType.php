@@ -31,6 +31,16 @@ class UsersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        ->add('association', EntityType::class, [
+            'class' => Association::class,
+            'expanded' => false,
+            'multiple' => false,
+            'choice_label' => 'name',
+            'query_builder' => function (AssociationRepository $er) {
+                return $er->createQueryBuilder('a');
+            },
+            'label' => 'Associations'
+        ])
         ->add('user', EntityType::class, [
             'class' => User::class,
             'expanded' => false,
@@ -42,10 +52,10 @@ class UsersType extends AbstractType
             },
             'label' => 'Utilisateurs'
         ])
-            ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'mt-2 btn fc-button-primary'],
-                'label'=> 'Ajouter'
-            ]);
+        ->add('submit', SubmitType::class, [
+            'attr' => ['class' => 'mt-2 btn fc-button-primary'],
+            'label'=> 'Ajouter'
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

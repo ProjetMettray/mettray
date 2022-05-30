@@ -1,7 +1,0 @@
-{{ form_start(usersModalForm) }}
-
-{% block form_row %}
-    {% set current_path = app.request.attributes.get('_route') %}
-    {{ form_widget(form.title, {'value' : 'Default title'}) }}
-{% endblock form_row %}
-{{ form_end(usersModalForm) }}

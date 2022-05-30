@@ -38,42 +38,41 @@ class UserController extends AbstractController
         $this->resetPasswordHelper = $resetPasswordHelper;
         $this->em = $em;
     }
+
     /**
      * @Route("/user", name="user_index", methods={"POST","GET"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function index(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository ,AssociationRepository $associationRepository): Response
-    {
+    {    
+
+        $associationUser = New AssociationUser();
+
         $user = New AssociationUser();
         $addUsersModalForm = $this->createForm(UsersType::class, $user);
         $addUsersModalForm->handleRequest($request);
 
-        $associationUser = New AssociationUser();
-
+        $associations = $this->em->getRepository(Association::class)->findAll();
         
-        $association = New Association();
-        $association = $this->em->getRepository(Association::class)->findOneById(1);
+        $modalForm = $this->createForm(UsersType::class, $associationUser);
+        $modalFormView = $modalForm->createView();
+        $modalForm = $modalForm->handleRequest($request);
+        if($modalForm->isSubmitted() && $modalForm->isValid()) {
+            $associationUserNew = $addUsersModalForm->getData();
 
-        $addAssociationUserForm = $this->createForm(UsersType::class, $associationUser);
-        $addAssociationUserForm->handleRequest($request);
-
-        if ($addUsersModalForm->isSubmitted() && $addUsersModalForm->isValid()) {
-            dd($addUsersModalForm->getData());
-            $userNew = $addUsersModalForm->getData();
-            
-            $userNew->setAssociation($association);
-
-            $entityManager->persist($userNew);
+            $entityManager->persist($associationUserNew);
             $entityManager->flush();
 
             return $this->redirectToRoute('user_index');
         }
+        
 
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
-            'associations'=>$associationRepository->findAll(),
-            'usersModalForm' => $addUsersModalForm->createView()
+            'associations' => $associationRepository->findAll(),
+            'usersModalForm' => $modalFormView
         ]);
+        
     }
 
     /**
