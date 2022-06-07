@@ -21,4 +21,4 @@ import $ from 'jquery';
 // import checkPasswordPattern from './rgpd';
 // import './rgpd_animo';
 // import './rgpd.js';
-// import './animo.js';
+// import './animo.js'; 

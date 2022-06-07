@@ -6,6 +6,11 @@
 }
 .bg-ter {
     background-color: #006767 !important;
+    background-color: #fbba0e !important;
+}
+.bg-qua {
+    background-color: #006767 !important;
+    border-color: #fbba0e !important;
 }
 .text-prim{
     color: #13b1b9 !important;
@@ -15,6 +20,9 @@
 }
 .text-ter{
     color: #006767 !important;
+}
+.text-qua{
+    color: #ffffff !important;
 }
 .border-prim{
     border-color: #13b1b9 !important;

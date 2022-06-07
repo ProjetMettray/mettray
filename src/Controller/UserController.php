@@ -2,15 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Association;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\User1Type;
 use App\Form\UserPasswordType;
 use App\Entity\AssociationUser;
-use App\Form\AssociationUserType;
+use App\Form\UsersType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AssociationRepository;
+use PhpParser\Node\Expr\New_;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -36,16 +38,41 @@ class UserController extends AbstractController
         $this->resetPasswordHelper = $resetPasswordHelper;
         $this->em = $em;
     }
+
     /**
-     * @Route("/user", name="user_index", methods={"GET"})
+     * @Route("/user", name="user_index", methods={"POST","GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(UserRepository $userRepository ,AssociationRepository $association): Response
-    {
+    public function index(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository ,AssociationRepository $associationRepository): Response
+    {    
+
+        $associationUser = New AssociationUser();
+
+        $user = New AssociationUser();
+        $addUsersModalForm = $this->createForm(UsersType::class, $user);
+        $addUsersModalForm->handleRequest($request);
+
+        $associations = $this->em->getRepository(Association::class)->findAll();
+        
+        $modalForm = $this->createForm(UsersType::class, $associationUser);
+        $modalFormView = $modalForm->createView();
+        $modalForm = $modalForm->handleRequest($request);
+        if($modalForm->isSubmitted() && $modalForm->isValid()) {
+            $associationUserNew = $addUsersModalForm->getData();
+
+            $entityManager->persist($associationUserNew);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_index');
+        }
+        
+
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
-            'associations'=>$association->findAll(),
+            'associations' => $associationRepository->findAll(),
+            'usersModalForm' => $modalFormView
         ]);
+        
     }
 
     /**
@@ -124,6 +151,7 @@ class UserController extends AbstractController
             'userForm' => $addUserForm->createView()
         ]);
     }
+
     /**
      * @Route("/user/{id}/addassociation", name="user_add_association")
      * @IsGranted("ROLE_ADMIN")
