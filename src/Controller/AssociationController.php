@@ -64,7 +64,7 @@ class AssociationController extends AbstractController
         if($updateAssociationForm->isSubmitted() && $updateAssociationForm->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('association');
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('association/update.html.twig', [
