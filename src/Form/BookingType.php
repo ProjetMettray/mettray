@@ -109,7 +109,7 @@ class BookingType extends AbstractType
                 'attr' => ['class' => 'd-flex flex-row justify-content-around text-white'],
                 'expanded' => true,
                 'multiple' => true,
-                'label' => 'Sélectionnez les jours concernés si nécessaire',
+                'label' => 'Sélectionnez les jours concernés si nécessaire pour une récurrence :',
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'mt-2 btn fc-button-primary'],

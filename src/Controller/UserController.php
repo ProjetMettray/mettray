@@ -144,7 +144,7 @@ class UserController extends AbstractController
             $this->setTokenObjectInSession($resetToken);
 
             $this->addFlash('message', 'Création du compte réussi');
-            return $this->redirectToRoute('user_add_association', ['id'=> $user->getId()]);
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('user/new.html.twig', [
