@@ -12,6 +12,7 @@ use App\Repository\RoomRepository;
 use App\Repository\BookingRepository;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Math;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -83,41 +84,82 @@ class BookingController extends AbstractController
             $userAssociations[] = $this->em->getRepository(Association::class)->findById($userHasAssociation->getAssociation());
         }
 
-        $form = $this->createForm(BookingType::class, $booking
-        //, array(
-        //    'userAssociations' => $userAssociations
-        //)
-        );
+        $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($booking->getDays() === []){
-                $booking->setDays([0,1,2,3,4,5,6]);
-            }
-            $booking->setRoom($room);
-            $booking->setStatus('En attente');
 
             $formObject = $form->getData();
             $startDateForm = $formObject->getStartAt();
             $endDateForm = $formObject->getEndAt();
-            $roomForm = $formObject->getRoom();
+            
 
+            $bookingDayStart = date("w", $startDateForm->getTimestamp());
+            $bookingDayEnd = date("w", $endDateForm->getTimestamp());
+
+
+            if ($startDateForm === $endDateForm) {
+                $booking->setDays([$bookingDayStart]);
+            } else if ((($endDateForm->getTimestamp() - $startDateForm->getTimestamp()) / (60 * 60 * 24)) <= 7 ) {
+                
+                if ($booking->getDays() === []) {
+                    $bookingDays = [];
+                    $j = 0;
+                    for ($i=0; $i<(($endDateForm->getTimestamp() - $startDateForm->getTimestamp()) / (60 * 60 * 24)); $i++) { 
+                        if($bookingDayStart + $i < 7) {
+                            array_push($bookingDays, $bookingDayStart + $i);
+                        } else {
+                            array_push($bookingDays, $j);
+                            $j++;
+                        }
+                    }
+                    $booking->setDays($bookingDays);
+                }
+            } else {
+                //dd($booking->getDays());
+                if ($booking->getDays() === []) {
+                    $booking->setDays([0, 1, 2, 3, 4, 5, 6]);
+                }
+            }
+
+            $booking->setRoom($room);
+            $booking->setStatus('En attente');
+
+            $roomForm = $formObject->getRoom();
             $bookingsForRoom = $this->em->getRepository(Booking::class)->findByRoom($roomForm);
 
             $sendForm = true;
+            $errorSend = false;
 
-            /*
             foreach ($bookingsForRoom as $bookingForRoom) {
-                if (($startDateForm >= $bookingForRoom->getStartAt() && $startDateForm < $bookingForRoom->getEndAt()) || ($endDateForm > $bookingForRoom->getStartAt() && $endDateForm <= $bookingForRoom->getEndAt())) {
-                    $form->get('start_at')->addError(new FormError('Ce créneau de dates est déjà pris!'));
-                    $sendForm = false;
-                }
-                if ($bookingForRoom->getEndAt() < $bookingForRoom->getStartAt()) {
-                    $form->get('end_at')->addError(new FormError('La date de fin doit être supérieure à la date de début!'));
-                    $sendForm = false;
-                }
+                if (($startDateForm >= $bookingForRoom->getStartAt() && $startDateForm < $bookingForRoom->getEndAt()) || ($endDateForm > $bookingForRoom->getStartAt() && $endDateForm <= $bookingForRoom->getEndAt()) || ($startDateForm < $bookingForRoom->getStartAt() && $endDateForm > $bookingForRoom->getEndAt())) {
+                    if (array_intersect($bookingForRoom->getDays(), $booking->getDays()) !== []) {
+                        
+                        if (($formObject->getStarttime() >= $bookingForRoom->getStarttime() && $formObject->getStarttime() < $bookingForRoom->getEndtime()) || ($formObject->getEndtime() > $bookingForRoom->getStarttime() && $formObject->getEndtime() <= $bookingForRoom->getEndtime())) {
+                            
+                            if (!$errorSend) {
+                                $form->get('start_at')->addError(new FormError('Ce créneau de dates est déjà pris!'));
+                                $sendForm = false;
+                                $errorSend = true;
+                            } 
+                        }  
+                    } else {
+                        
+                        if (!$errorSend) {
+                            if (($formObject->getStarttime() >= $bookingForRoom->getStarttime() && $formObject->getStarttime() < $bookingForRoom->getEndtime()) || ($formObject->getEndtime() > $bookingForRoom->getStarttime() && $formObject->getEndtime() <= $bookingForRoom->getEndtime())) {
+                                $form->get('start_at')->addError(new FormError('Ce créneau de dates est déjà pris!'));
+                                $sendForm = false;
+                                $errorSend = true;
+                            }
+                        }
+                    }                  
+                }  
             }
-            */
+
+            if ($booking->getEndAt() < $booking->getStartAt()) {
+                $form->get('start_at')->addError(new FormError('La date de fin doit être supérieure à la date de début!'));
+                $sendForm = false;
+            }
             
             if ($sendForm) {
                 $entityManager = $this->getDoctrine()->getManager();
