@@ -135,7 +135,7 @@ class BookingController extends AbstractController
                 if (($startDateForm >= $bookingForRoom->getStartAt() && $startDateForm < $bookingForRoom->getEndAt()) || ($endDateForm > $bookingForRoom->getStartAt() && $endDateForm <= $bookingForRoom->getEndAt()) || ($startDateForm < $bookingForRoom->getStartAt() && $endDateForm > $bookingForRoom->getEndAt())) {
                     if (array_intersect($bookingForRoom->getDays(), $booking->getDays()) !== []) {
                         
-                        if (($formObject->getStarttime() >= $bookingForRoom->getStarttime() && $formObject->getStarttime() < $bookingForRoom->getEndtime()) || ($formObject->getEndtime() > $bookingForRoom->getStarttime() && $formObject->getEndtime() <= $bookingForRoom->getEndtime())) {
+                        if (($formObject->getStarttime() >= $bookingForRoom->getStarttime() && $formObject->getStarttime() < $bookingForRoom->getEndtime()) || ($formObject->getEndtime() > $bookingForRoom->getStarttime() && $formObject->getEndtime() <= $bookingForRoom->getEndtime()) || ($formObject->getStarttime() < $bookingForRoom->getStartTime() && $formObject->getEndtime() > $bookingForRoom->getEndTime())) {
                             
                             if (!$errorSend) {
                                 $form->get('start_at')->addError(new FormError('Ce créneau de dates est déjà pris!'));
@@ -146,8 +146,10 @@ class BookingController extends AbstractController
                     } else {
                         
                         if (!$errorSend) {
-                            if (($formObject->getStarttime() >= $bookingForRoom->getStarttime() && $formObject->getStarttime() < $bookingForRoom->getEndtime()) || ($formObject->getEndtime() > $bookingForRoom->getStarttime() && $formObject->getEndtime() <= $bookingForRoom->getEndtime())) {
-                                $form->get('start_at')->addError(new FormError('Ce créneau de dates est déjà pris!'));
+                            if (($formObject->getStarttime() >= $bookingForRoom->getStarttime() && $formObject->getStarttime() < $bookingForRoom->getEndtime()) || ($formObject->getEndtime() > $bookingForRoom->getStarttime() && $formObject->getEndtime() <= $bookingForRoom->getEndtime()) || ($formObject->getStarttime() < $bookingForRoom->getStartTime() && $formObject->getEndtime() > $bookingForRoom->getEndTime())) {
+                                $form->get('start_at')->addError(new
+                                
+                                FormError('Ce créneau de dates est déjà pris!'));
                                 $sendForm = false;
                                 $errorSend = true;
                             }
