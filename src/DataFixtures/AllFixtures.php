@@ -73,27 +73,6 @@ class AllFixtures extends Fixture
         ['chloe@gmail.com', ['ROLE_ADMIN'], 'Chloe', 'Metayer', '02.47.45.12.17']
     ];
 
-    public const FAKE_ROOM_ASSO = [
-        ['Demi terrain A', 'FC Mettray'],
-        ['Demi terrain B', 'FC Mettray'],
-        ['Grand bassin', 'Natation Club Mettray'],
-        ['Ligne 1', 'Natation Club Mettray'],
-        ['Ligne 2', 'Natation Club Mettray'],
-        ['Ligne 3', 'Natation Club Mettray'],
-        ['Ligne 4', 'Natation Club Mettray'],
-        ['Ligne 5', 'Natation Club Mettray'],
-        ['Ligne 6', 'Natation Club Mettray'],
-        ['Ligne 7', 'Natation Club Mettray'],
-        ['Ligne 8', 'Natation Club Mettray'],
-        ['Terrain entier', 'Hockey Boys'],
-        ['Katta', 'FC Mettray'],
-        ['Katta 1', 'FC Mettray'],
-        ['wiki', 'Hockey Boys'],
-        ['Katta', 'Judo Karate Club'],
-        ['Battle', 'Judo Karate Club'],
-        ['Terrain entier', 'Natation Club Mettray']
-    ];
-
     public const FAKE_ASSO_USER = [
         ['Daunay', 'FC Mettray'],
         ['Cauvin', 'FC Mettray'],
@@ -213,17 +192,6 @@ class AllFixtures extends Fixture
                 ->setVisibility($fakeRoom[6]);
 
             $manager->persist($room);
-
-        }
-        $manager->flush();
-
-        foreach (self::FAKE_ROOM_ASSO as $fakeRoomAssociation) {
-            $roomUser = new RoomAssociation();
-            $roomUser
-                ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoomAssociation[0]))
-                ->setAssociation($manager->getRepository(Association::class)->findOneByName($fakeRoomAssociation[1]));
-
-            $manager->persist($roomUser);
 
         }
         $manager->flush();

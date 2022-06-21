@@ -3,7 +3,6 @@
 {% block title %}Mes salles | Mettray
 {% endblock %}
 {% block body %}
-
 	<div class="container">
 		<div class="row d-flex justify-content-center mt-2">
 			<div class="col-3">
@@ -19,12 +18,11 @@
 										</div>
 										<ul class="list-group list-group-flush">
 											{% set foo = 0 %}
-											{% for rooms in associations.roomAssociations %}
+											{% for rooms in associations.rooms %}
 												{% set foo = foo + 1 %}
-												{% if rooms.room %}
 													<li class="list-group-item text-ter">
 														Salle :
-														<a href="{{path("main_room",{'id': rooms.room.id})}}" class="btn fc-button-primary">{{rooms.room.name}}</a>
+														<a href="{{path("main_room",{'id': rooms.id})}}" class="btn fc-button-primary">{{rooms.name}}</a>
 														<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
 															<i class="fas fa-eye text-sec"></i>
 														</a>
@@ -32,19 +30,18 @@
 															<div class="card card-body">
 																<ul class="list-group">
 																	<li class="text-ter">Description:
-																		<span class="text-prim">{{rooms.room.description}}</span>
+																		<span class="text-prim">{{rooms.description}}</span>
 																	</li>
 																	<li class="text-ter">Nombres de places:
-																		<span class="text-prim">{{rooms.room.nbPlace}}</span>
+																		<span class="text-prim">{{rooms.nbPlace}}</span>
 																	</li>
 																	<li class="text-ter">Localisation:
-																		<span class="text-prim">{{rooms.room.location}}</span>
+																		<span class="text-prim">{{rooms.location}}</span>
 																	</li>
 																</ul>
 															</div>
 														</div>
 													</li>
-												{% endif %}
 											{% endfor %}
 										</ul>
 									</div>
