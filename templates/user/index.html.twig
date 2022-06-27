@@ -37,8 +37,8 @@
 						</tr>
 					</thead>
 					{% for user in users %}
-						{% for assoUser in user.associationUsers %}
-							{% if assoUser.association.id == asso.id %}
+						{% for assoUser in user.associations %}
+							{% if assoUser.id == asso.id %}
 								<tbody>
 									<tr class="table-active ts">
 										<td>{{ user.firstname }}
@@ -71,34 +71,8 @@
 					<nav class="navbar navbar-expand-lg bg-prim rounded text-center d-flex justify-content-around fixed-bottom">
 						<a class="btn btn-ter ml-3" href="{{ path('location_add') }}">Ajouter une adresse</a>
 						<a class="btn btn-ter ml-3" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
-						<!-- Button trigger modal -->
-						<button type="button" class="btn bg-sec border-sec text-ter mt-1 modal_button" data-toggle="modal" data-target={{ "#exampleModal" }} id={{ "modalButton" }} name="associationId" value={{ 1 }}>
-							Ajouter un utilisateur par association
-						</button>
 						<a class="btn btn-ter ml-3" href="{{ path('association_add') }}">Ajouter une structure/association</a>
 					</nav>
-
-					<!-- Modal -->
-					<div class="modal fade" id={{ "exampleModal" }} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Ajouter un utilisateur</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-
-									{{ form_start(usersModalForm) }}
-										
-									{{ form_end(usersModalForm) }}
-									
-								</div>
-						</div>
-					</div>
-
 			</div>
 				{% endif %}
 			</div>

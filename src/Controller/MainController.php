@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Room;
 use App\Entity\Booking;
 use App\Entity\Association;
-use App\Entity\AssociationUser;
 use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,7 +61,7 @@ class MainController extends AbstractController
         $bookingsForUser = [];
         $bookingsIdForUser = [];
 
-        $userHasAssociations = $this->em->getRepository(AssociationUser::class)->findByUser($userId);
+        $userHasAssociations = $this->em->getRepository(Association::class);
         foreach ($userHasAssociations as $userHasAssociation) {
             $userAssociations[$userHasAssociation->getAssociation()->getId()] = $userHasAssociation->getAssociation()->getName();
         }

@@ -29,22 +29,19 @@
 					<a class="m-5 btn btn-secondary btn-ter text-ter bold" href="{{path('booking_show_all_by_user')}}">Voir mes réservation</a>
 				</h2>
 				<div class="d-flex flex-wrap">
-					{% for asso in user.associationUsers %}
+					{% for asso in user.associations %}
 						<div class="m-3">
-							{%  if app.user.id == asso.user.id%}
 								<div class="card" style="width: 18rem;">
 									<div class="card-header bg-prim">
-										{{asso.association.Name}}
+										{{asso.Name}}
 									</div>
 									<ul class="list-group list-group-flush">
 										<li class="list-group-item">Email:
-											{{asso.association.email}}</li>
+											{{asso.email}}</li>
 										<li class="list-group-item">Téléphone:
-											{{asso.association.telephone}}</li>
+											{{asso.telephone}}</li>
 									</ul>
 								</div>
-
-							{% endif %}
 						</div>
 					{% endfor %}
 				</div>

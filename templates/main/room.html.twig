@@ -11,8 +11,8 @@
 					{% if is_granted('ROLE_USER') %}
 						<h2 class="m-4 text-ter">Mes salles</h2>
 						{% for associations in asso %}
-							{% for assoUser in associations.associationUsers %}
-								{%  if app.user.id == assoUser.user.id%}
+							{% for assoUser in associations.users %}
+								{%  if app.user.id == assoUser.id%}
 									<div class="m-3 card border-prim" style="width: 18rem;">
 										<div class="card-header border-ter bg-prim text-white">
 											{{associations.name}}

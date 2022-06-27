@@ -57,10 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     /**
-     * @ORM\OneToMany(targetEntity=AssociationUser::class, mappedBy="user")
-     * @ORM\JoinColumn(onDelete="CASCADE") 
+     * @ORM\ManyToMany(targetEntity=Association::class, mappedBy="users")
      */
-    private $associationUsers;
+    private $associations;
 
     public function __construct()
     {
@@ -200,37 +199,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|AssociationUser[]
+     * @return Collection<int, Association>
      */
-    public function getAssociationUsers(): Collection
+    public function getAssociations(): Collection
     {
-        return $this->associationUsers;
+        return $this->associations;
     }
 
-    public function addAssociationUser(AssociationUser $associationUser): self
+    public function addAssociation(Association $association): self
     {
-        if (!$this->associationUsers->contains($associationUser)) {
-            $this->associationUsers[] = $associationUser;
-            $associationUser->setUser($this);
+        if (!$this->associations->contains($association)) {
+            $this->associations[] = $association;
+            $association->addUser($this);
         }
 
         return $this;
     }
 
-    public function removeAssociationUser(AssociationUser $associationUser): self
+    public function removeAssociation(Association $association): self
     {
-        if ($this->associationUsers->removeElement($associationUser)) {
-            // set the owning side to null (unless already changed)
-            if ($associationUser->getUser() === $this) {
-                $associationUser->setUser(null);
-            }
+        if ($this->associations->removeElement($association)) {
+            $association->removeUser($this);
         }
 
         return $this;
-    }
-
-    public function addUserAssociation(Association $association)
-    {
-        $this->associationUsers[] = $association;
     }
 }

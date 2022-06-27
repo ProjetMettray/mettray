@@ -31,21 +31,22 @@ class Association
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="association")
      */
     private $bookings;
-    /**
-     * @ORM\OneToMany(targetEntity=AssociationUser::class, mappedBy="association")
-     */
-    private $associationUsers;
 
     /**
      * @ORM\ManyToMany(targetEntity=Room::class, inversedBy="associations")
      */
     private $rooms;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="associations")
+     */
+    private $users;
     public function __construct()
     {
         $this->user_has_association = new ArrayCollection();
         $this->bookings = new ArrayCollection();
-        $this->associationUsers = new ArrayCollection();
         $this->rooms = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -107,31 +108,6 @@ class Association
         }
         return $this;
     }
-    /**
-     * @return Collection|AssociationUser[]
-     */
-    public function getAssociationUsers(): Collection
-    {
-        return $this->associationUsers;
-    }
-    public function addAssociationUser(AssociationUser $associationUser): self
-    {
-        if (!$this->associationUsers->contains($associationUser)) {
-            $this->associationUsers[] = $associationUser;
-            $associationUser->setAssociation($this);
-        }
-        return $this;
-    }
-    public function removeAssociationUser(AssociationUser $associationUser): self
-    {
-        if ($this->associationUsers->removeElement($associationUser)) {
-            // set the owning side to null (unless already changed)
-            if ($associationUser->getAssociation() === $this) {
-                $associationUser->setAssociation(null);
-            }
-        }
-        return $this;
-    }
 
     /**
      * @return Collection<int, Room>
@@ -152,6 +128,30 @@ class Association
     public function removeRoom(Room $room): self
     {
         $this->rooms->removeElement($room);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        $this->users->removeElement($user);
 
         return $this;
     }

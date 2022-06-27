@@ -3,11 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Association;
-use App\Entity\AssociationUser;
 use App\Entity\Room;
 use App\Entity\Booking;
 use App\Repository\AssociationRepository;
-use App\Repository\AssociationUserRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -26,13 +24,11 @@ use Symfony\Component\Security\Core\Security;
 class BookingType extends AbstractType
 {
 
-    private $associationUserRepository;
     private $security;
 
-    public function __construct(Security $security, AssociationUserRepository $associationUserRepository)
+    public function __construct(Security $security)
     {
         $this->security = $security;
-        $this->associationUserRepository = $associationUserRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
