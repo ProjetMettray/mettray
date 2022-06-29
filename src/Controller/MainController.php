@@ -56,9 +56,11 @@ class MainController extends AbstractController
     {
         $asso = $this->em->getRepository(Association::class)->findAll();
         $room = $this->em->getRepository(Room::class)->findAll();
+        $currentUserId = $this->getUser()->getId();
+
+        $userAssociations = $this->em->getRepository(Association::class)->findByUserId($currentUserId);
 
         $bookings = $this->em->getRepository(Room::class)->findBy(['id' => $id]);
-        $userAssociations = [];
         $bookingsForUser = [];
         $bookingsIdForUser = [];
 
