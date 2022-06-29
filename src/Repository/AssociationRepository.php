@@ -20,12 +20,15 @@ class AssociationRepository extends ServiceEntityRepository
         parent::__construct($registry, Association::class);
     }
 
-    public function queryOwnedBy($userId) {
+    public function queryOwnedBy($userId, $roomId) {
 
         $query = $this  ->createQueryBuilder('a')      
-                        ->innerJoin('a.associationUsers', 'au')
-                        ->andWhere('au.user = :id')                
-                        ->setParameter('id', $userId);
+                        ->innerJoin('a.users', 'u')
+                        ->innerJoin('a.rooms', 'r')
+                        ->andWhere('u.id = :userId')
+                        ->andWhere('r.id = :roomId')
+                        ->setParameter('userId', $userId)
+                        ->setParameter('roomId', $roomId);
     
         return $query;
     }
@@ -45,22 +48,21 @@ class AssociationRepository extends ServiceEntityRepository
     }
 
 
-    // /**
-    //  * @return Association[] Returns an array of Association objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    /* @return Association[] Returns an array of Association objects
+    */
+
+    public function findByUserId($userId)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->setParameter('userId', $userId)
+            ->innerJoin('a.users', 'u')
+            ->andWhere('u.id = :userId')
+            ->orderBy('a.name', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Association

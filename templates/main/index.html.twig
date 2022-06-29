@@ -9,16 +9,14 @@
 				{% if app.user %}
 					{% if is_granted('ROLE_USER') %}
 						<h2 class="m-4 text-ter">Mes salles</h2>
-						{% for associations in asso %}
 							{% for assoUser in associations %}
-								{%  if app.user.id == assoUser.user.id%}
 									<div class="m-3 card bg-prim text-white" style="width: 18rem;">
 										<div class="card-header bg-prim text-white">
-											{{associations.name}}
+											{{assoUser.name}}
 										</div>
 										<ul class="list-group list-group-flush">
 											{% set foo = 0 %}
-											{% for rooms in associations.rooms %}
+											{% for rooms in assoUser.rooms %}
 												{% set foo = foo + 1 %}
 													<li class="list-group-item text-ter">
 														Salle :
@@ -45,9 +43,7 @@
 											{% endfor %}
 										</ul>
 									</div>
-								{% endif %}
 							{% endfor %}
-						{% endfor %}
 					{% endif %}
 					{% if is_granted('ROLE_ADMIN') %}
 						<div class="m-3 card border-prim" style="width: 18rem;">
