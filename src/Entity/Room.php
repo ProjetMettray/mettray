@@ -68,11 +68,17 @@ class Room
      */
     private $visibility;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Association::class, mappedBy="rooms")
+     */
+    private $associations;
+
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
         $this->user = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->associations = new ArrayCollection();
     }
 
 
@@ -250,6 +256,33 @@ class Room
     public function setVisibility(int $visibility): self
     {
         $this->visibility = $visibility;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Association>
+     */
+    public function getAssociations(): Collection
+    {
+        return $this->associations;
+    }
+
+    public function addAssociation(Association $association): self
+    {
+        if (!$this->associations->contains($association)) {
+            $this->associations[] = $association;
+            $association->addRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociation(Association $association): self
+    {
+        if ($this->associations->removeElement($association)) {
+            $association->removeRoom($this);
+        }
 
         return $this;
     }

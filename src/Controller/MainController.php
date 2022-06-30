@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Room;
 use App\Entity\Booking;
 use App\Entity\Association;
-use App\Entity\AssociationUser;
+use App\Entity\User;
 use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,14 +34,16 @@ class MainController extends AbstractController
     {
         $asso = $this->em->getRepository(Association::class)->findAll();
         $room = $this->em->getRepository(Room::class)->findAll();
+        $currentUserId = $this->getUser()->getId();
 
-
+        $associations = $this->em->getRepository(Association::class)->findByUserId($currentUserId);
         $locations = $location->findAll();
 
         return $this->render('main/index.html.twig', [
 
             'locations' => $locations,
             'asso' => $asso,
+            'associations' => $associations,
             'room' => $room,
 
         ]);
@@ -54,18 +56,13 @@ class MainController extends AbstractController
     {
         $asso = $this->em->getRepository(Association::class)->findAll();
         $room = $this->em->getRepository(Room::class)->findAll();
+        $currentUserId = $this->getUser()->getId();
+
+        $userAssociations = $this->em->getRepository(Association::class)->findByUserId($currentUserId);
 
         $bookings = $this->em->getRepository(Room::class)->findBy(['id' => $id]);
-
-        $userId = $this->getUser()->getId();
-        $userAssociations = [];
         $bookingsForUser = [];
         $bookingsIdForUser = [];
-
-        $userHasAssociations = $this->em->getRepository(AssociationUser::class)->findByUser($userId);
-        foreach ($userHasAssociations as $userHasAssociation) {
-            $userAssociations[$userHasAssociation->getAssociation()->getId()] = $userHasAssociation->getAssociation()->getName();
-        }
 
         foreach ($userAssociations as $associationId => $associationName) {
             $bookingsForUser[] = $this->em->getRepository(Booking::class)->findByAssociation($associationId);

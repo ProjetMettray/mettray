@@ -5,11 +5,9 @@ namespace App\Form;
 use App\Entity\Room;
 use App\Entity\User;
 use App\Entity\Association;
-use App\Entity\AssociationUser;
 use App\Repository\RoomRepository;
 use Symfony\Component\Form\AbstractType;
 use App\Repository\AssociationRepository;
-use App\Repository\AssociationUserRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -61,8 +59,8 @@ class RegisterType extends AbstractType
                     'class' => 'form-control'
             ],
             ])
-            ->add('associationUsers', EntityType::class, [
-                'class' => AssociationUser::class,
+            ->add('associations', EntityType::class, [
+                'class' => User::class,
                 'expanded' => true,
                 'multiple' => true,
                 'choice_label' => 'association'

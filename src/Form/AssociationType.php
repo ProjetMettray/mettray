@@ -2,13 +2,11 @@
 
 namespace App\Form;
 
-use App\Entity\User;
 use App\Entity\Association;
 use App\Entity\Room;
-use App\Entity\RoomAssociation;
-use Doctrine\ORM\EntityRepository;
+use App\Entity\User;
 use App\Repository\RoomRepository;
-use App\Repository\RoomAssociationRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -43,19 +41,32 @@ class AssociationType extends AbstractType
                 ],
             ])
             //->add('user_has_association')
-            ->add('roomAssociations', EntityType::class, [
+            ->add('rooms', EntityType::class, [
                 'label' => "Salles liées à l'association",
                 'attr' => [
                     'class' => ''
                 ],
                 'class' => Room::class,
-                'mapped' => false,
                 'expanded' => true,
                 'multiple' => true,
                 'choice_label' => 'name',
                 'query_builder' => function (RoomRepository $er) {
                     return $er->createQueryBuilder('u')                 
                     ->orderBy('u.name', 'ASC');
+                }
+            ])
+            ->add('users', EntityType::class, [
+                'label' => "Personnes de l'association",
+                'attr' => [
+                    'class' => ''
+                ],
+                'class' => User::class,
+                'expanded' => true,
+                'multiple' => true,
+                'choice_label' => 'lastname',
+                'query_builder' => function (UserRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.lastname', 'ASC');
                 }
             ])
             ->add('submit', SubmitType::class, [

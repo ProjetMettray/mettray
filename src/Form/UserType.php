@@ -63,7 +63,20 @@ class UserType extends AbstractType
                 ],
                 'label' => 'Téléphone'
             ])
-
+            ->add('associations', EntityType::class, [
+                'label' => "Associations de l'utilisateur",
+                'attr' => [
+                    'class' => ''
+                ],
+                'class' => Association::class,
+                'expanded' => true,
+                'multiple' => true,
+                'choice_label' => 'name',
+                'query_builder' => function (AssociationRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.name', 'ASC');
+                }
+            ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'mt-2 btn fc-button-primary'],
                 'label'=> 'Envoyer'

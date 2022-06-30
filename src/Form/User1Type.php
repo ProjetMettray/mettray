@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Association;
 use App\Entity\User;
+use App\Repository\AssociationRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,6 +45,20 @@ class User1Type extends AbstractType
                 'attr' => [
                     'class' => 'form-control input-form'
                 ],
+            ])
+            ->add('associations', EntityType::class, [
+                'label' => "Associations de l'utilisateur",
+                'attr' => [
+                    'class' => ''
+                ],
+                'class' => Association::class,
+                'expanded' => true,
+                'multiple' => true,
+                'choice_label' => 'name',
+                'query_builder' => function (AssociationRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.name', 'ASC');
+                }
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'mt-2 btn fc-button-primary'],

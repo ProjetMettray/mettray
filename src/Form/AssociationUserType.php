@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Form;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\AssociationUser;
 use App\Entity\Association;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,10 +15,10 @@ class AssociationUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('association', EntityType::class, [
+        ->add('associations', EntityType::class, [
             'class' => Association::class,
-            'expanded' => false,
-            'multiple' => false,
+            'expanded' => true,
+            'multiple' => true,
             'choice_label' => 'name',
             'query_builder' => function (AssociationRepository $er) {
                 return $er->createQueryBuilder('u')                 
@@ -35,7 +35,7 @@ class AssociationUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => AssociationUser::class,
+            'data_class' => User::class,
         ]);
     }
 }

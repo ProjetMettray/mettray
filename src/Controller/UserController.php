@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Association;
 use App\Entity\User;
+use App\Form\AssociationUserType;
 use App\Form\UserType;
 use App\Form\User1Type;
 use App\Form\UserPasswordType;
-use App\Entity\AssociationUser;
 use App\Form\UsersType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -44,35 +44,11 @@ class UserController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
     public function index(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository ,AssociationRepository $associationRepository): Response
-    {    
-
-        $associationUser = New AssociationUser();
-
-        $user = New AssociationUser();
-        $addUsersModalForm = $this->createForm(UsersType::class, $user);
-        $addUsersModalForm->handleRequest($request);
-
-        $associations = $this->em->getRepository(Association::class)->findAll();
-        
-        $modalForm = $this->createForm(UsersType::class, $associationUser);
-        $modalFormView = $modalForm->createView();
-        $modalForm = $modalForm->handleRequest($request);
-        if($modalForm->isSubmitted() && $modalForm->isValid()) {
-            $associationUserNew = $addUsersModalForm->getData();
-
-            $entityManager->persist($associationUserNew);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('user_index');
-        }
-        
-
+    {
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
             'associations' => $associationRepository->findAll(),
-            'usersModalForm' => $modalFormView
         ]);
-        
     }
 
     /**
@@ -158,7 +134,7 @@ class UserController extends AbstractController
      */
     public function addAssociation(User $id, Request $request, EntityManagerInterface $entityManager)
     {
-        $association = New AssociationUser();
+        $association = New Association();
         $user = $this->em->getRepository(User::class)->findOneById($id);
         $addAssociationUserForm = $this->createForm(AssociationUserType::class, $association);
         $addAssociationUserForm->handleRequest($request);

@@ -31,20 +31,22 @@ class Association
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="association")
      */
     private $bookings;
+
     /**
-     * @ORM\OneToMany(targetEntity=AssociationUser::class, mappedBy="association")
+     * @ORM\ManyToMany(targetEntity=Room::class, inversedBy="associations")
      */
-    private $associationUsers;
+    private $rooms;
+
     /**
-     * @ORM\OneToMany(targetEntity=RoomAssociation::class, mappedBy="association")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="associations")
      */
-    private $roomAssociations;
+    private $users;
     public function __construct()
     {
         $this->user_has_association = new ArrayCollection();
         $this->bookings = new ArrayCollection();
-        $this->associationUsers = new ArrayCollection();
-        $this->roomAssociations = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -106,54 +108,51 @@ class Association
         }
         return $this;
     }
+
     /**
-     * @return Collection|AssociationUser[]
+     * @return Collection<int, Room>
      */
-    public function getAssociationUsers(): Collection
+    public function getRooms(): Collection
     {
-        return $this->associationUsers;
+        return $this->rooms;
     }
-    public function addAssociationUser(AssociationUser $associationUser): self
+
+    public function addRoom(Room $room): self
     {
-        if (!$this->associationUsers->contains($associationUser)) {
-            $this->associationUsers[] = $associationUser;
-            $associationUser->setAssociation($this);
+        if (!$this->rooms->contains($room)) {
+            $this->rooms[] = $room;
         }
         return $this;
     }
-    public function removeAssociationUser(AssociationUser $associationUser): self
+
+    public function removeRoom(Room $room): self
     {
-        if ($this->associationUsers->removeElement($associationUser)) {
-            // set the owning side to null (unless already changed)
-            if ($associationUser->getAssociation() === $this) {
-                $associationUser->setAssociation(null);
-            }
-        }
+        $this->rooms->removeElement($room);
+
         return $this;
     }
+
     /**
-     * @return Collection|RoomAssociation[]
+     * @return Collection<int, User>
      */
-    public function getRoomAssociations(): Collection
+    public function getUsers(): Collection
     {
-        return $this->roomAssociations;
+        return $this->users;
     }
-    public function addRoomAssociation(RoomAssociation $roomAssociation): self
+
+    public function addUser(User $user): self
     {
-        if (!$this->roomAssociations->contains($roomAssociation)) {
-            $this->roomAssociations[] = $roomAssociation;
-            $roomAssociation->setAssociation($this);
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
         }
+
         return $this;
     }
-    public function removeRoomAssociation(RoomAssociation $roomAssociation): self
+
+    public function removeUser(User $user): self
     {
-        if ($this->roomAssociations->removeElement($roomAssociation)) {
-            // set the owning side to null (unless already changed)
-            if ($roomAssociation->getAssociation() === $this) {
-                $roomAssociation->setAssociation(null);
-            }
-        }
+        $this->users->removeElement($user);
+
         return $this;
     }
 }

@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Entity\Booking;
 use App\Form\BookingType;
 use App\Entity\Association;
-use App\Entity\AssociationUser;
 use App\Repository\RoomRepository;
 use App\Repository\BookingRepository;
 use Symfony\Component\Form\FormError;
@@ -52,7 +51,7 @@ class BookingController extends AbstractController
         $userAssociations = [];
         $bookingsByAssociation = [];
 
-        $userHasAssociations = $this->em->getRepository(AssociationUser::class)->findByUser($userId);
+        $userHasAssociations = $this->em->getRepository(Association::class);
         foreach ($userHasAssociations as $userHasAssociation) {
             $userAssociations[$userHasAssociation->getAssociation()->getId()] = $userHasAssociation->getAssociation()->getName();
         }
@@ -79,7 +78,7 @@ class BookingController extends AbstractController
         $userId = $this->getUser()->getId();
         $userAssociations = [];
 
-        $userHasAssociations = $this->em->getRepository(AssociationUser::class)->findByUser($userId);
+        $userHasAssociations = $this->em->getRepository(Association::class);
         foreach ($userHasAssociations as $userHasAssociation) {
             $userAssociations[] = $this->em->getRepository(Association::class)->findById($userHasAssociation->getAssociation());
         }
