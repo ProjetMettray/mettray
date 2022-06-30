@@ -47,21 +47,21 @@ class BookingController extends AbstractController
      */
     public function showAllByUser(): Response
     {
-        $userId = $this->getUser()->getId();
+        $currentUserId = $this->getUser()->getId();
         $userAssociations = [];
         $bookingsByAssociation = [];
 
-        $userHasAssociations = $this->em->getRepository(Association::class);
-        foreach ($userHasAssociations as $userHasAssociation) {
-            $userAssociations[$userHasAssociation->getAssociation()->getId()] = $userHasAssociation->getAssociation()->getName();
+        $userAssociations = $this->em->getRepository(Association::class)->findByUserId($currentUserId);
+        foreach ($userAssociations as $userAssociation) {
+            $userAssociations[$userAssociation->getId() - 1] = $userAssociation->getName();
         }
 
         foreach ($userAssociations as $associationId => $associationName) {
-            $bookingsByAssociation[$associationName] = $this->em->getRepository(Booking::class)->findByAssociation($associationId);
+            $bookingsByAssociation[$associationName] = $this->em->getRepository(Booking::class)->findByAssociation($associationId + 1);
         }
 
         return $this->render('booking/show_all_by_user.html.twig', [
-            'userId' => $userId,
+            'userId' => $currentUserId,
             'userAssociations' => $userAssociations,
             'bookingsByAssociation' => $bookingsByAssociation
         ]);
