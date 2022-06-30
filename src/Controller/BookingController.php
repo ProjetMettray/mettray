@@ -49,15 +49,17 @@ class BookingController extends AbstractController
     {
         $currentUserId = $this->getUser()->getId();
         $userAssociations = [];
+        $associationsOfUser = [];
         $bookingsByAssociation = [];
 
         $userAssociations = $this->em->getRepository(Association::class)->findByUserId($currentUserId);
         foreach ($userAssociations as $userAssociation) {
-            $userAssociations[$userAssociation->getId() - 1] = $userAssociation->getName();
+            $associationsOfUser[$userAssociation->getId()] = $userAssociation->getName();
         }
+        //dd($associationsOfUser);
 
-        foreach ($userAssociations as $associationId => $associationName) {
-            $bookingsByAssociation[$associationName] = $this->em->getRepository(Booking::class)->findByAssociation($associationId + 1);
+        foreach ($associationsOfUser as $associationId => $associationName) {
+            $bookingsByAssociation[$associationName] = $this->em->getRepository(Booking::class)->findByAssociation($associationId);
         }
 
         return $this->render('booking/show_all_by_user.html.twig', [
