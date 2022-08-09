@@ -5,70 +5,94 @@
 {% block body %}
 	<div class="container">
 		<div class="row d-flex justify-content-center mt-2">
-			<div class="col-3">
 				{% if app.user %}
 					{% if is_granted('ROLE_USER') %}
-						<h2 class="m-4 text-ter">Mes salles</h2>
+						<h2 class="m-4 text-ter text-center">Associations</h2>
+						<div class="">
 							{% for assoUser in associations %}
-									<div class="m-3 card bg-prim text-white" style="width: 18rem;">
-										<div class="card-header bg-prim text-white">
-											{{assoUser.name}}
-										</div>
-										<ul class="list-group list-group-flush">
-											{% set foo = 0 %}
-											{% for rooms in assoUser.rooms %}
-												{% set foo = foo + 1 %}
-													<li class="list-group-item text-ter">
-														Salle :
-														<a href="{{path("main_room",{'id': rooms.id})}}" class="btn fc-button-primary">{{rooms.name}}</a>
-														<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
-															<i class="fas fa-eye text-sec"></i>
-														</a>
-														<div class="collapse" id="collapseExample{{foo}}">
-															<div class="card card-body">
-																<ul class="list-group">
-																	<li class="text-ter">Description:
-																		<span class="text-prim">{{rooms.description}}</span>
-																	</li>
-																	<li class="text-ter">Nombres de places:
-																		<span class="text-prim">{{rooms.nbPlace}}</span>
-																	</li>
-																	<li class="text-ter">Localisation:
-																		<span class="text-prim">{{rooms.location}}</span>
-																	</li>
-																</ul>
-															</div>
-														</div>
-													</li>
-											{% endfor %}
-										</ul>
-									</div>
+
+								{% if assoUser.rooms is not empty %}
+							<p class="text-center mt-3">
+								<button class="btn fc-button-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#list{{ assoUser.id }}" aria-expanded="false" aria-controls="list{{ assoUser.id }}">
+									{{ assoUser.name }}
+								</button>
+							</p>
+							<div class="collapse" id="list{{ assoUser.id }}">
+								<div class="card card-body">
+									<ul class="list-group list-group-flush">
+										{% set foo = 0 %}
+										{% for rooms in assoUser.rooms %}
+											{% set foo = foo + 1 %}
+											<li class="list-group-item text-ter my-2 text-center">
+												Salle :
+												<a href="{{path("main_room",{'id': rooms.id})}}" class="btn fc-button-primary">{{rooms.name}}</a>
+												<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
+													<i class="fas fa-eye text-sec"></i>
+												</a>
+												<div class="">
+													<div class="">
+														<ul class="list-group">
+															<li class="text-ter">Description:
+																<span class="text-prim">{{rooms.description}}</span>
+															</li>
+															<li class="text-ter">Nombres de places:
+																<span class="text-prim">{{rooms.nbPlace}}</span>
+															</li>
+															<li class="text-ter">Localisation:
+																<span class="text-prim">{{rooms.location}}</span>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</li>
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+								{%  endif %}
 							{% endfor %}
+						</div>
 					{% endif %}
 					{% if is_granted('ROLE_ADMIN') %}
-						<div class="m-3 card border-prim" style="width: 18rem;">
-							<div class="card-header bg-prim text-white">
-								Liste de toutes les salles
+						<p class="text-center mt-3">
+							<button class="btn fc-button-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#listadmin" aria-expanded="false" aria-controls="listadmin">
+								Admin
+							</button>
+						</p>
+						<div class="collapse" id="listadmin">
+							<div class="card card-body">
+								<ul class="list-group list-group-flush">
+									{% set foo = 0 %}
+									{% for rooms in room %}
+										{% set foo = foo + 1 %}
+										<li class="list-group-item text-ter my-2 text-center">
+											Salle :
+											<a href="{{path("main_room",{'id': rooms.id})}}" class="btn fc-button-primary">{{rooms.name}}</a>
+											<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
+												<i class="fas fa-eye text-sec"></i>
+											</a>
+											<div class="">
+												<div class="">
+													<ul class="list-group">
+														<li class="text-ter">Description:
+															<span class="text-prim">{{rooms.description}}</span>
+														</li>
+														<li class="text-ter">Nombres de places:
+															<span class="text-prim">{{rooms.nbPlace}}</span>
+														</li>
+														<li class="text-ter">Localisation:
+															<span class="text-prim">{{rooms.location}}</span>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</li>
+									{% endfor %}
+								</ul>
 							</div>
-							<ul class="list-group list-group-flush">
-								{% for rooms in room %}
-									<li class="list-group-item text-ter">
-										Salle :
-										<a href="{{path("main_room",{'id': rooms.id})}}" class="btn fc-button-primary">{{rooms.name}}</a>
-									</li>
-								{% endfor %}
-							</ul>
 						</div>
 					{% endif %}
 				{% endif %}
-			</div>
-			<div class="col-9 text-center">
-				<div class="row">
-					<div class="container col text-ter" style="width: 720px; margin: 2rem">
-						<div>Sélectionnez une salle pour afficher le calendrier</div>
-					</div>
-				</div>
-			</div>
 			<div class="row">
 				<div class="p-0 container col" style="width: 548px; margin: 5rem">
 					<div id="calendar-holder"></div>

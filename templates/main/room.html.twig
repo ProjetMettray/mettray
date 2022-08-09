@@ -6,80 +6,18 @@
 {% block body %}
 	<div class="container">
 		<div class="row d-flex justify-content-center mt-2">
-			<div class="col-3">
-				{% if app.user %}
-					{% if is_granted('ROLE_USER') %}
-						<h2 class="m-4 text-ter">Mes salles</h2>
-						{% for associations in asso %}
-							{% for assoUser in associations.users %}
-								{%  if app.user.id == assoUser.id%}
-									<div class="m-3 card border-prim" style="width: 18rem;">
-										<div class="card-header border-ter bg-prim text-white">
-											{{associations.name}}
-										</div>
-										<ul class="list-group list-group-flush">
-											{% set foo = 0 %}
-											{% for rooms in associations.rooms %}
-												{% set foo = foo + 1 %}
-												<li class="list-group-item text-ter">
-													Salle :
-													<a href="{{path("main_room",{'id': rooms.id})}}" class="btn fc-button-primary">{{rooms.name}}</a>
-													<a class="btn align-items-end" data-bs-toggle="collapse" href="#collapseExample{{foo}}" role="button" aria-expanded="false" aria-controls="collapseExample{{foo}}" href="{{path('main')}}">
-														<i class="fas fa-eye text-sec"></i>
-													</a>
-													<div class="collapse" id="collapseExample{{foo}}">
-														<div class="card card-body">
-															<ul class="list-group">
-																<li class="text-ter">Description:
-																	<span class="text-prim">{{rooms.description}}</span>
-																</li>
-																<li class="text-ter">Nombres de places:
-																	<span class="text-prim">{{rooms.nbPlace}}</span>
-																</li>
-																<li class="text-ter">Localisation:
-																	<span class="text-prim">{{rooms.location}}</span>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</li>
-											{% endfor %}
-										</ul>
-									</div>
-								{% endif %}
-							{% endfor %}
-						{% endfor %}
-					{% endif %}
-					{% if is_granted('ROLE_ADMIN') %}
-						<div class="m-3 card border-prim" style="width: 18rem;">
-							<div class="card-header bg-prim text-white border-ter">
-								Liste de toutes les salles
-							</div>
-							<ul class="list-group list-group-flush border-ter">
-								{% for rooms in room %}
-									<li class="list-group-item text-ter">
-										Salle :
-										<a href="{{path("main_room",{'id': rooms.id})}}" class="btn fc-button-primary">{{rooms.name}}</a>
-									</li>
-								{% endfor %}
-							</ul>
-						</div>
-					{% endif %}
-				{% endif %}
-			</div>
-			<div class="col-9 text-center">
-				<div class="col">
+			<div class="text-center">
+				<div>
+					<a href="{{ path('main') }}" class="btn fc-button-primary">Retour à la liste des salles</a>
 					<h2 class="mt-3 text-center text-ter">Salle:
 						{{roomid.name}}
 					</h2>
 					<a href="{{ path("booking_new", {'room': roomid.id}) }}" class="btn fc-button-primary">Réserver</a>
-					<div class="p-0 container" style="width: 720px; margin: 2rem">
 						<div id="calendar-holder"></div>
-					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="p-0 container col" style="width: 548px; margin: 5rem">
+				<div class="p-0 container col">
 					<div id="calendar-holder"></div>
 					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
