@@ -128,6 +128,7 @@ class AllFixtures extends Fixture
                 ->setTelephone($fakeAsso[2]);;
             $manager->persist($association);
         }
+
         $manager->flush();
 
         foreach (self::FAKE_LOCATION as $fakeLoc) {
@@ -137,8 +138,8 @@ class AllFixtures extends Fixture
                 ->setRoad($fakeLoc[2])
                 ->setCity($fakeLoc[3]);
             $manager->persist($location);
-
         }
+
         $manager->flush();
 
         foreach (self::FAKE_USER as $fakeuser) {
@@ -159,7 +160,6 @@ class AllFixtures extends Fixture
         }
 
         foreach (self::FAKE_ADMIN as $fakeadmin) {
-
             $user = new User;
 
             $user
@@ -179,62 +179,66 @@ class AllFixtures extends Fixture
         $manager->flush();
 
         foreach (self::FAKE_ASSO_USER as $fakeAssoUser) {
-
             $assoUser = new AssociationUser();
+
             $assoUser
                 ->setAssociation($manager->getRepository(Association::class)->findOneByName($fakeAssoUser[1]))
                 ->setUser($manager->getRepository(User::class)->findOneByLastname($fakeAssoUser[0]));
 
             $manager->persist($assoUser);
         }
+
         $manager->flush();
 
         foreach (self::FAKE_ROOM_PARENT as $fakeRoomParent) {
             $room = new Room();
+
             $room->setName($fakeRoomParent[0])
                 ->setNbPlace($fakeRoomParent[1])
                 ->setDescription($fakeRoomParent[2])
                 //->addRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[3]))
                 ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoomParent[4]))
-                ->setLocation($manager->getRepository(Location::class)->findOneByName('Grand Gymnase'))
+                ->setLocation($manager->getRepository(Location::class)->findOneByName($fakeRoomParent[5]))
                 ->setVisibility($fakeRoomParent[6]);
 
             $manager->persist($room);
-
         }
+
         $manager->flush();
 
         foreach (self::FAKE_ROOM as $fakeRoom) {
             $room = new Room();
+
             $room->setName($fakeRoom[0])
                 ->setNbPlace($fakeRoom[1])
                 ->setDescription($fakeRoom[2])
                 //->addRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[3]))
                 ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoom[4]))
-                ->setLocation($manager->getRepository(Location::class)->findOneByName('Grand Gymnase'))
+                ->setLocation($manager->getRepository(Location::class)->findOneByName($fakeRoom[5]))
                 ->setVisibility($fakeRoom[6]);
 
             $manager->persist($room);
-
         }
+
         $manager->flush();
 
         foreach (self::FAKE_ROOM_ASSO as $fakeRoomAssociation) {
             $roomUser = new RoomAssociation();
+
             $roomUser
                 ->setRoom($manager->getRepository(Room::class)->findOneByName($fakeRoomAssociation[0]))
                 ->setAssociation($manager->getRepository(Association::class)->findOneByName($fakeRoomAssociation[1]));
 
             $manager->persist($roomUser);
-
         }
+
         $manager->flush();
 
         foreach (self::FAKE_BOOKING as $fakeBooking) {
             $start_at = new \DateTimeImmutable($fakeBooking[1]);
             $end_at = new \DateTimeImmutable($fakeBooking[2]);
-
             $roomUser = new Booking();
+
             $roomUser
                 ->setTitle($fakeBooking[0])
                 ->setStartAt($start_at)
@@ -246,6 +250,7 @@ class AllFixtures extends Fixture
 
             $manager->persist($roomUser);
         }
+
         $manager->flush();
     }
 }
